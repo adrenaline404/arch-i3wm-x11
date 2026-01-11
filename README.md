@@ -9,7 +9,7 @@ A clean, modern, and lightweight i3wm (X11) configuration for Arch Linux.
 Designed to be LightDM-safe, laptop-friendly, and easy to deploy via a single install script.
 
 This repository targets:
-- Arch Linux (installed via archinstall)
+- Arch Linux
 - i3wm + LightDM
 - X11 session (NOT Wayland)
 - Low-to-mid spec laptops (Intel iGPU friendly)
