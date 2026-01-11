@@ -1,3 +1,5 @@
+---
+
 # arch-i3wm-x11
 
 ![Arch Linux](https://img.shields.io/badge/Arch-Linux-1793D1?logo=arch-linux&logoColor=white)
@@ -66,37 +68,21 @@ All configuration files are installed into ~/.config/.
 Installed automatically via install.sh.
 
 Main components:
-
-i3-wm
-
-xorg-xinit
-
-polybar
-
-rofi
-
-picom
-
-dunst
-
-feh
-
-maim
-
-brightnessctl
-
-pamixer
-
-alacritty
-
-xsecurelock
-
-xss-lock
-
-imagemagick
-
-Nerd Fonts + Noto Fonts
-
+- i3-wm
+- xorg-xinit
+- polybar
+- rofi
+- picom
+- dunst
+- feh
+- maim
+- brightnessctl
+- pamixer
+- alacritty
+- xsecurelock
+- xss-lock
+- imagemagick
+- Nerd Fonts + Noto Fonts
 
 No AUR packages required.
 
