@@ -18,22 +18,6 @@ A **stable, minimal, and modern i3wm (X11) setup for Arch Linux**, designed spec
 - **Picom** — compositor with *auto-disable on fullscreen*
 - **xsecurelock + xss-lock** — modern and secure lockscreen
 - **Dunst** — notification daemon (volume & brightness OSD)
-![Arch Linux](https://img.shields.io/badge/Arch-Linux-1793D1?logo=arch-linux&logoColor=white)
-![i3wm](https://img.shields.io/badge/i3wm-Tiling_WM-2E3440)
-![X11](https://img.shields.io/badge/X11-Stable_Display_Server-555555)
-
-A **stable, minimal, and modern i3wm (X11) setup for Arch Linux**, designed specifically for **low-end and older Intel-based laptops**.
-
----
-
-## ✨ Features
-
-- **i3wm (X11)** — mature, predictable tiling window manager
-- **Polybar** — lightweight and themeable status bar
-- **Rofi** — application launcher & power menu
-- **Picom** — compositor with *auto-disable on fullscreen*
-- **xsecurelock + xss-lock** — modern and secure lockscreen
-- **Dunst** — notification daemon (volume & brightness OSD)
 - **Brightness & volume control** (media keys supported)
 - **Screenshot tool** (selection-based)
 - **Dynamic theme switching (runtime)**
@@ -266,13 +250,5 @@ Adjust `picom.conf` if necessary.
 
 ## ⚠ Disclaimer
 
-- These are personal dotfiles.
-- Always back up existing configuration before use.
-
-📜 License
-- MIT License — see LICENSE
-
-
-⚠ Disclaimer
 - These are personal dotfiles.
 - Always back up existing configuration before use.
