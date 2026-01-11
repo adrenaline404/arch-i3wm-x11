@@ -16,4 +16,4 @@ chmod +x ~/.config/polybar/*.sh
 chmod +x ~/.config/rofi/*.sh
 chmod +x ~/.config/themes/*.sh
 
-echo "Install selesai. | Jalankan: startx - untuk memulai i3wm. | By: @adrenaline404"
+echo "Installation complete! You can start i3 with the command 'startx'."
