@@ -1,0 +1,16 @@
+[global]
+monitor = 0
+follow = mouse
+width = 250
+height = 80
+offset = 20x40
+origin = top-right
+transparency = 10
+frame_width = 0
+font = JetBrainsMono Nerd Font 10
+corner_radius = 8
+
+[urgency_normal]
+background = "#000000cc"
+foreground = "#ffffff"
+timeout = 2

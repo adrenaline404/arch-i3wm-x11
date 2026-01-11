@@ -1,0 +1,18 @@
+configuration {
+  show-icons: true;
+  font: "JetBrainsMono Nerd Font 11";
+}
+
+* {
+  background: #000000cc;
+  foreground: #ffffff;
+  border-radius: 8px;
+}
+
+window {
+  width: 400px;
+}
+
+element {
+  padding: 8px;
+}

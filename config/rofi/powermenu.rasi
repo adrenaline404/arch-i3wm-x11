@@ -1,0 +1,16 @@
+configuration {
+  font: "JetBrainsMono Nerd Font 11";
+}
+
+* {
+  background: #000000cc;
+  foreground: #ffffff;
+}
+
+window {
+  width: 300px;
+}
+
+element {
+  padding: 10px;
+}

@@ -1,0 +1,17 @@
+set $mod Mod4
+font pango:JetBrainsMono Nerd Font 10
+
+exec_always --no-startup-id ~/.config/i3/autostart.sh
+
+bindsym $mod+Return exec alacritty
+bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/launcher.rasi
+bindsym $mod+Shift+e exec ~/.config/rofi/theme-switcher.sh
+bindsym $mod+Shift+x exec loginctl lock-session
+bindsym Print exec ~/.config/i3/screenshot.sh
+
+bindsym XF86AudioRaiseVolume exec ~/.config/i3/volume.sh up
+bindsym XF86AudioLowerVolume exec ~/.config/i3/volume.sh down
+bindsym XF86AudioMute exec ~/.config/i3/volume.sh mute
+
+bindsym XF86MonBrightnessUp exec ~/.config/i3/brightness.sh up
+bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh down
