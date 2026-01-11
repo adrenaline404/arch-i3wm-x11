@@ -3,16 +3,21 @@ configuration {
   font: "JetBrainsMono Nerd Font 11";
 }
 
-* {
-  background: #000000cc;
-  foreground: #ffffff;
-  border-radius: 8px;
+window {
+  transparency: "real";
+  background-color: #1e1e2ecc;
+  border-radius: 10px;
 }
 
-window {
-  width: 400px;
+listview {
+  lines: 8;
 }
 
 element {
   padding: 8px;
+}
+
+element selected {
+  background-color: #89b4fa;
+  text-color: #1e1e2e;
 }

@@ -1,6 +1,9 @@
-#!/bin/sh
-pgrep -x picom || picom --config ~/.config/i3/picom.conf &
-pgrep -x dunst || dunst &
-pgrep -x polybar || ~/.config/polybar/launch.sh &
-feh --bg-fill ~/.config/wallpaper/current.jpg &
-pgrep -x xss-lock || xss-lock -- xsecurelock &
+#!/usr/bin/env bash
+
+pkill picom
+pkill polybar
+
+feh --bg-fill ~/Pictures/catppuccin.jpg
+picom --config ~/.config/picom/picom.conf &
+~/.config/polybar/launch.sh &
+dunst &

@@ -1,16 +1,31 @@
 [global]
 monitor = 0
 follow = mouse
-width = 250
-height = 80
-offset = 20x40
+width = 320
+height = 300
 origin = top-right
-transparency = 10
-frame_width = 0
-font = JetBrainsMono Nerd Font 10
-corner_radius = 8
+offset = 20x20
+padding = 12
+horizontal_padding = 12
+frame_width = 1
+frame_color = "#44475a"
+font = JetBrainsMono Nerd Font 9
+corner_radius = 6
+separator_height = 2
+separator_color = frame
+idle_threshold = 120
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+timeout = 3
 
 [urgency_normal]
-background = "#000000cc"
-foreground = "#ffffff"
-timeout = 2
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+timeout = 6
+
+[urgency_critical]
+background = "#1e1e2e"
+foreground = "#f38ba8"
+timeout = 0

@@ -1,6 +1,11 @@
-#!/bin/sh
-CHOICE=$(printf "Catppuccin\nNord" | rofi -dmenu)
-case "$CHOICE" in
-  Catppuccin) ~/.config/themes/catppuccin.sh ;;
-  Nord) ~/.config/themes/nord.sh ;;
+#!/usr/bin/env bash
+choice=$(printf "Catppuccin\nNord" | rofi -dmenu)
+
+case "$choice" in
+  Catppuccin)
+    feh --bg-fill ~/Pictures/catppuccin.jpg
+    ;;
+  Nord)
+    feh --bg-fill ~/Pictures/nord.jpg
+    ;;
 esac

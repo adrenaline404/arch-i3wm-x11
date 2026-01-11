@@ -1,16 +1,19 @@
 configuration {
+  show-icons: false;
   font: "JetBrainsMono Nerd Font 11";
 }
 
-* {
-  background: #000000cc;
-  foreground: #ffffff;
-}
-
 window {
-  width: 300px;
+  transparency: "real";
+  background-color: #1e1e2ecc;
+  border-radius: 10px;
 }
 
-element {
-  padding: 10px;
+listview {
+  lines: 5;
+}
+
+element selected {
+  background-color: #f38ba8;
+  text-color: #1e1e2e;
 }

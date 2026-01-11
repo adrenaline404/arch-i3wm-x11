@@ -5,13 +5,24 @@ exec_always --no-startup-id ~/.config/i3/autostart.sh
 
 bindsym $mod+Return exec alacritty
 bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/launcher.rasi
-bindsym $mod+Shift+e exec ~/.config/rofi/theme-switcher.sh
-bindsym $mod+Shift+x exec loginctl lock-session
-bindsym Print exec ~/.config/i3/screenshot.sh
+bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
 
-bindsym XF86AudioRaiseVolume exec ~/.config/i3/volume.sh up
-bindsym XF86AudioLowerVolume exec ~/.config/i3/volume.sh down
-bindsym XF86AudioMute exec ~/.config/i3/volume.sh mute
+bindsym XF86AudioRaiseVolume exec ~/.config/i3/scripts/volume.sh up
+bindsym XF86AudioLowerVolume exec ~/.config/i3/scripts/volume.sh down
+bindsym XF86AudioMute exec ~/.config/i3/scripts/volume.sh mute
 
-bindsym XF86MonBrightnessUp exec ~/.config/i3/brightness.sh up
-bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh down
+bindsym XF86MonBrightnessUp exec ~/.config/i3/scripts/brightness.sh up
+bindsym XF86MonBrightnessDown exec ~/.config/i3/scripts/brightness.sh down
+
+bindsym Print exec ~/.config/i3/scripts/screenshot.sh
+
+bindsym $mod+Shift+e exec rofi -dmenu -p "Power" \
+  <<< "Shutdown\nReboot\nLogout" | \
+  xargs -I{} sh -c 'case "{}" in \
+    Shutdown) systemctl poweroff ;; \
+    Reboot) systemctl reboot ;; \
+    Logout) i3-msg exit ;; \
+  esac'
+
+floating_modifier $mod
+focus_follows_mouse yes
