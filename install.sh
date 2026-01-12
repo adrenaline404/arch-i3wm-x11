@@ -54,8 +54,11 @@ PKGS=(
     dunst
     feh
     pamixer
-    pulseaudio
-    pulseaudio-alsa
+    pipewire
+    pipewire-pulse
+    pipewire-alsa
+    pipewire-jack
+    wireplumber
     brightnessctl
     playerctl
     maim
@@ -63,6 +66,7 @@ PKGS=(
     xsecurelock
     network-manager-applet
     blueman
+    pavucontrol
 )
 
 info "Installing packages..."
@@ -115,6 +119,14 @@ if [[ ! -f "$THEME_STATE" ]]; then
     echo "catppuccin" > "$THEME_STATE"
 fi
 
+info "Configuring PipeWire..."
+if systemctl --user is-enabled pipewire &>/dev/null 2>&1; then
+    success "PipeWire user service already enabled"
+else
+    systemctl --user enable --now pipewire pipewire-pulse wireplumber 2>/dev/null || true
+    success "PipeWire user services enabled"
+fi
+
 if systemctl is-enabled lightdm &>/dev/null 2>&1; then
     success "LightDM is enabled"
 else
@@ -146,3 +158,4 @@ info "1. Logout and select i3 session in LightDM"
 info "2. Or run: startx (if not using LightDM)"
 info "3. Default theme: catppuccin"
 info "4. Switch themes with: Super+Shift+T or ~/.config/rofi/theme-switcher.sh"
+info "5. PipeWire is configured and will start automatically"

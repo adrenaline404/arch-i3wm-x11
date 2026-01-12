@@ -16,6 +16,7 @@ Modern i3wm (X11) configuration for Arch Linux with black transparent semi-blur 
 - **Rofi Launcher** - Beautiful application launcher and power menu with icons
 - **Dunst Notifications** - Clean, modern notification daemon with transparency
 - **Picom Compositor** - Optimized blur effects for Intel HD Graphics
+- **PipeWire Audio** - Modern audio server with PulseAudio compatibility
 - **Error Handling** - Robust error handling in all scripts
 - **LightDM Compatible** - Works seamlessly with LightDM
 - **Media Controls** - Volume, brightness, screenshot shortcuts with icons
@@ -28,6 +29,7 @@ Modern i3wm (X11) configuration for Arch Linux with black transparent semi-blur 
 - LightDM (recommended) or manual X11 start
 - Internet connection for package installation
 - Intel HD Graphics (optimized for Haswell/Broadwell)
+- PipeWire for audio (included in installation)
 
 ## 🚀 Installation
 
@@ -184,6 +186,14 @@ Edit `~/.config/picom/picom.conf` to adjust compositor settings. Blur is enabled
 Edit `~/.config/rofi/launcher.rasi` and `~/.config/rofi/powermenu.rasi` to customize launcher appearance.
 
 ## 🐛 Troubleshooting
+
+### Audio not working (PipeWire)
+
+1. Check if PipeWire is running: `systemctl --user status pipewire pipewire-pulse wireplumber`
+2. Verify PipeWire is active: `pactl info | grep "Server Name"` (should show "PulseAudio (on PipeWire)")
+3. Restart PipeWire services: `systemctl --user restart pipewire pipewire-pulse wireplumber`
+4. Check audio devices: `pactl list short sinks`
+5. If issues persist, check logs: `journalctl --user -u pipewire -u pipewire-pulse -u wireplumber`
 
 ### Blur not working
 
