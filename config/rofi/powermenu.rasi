@@ -1,19 +1,66 @@
 configuration {
-  show-icons: false;
-  font: "JetBrainsMono Nerd Font 11";
+    show-icons: true;
+    font: "JetBrainsMono Nerd Font 12";
+    location: center;
+    disable-history: false;
+    sidebar-mode: false;
 }
 
 window {
-  transparency: "real";
-  background-color: #1e1e2ecc;
-  border-radius: 10px;
+    transparency: "real";
+    background-color: #000000cc;
+    border-radius: 12px;
+    width: 22%;
+    location: center;
+}
+
+inputbar {
+    children: [textbox-prompt-colon, entry];
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: "󰐥 Power:";
+    margin: 0px 0.3em 0em 0em;
+    text-color: #00d4ff;
+}
+
+entry {
+    background-color: transparent;
+    text-color: #ffffff;
 }
 
 listview {
-  lines: 5;
+    lines: 5;
+    columns: 1;
+    spacing: 6px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+}
+
+element {
+    background-color: transparent;
+    text-color: #ffffff;
+    orientation: vertical;
+    border-radius: 6px;
+    padding: 12px;
 }
 
 element selected {
-  background-color: #f38ba8;
-  text-color: #1e1e2e;
+    background-color: #ff4444;
+    text-color: #000000;
+    border-radius: 6px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element-icon {
+    size: 1.6em;
 }

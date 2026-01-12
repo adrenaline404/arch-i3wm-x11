@@ -1,23 +1,70 @@
 configuration {
-  show-icons: true;
-  font: "JetBrainsMono Nerd Font 11";
+    show-icons: true;
+    font: "JetBrainsMono Nerd Font 11";
+    display-drun: "󰀻 Applications";
+    display-run: "󰍉 Run";
+    display-window: "󰖲 Windows";
+    drun-display-format: "{name}";
+    window-format: "{w}    {c}   {t}";
 }
 
 window {
-  transparency: "real";
-  background-color: #1e1e2ecc;
-  border-radius: 10px;
+    transparency: "real";
+    background-color: #000000cc;
+    border-radius: 12px;
+    width: 50%;
+    location: center;
+    x-offset: 0;
+    y-offset: 0;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+prompt {
+    background-color: transparent;
+    padding: 6px;
+    text-color: #00d4ff;
+}
+
+entry {
+    background-color: transparent;
+    padding: 6px;
+    text-color: #ffffff;
 }
 
 listview {
-  lines: 8;
+    lines: 8;
+    columns: 1;
+    spacing: 6px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
 }
 
 element {
-  padding: 8px;
+    background-color: transparent;
+    text-color: #ffffff;
+    orientation: vertical;
+    border-radius: 6px;
+    padding: 8px;
 }
 
 element selected {
-  background-color: #89b4fa;
-  text-color: #1e1e2e;
+    background-color: #00d4ff;
+    text-color: #000000;
+    border-radius: 6px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element-icon {
+    size: 1.3em;
 }
