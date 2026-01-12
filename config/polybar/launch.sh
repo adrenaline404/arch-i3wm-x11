@@ -33,9 +33,32 @@ if [[ -f "$CONFIG_FILE" ]] && [[ -f "$THEME_FILE" ]]; then
         echo ""
         grep -v "^include-file" "$CONFIG_FILE" | grep -v "^;.*include-file"
     } > "$TEMP_CONFIG"
-    
+    if [ -d /sys/class/backlight ]; then
+        BACKLIGHT_CARD=$(ls /sys/class/backlight 2>/dev/null | awk 'NR==1{print}') || true
+        if [ -n "$BACKLIGHT_CARD" ]; then
+            export BACKLIGHT_CARD
+        fi
+    fi
+    if [ -d /sys/class/power_supply ]; then
+        POLYBAR_BATTERY=$(ls /sys/class/power_supply | grep -E '^BAT' | head -n1 || true)
+        POLYBAR_ADAPTER=$(ls /sys/class/power_supply | grep -i '^AC' | head -n1 || true)
+        [ -n "$POLYBAR_BATTERY" ] && export POLYBAR_BATTERY
+        [ -n "$POLYBAR_ADAPTER" ] && export POLYBAR_ADAPTER
+    fi
     polybar -q main -c "$TEMP_CONFIG" &
     (sleep 2 && rm -f "$TEMP_CONFIG") &
 else
+    if [ -d /sys/class/backlight ]; then
+        BACKLIGHT_CARD=$(ls /sys/class/backlight 2>/dev/null | awk 'NR==1{print}') || true
+        if [ -n "$BACKLIGHT_CARD" ]; then
+            export BACKLIGHT_CARD
+        fi
+    fi
+    if [ -d /sys/class/power_supply ]; then
+        POLYBAR_BATTERY=$(ls /sys/class/power_supply | grep -E '^BAT' | head -n1 || true)
+        POLYBAR_ADAPTER=$(ls /sys/class/power_supply | grep -i '^AC' | head -n1 || true)
+        [ -n "$POLYBAR_BATTERY" ] && export POLYBAR_BATTERY
+        [ -n "$POLYBAR_ADAPTER" ] && export POLYBAR_ADAPTER
+    fi
     polybar -q main -c "$CONFIG_FILE" &
 fi

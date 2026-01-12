@@ -110,9 +110,17 @@ chmod +x \
     "$CONFIG/i3/autostart.sh" \
     "$CONFIG/i3/lock.sh" \
     "$CONFIG/i3/scripts/"*.sh \
+    "$CONFIG/polybar/scripts/"*.sh \
     "$CONFIG/polybar/launch.sh" \
     "$CONFIG/rofi/theme-switcher.sh" \
     "$CONFIG/rofi/powermenu.sh" 2>/dev/null || true
+
+if [[ -f "$CONFIG/udev/99-backlight.rules" ]]; then
+    sudo cp "$CONFIG/udev/99-backlight.rules" /etc/udev/rules.d/99-backlight.rules 2>/dev/null || true
+    sudo udevadm control --reload 2>/dev/null || true
+    sudo udevadm trigger 2>/dev/null || true
+    success "Installed udev backlight rule (if permitted)"
+fi
 
 THEME_STATE="$CONFIG/.theme_state"
 if [[ ! -f "$THEME_STATE" ]]; then
@@ -159,3 +167,4 @@ info "2. Or run: startx (if not using LightDM)"
 info "3. Default theme: catppuccin"
 info "4. Switch themes with: Super+Shift+T or ~/.config/rofi/theme-switcher.sh"
 info "5. PipeWire is configured and will start automatically"
+info "Setup complete. Enjoy your Arch i3wm environment!"

@@ -1,7 +1,7 @@
 configuration {
     show-icons: true;
     font: "JetBrainsMono Nerd Font 12";
-    location: center;
+    location: 0;
     disable-history: false;
     sidebar-mode: false;
 }
@@ -10,22 +10,22 @@ window {
     transparency: "real";
     background-color: #000000cc;
     border-radius: 12px;
-    width: 22%;
-    location: center;
+    width: 24%;
+    location: 0;
 }
 
 inputbar {
     children: [textbox-prompt-colon, entry];
     background-color: transparent;
     border-radius: 6px;
-    padding: 8px;
+    padding: 10px;
 }
 
 textbox-prompt-colon {
     expand: false;
     str: "󰐥 Power:";
-    margin: 0px 0.3em 0em 0em;
-    text-color: #00d4ff;
+    margin: 0px 0.4em 0em 0em;
+    text-color: #89b4fa;
 }
 
 entry {
@@ -36,7 +36,7 @@ entry {
 listview {
     lines: 5;
     columns: 1;
-    spacing: 6px;
+    spacing: 8px;
     cycle: true;
     dynamic: true;
     layout: vertical;
@@ -46,14 +46,14 @@ element {
     background-color: transparent;
     text-color: #ffffff;
     orientation: vertical;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 12px;
 }
 
 element selected {
-    background-color: #ff4444;
+    background-color: #ff6b6b;
     text-color: #000000;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 element-text {

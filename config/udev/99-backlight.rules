@@ -1,0 +1,1 @@
+SUBSYSTEM=="backlight", KERNEL=="*", ACTION=="add", MODE="0664", GROUP="video"

@@ -5,12 +5,13 @@
 ![X11](https://img.shields.io/badge/X11-Display_Server-blue?style=flat)
 ![LightDM](https://img.shields.io/badge/LightDM-Supported-green?style=flat)
 
-Modern i3wm (X11) configuration for Arch Linux with black transparent semi-blur theme, optimized for low-to-mid spec laptops. Designed for **Asus X540LA** (Intel Core i3-4005U, 4GB RAM) with Intel HD Graphics.
+Modern i3wm (X11) configuration for Arch Linux with black transparent semi-blur theme, optimized for low-to-mid spec laptops. Designed for **Asus X540LA**.
 
 ## ✨ Features
 
 - **Black Transparent Semi-Blur Theme** - Modern transparent design with blur effects
 - **Complete i3wm Configuration** - Full keybindings, workspace management, window controls
+- **Modern Theme System** - Black, Catppuccin, and Nord themes with synchronized switching
 - **Modern Theme System** - Black, Catppuccin, and Nord themes with synchronized switching
 - **Polybar Status Bar** - Feature-rich status bar with modern icons (Nerd Font)
 - **Rofi Launcher** - Beautiful application launcher and power menu with icons
@@ -21,6 +22,10 @@ Modern i3wm (X11) configuration for Arch Linux with black transparent semi-blur 
 - **LightDM Compatible** - Works seamlessly with LightDM
 - **Media Controls** - Volume, brightness, screenshot shortcuts with icons
 - **Theme Switcher** - Synchronized theme switching across all components
+- **Clean Code** - Scripts and configuration files are stripped of inline comments/notes for a production-ready layout
+- **Backlight udev rule** - Optional udev rule provided to allow non-root brightness control
+- **Powermenu confirmation** - Reboot/shutdown require confirmation via Rofi
+- **Polybar launchers** - Clickable launcher icons (bottom/right) via `~/.config/polybar/launchers` and `~/.config/polybar/scripts/launchers.sh`
 
 ## 📋 Requirements
 
@@ -173,6 +178,10 @@ arch-i3wm-x11/
 
 Edit `~/.config/polybar/config.ini` to customize the status bar. Theme colors are loaded from `~/.config/polybar/themes/*.ini`.
 
+Notes:
+- Launch Polybar via `~/.config/polybar/launch.sh` so the script can auto-detect and export `BACKLIGHT_CARD`, `POLYBAR_BATTERY`, and `POLYBAR_ADAPTER` environment variables used by the modules.
+- A simple launcher widget reads `~/.config/polybar/launchers` (format: `icon;command`) and renders clickable icons. The helper script is `~/.config/polybar/scripts/launchers.sh`.
+
 ### i3wm
 
 Edit `~/.config/i3/config` to customize window manager behavior, keybindings, and window assignments.
@@ -183,7 +192,7 @@ Edit `~/.config/picom/picom.conf` to adjust compositor settings. Blur is enabled
 
 ### Rofi
 
-Edit `~/.config/rofi/launcher.rasi` and `~/.config/rofi/powermenu.rasi` to customize launcher appearance.
+Edit `~/.config/rofi/launcher.rasi` to customize launcher appearance. The power menu supports theme-specific files named `powermenu-<theme>.rasi` (for example `powermenu-catppuccin.rasi`) and selects them automatically. Note: these `powermenu` themes use numeric `location` values required by `rofi`. Reboot and shutdown entries now prompt for confirmation.
 
 ## 🐛 Troubleshooting
 
@@ -229,8 +238,20 @@ Edit `~/.config/rofi/launcher.rasi` and `~/.config/rofi/powermenu.rasi` to custo
 ### Brightness not working
 
 1. Check backlight device: `ls /sys/class/backlight/`
-2. Edit `~/.config/polybar/config.ini` and update `card = intel_backlight` if needed
-3. Check permissions: `sudo chmod 666 /sys/class/backlight/intel_backlight/brightness`
+2. The setup auto-detects the backlight device and exports `BACKLIGHT_CARD` for Polybar. You can override it by exporting `BACKLIGHT_CARD` before launching Polybar or editing `card = ${env:BACKLIGHT_CARD:intel_backlight}` in `~/.config/polybar/config.ini`.
+3. Use the provided udev rule to allow non-root brightness control. Copy `~/.config/udev/99-backlight.rules` to `/etc/udev/rules.d/` and reload udev:
+
+```bash
+sudo cp ~/.config/udev/99-backlight.rules /etc/udev/rules.d/99-backlight.rules
+sudo udevadm control --reload
+sudo udevadm trigger
+```
+
+4. Add your user to the `video` group and re-login:
+
+```bash
+sudo usermod -aG video $USER
+```
 
 ## 📝 Customization
 
@@ -308,4 +329,4 @@ However, it works great on any Arch Linux system with X11!
 
 **Maintained by adrenaline404**
 
-*Enjoy your modern, transparent, blurred i3wm setup! 🚀*
+*Enjoy 🚀*

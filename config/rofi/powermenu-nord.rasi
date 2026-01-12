@@ -1,0 +1,7 @@
+configuration { show-icons: true; font: "JetBrainsMono Nerd Font 12"; location: 0; }
+window { transparency: "real"; background-color: #2e344080; border-radius: 12px; width: 24%; location: 0; }
+textbox-prompt-colon { str: "󰐥 Power:"; text-color: #88c0d0; }
+element selected { background-color: #88c0d0; text-color: #2e3440; }
+element { padding: 12px; border-radius: 8px; }
+entry { text-color: #d8dee9; }
+element-icon { size: 1.6em; }

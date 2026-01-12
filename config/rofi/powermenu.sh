@@ -14,7 +14,12 @@ fi
 
 OPTIONS="󰌾 Lock\n󰗽 Logout\n󰜉 Reboot\n󰐥 Shutdown"
 
-CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "󰐥 Power" -theme ~/.config/rofi/powermenu.rasi -selected-row 0)
+THEME_FILE="$HOME/.config/rofi/powermenu-${THEME}.rasi"
+if [[ ! -f "$THEME_FILE" ]]; then
+    THEME_FILE="$HOME/.config/rofi/powermenu.rasi"
+fi
+
+CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "󰐥 Power" -theme "$THEME_FILE" -selected-row 0)
 
 case "$CHOICE" in
     *Lock)
@@ -31,14 +36,20 @@ case "$CHOICE" in
         ;;
     *Reboot)
         if command -v systemctl >/dev/null 2>&1; then
-            systemctl reboot
+            CONF=$(printf "No\nYes" | rofi -dmenu -p "Confirm reboot?" -theme "$THEME_FILE" -selected-row 0)
+            if [[ "$CONF" == "Yes" ]]; then
+                systemctl reboot
+            fi
         else
             notify-send -u critical "Power Menu" "systemctl not available"
         fi
         ;;
     *Shutdown)
         if command -v systemctl >/dev/null 2>&1; then
-            systemctl poweroff
+            CONF=$(printf "No\nYes" | rofi -dmenu -p "Confirm shutdown?" -theme "$THEME_FILE" -selected-row 0)
+            if [[ "$CONF" == "Yes" ]]; then
+                systemctl poweroff
+            fi
         else
             notify-send -u critical "Power Menu" "systemctl not available"
         fi

@@ -13,7 +13,7 @@ window {
     background-color: #000000cc;
     border-radius: 12px;
     width: 50%;
-    location: center;
+    location: 0;
     x-offset: 0;
     y-offset: 0;
 }
