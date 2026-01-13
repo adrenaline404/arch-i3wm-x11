@@ -27,3 +27,18 @@ dist/
 
 # Misc
 *.local
+
+# Backup files
+*.bak
+*.backup
+*~
+.*.swp
+.*.swo
+
+# User-specific files
+*.log
+*.cache
+
+# Temporary files
+tmp/
+temp/

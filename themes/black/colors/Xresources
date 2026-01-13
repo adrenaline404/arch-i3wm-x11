@@ -1,0 +1,68 @@
+! Black Theme - Dark Color Scheme
+
+! Special colors
+*.foreground:   #ffffff
+*.background:   #0d0d0d
+*.cursorColor:  #5294e2
+
+! Black and Grey
+*.color0:       #0d0d0d
+*.color8:       #424242
+
+! Red
+*.color1:       #e53935
+*.color9:       #ef5350
+
+! Green
+*.color2:       #43a047
+*.color10:      #66bb6a
+
+! Yellow
+*.color3:       #ffb300
+*.color11:      #ffca28
+
+! Blue
+*.color4:       #5294e2
+*.color12:      #64b5f6
+
+! Magenta
+*.color5:       #8e24aa
+*.color13:      #ab47bc
+
+! Cyan
+*.color6:       #00acc1
+*.color14:      #26c6da
+
+! White
+*.color7:       #e0e0e0
+*.color15:      #ffffff
+
+! i3wm colors
+i3wm.background:        #0d0d0d
+i3wm.foreground:        #ffffff
+i3wm.border:            #1a1a1a
+i3wm.indicator:         #5294e2
+i3wm.focused:           #5294e2
+
+! Polybar colors
+polybar.background:     #0d0d0dee
+polybar.background-alt: #1a1a1aaa
+polybar.foreground:     #ffffff
+polybar.foreground-alt: #b0b0b0
+polybar.primary:        #5294e2
+polybar.secondary:      #7c8fa0
+polybar.alert:          #e53935
+polybar.accent:         #5294e2
+
+! Rofi colors
+rofi.background:        #0d0d0dee
+rofi.background-alt:    #1a1a1aaa
+rofi.foreground:        #ffffff
+rofi.accent:            #5294e2
+rofi.urgent:            #e53935
+
+! Dunst colors
+dunst.background:       #0d0d0dee
+dunst.foreground:       #ffffff
+dunst.frame:            #5294e2
+dunst.critical:         #e53935

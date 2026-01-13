@@ -1,0 +1,68 @@
+! Ocean Theme - Deep Blue Color Scheme
+
+! Special colors
+*.foreground:   #e6f1ff
+*.background:   #0a192f
+*.cursorColor:  #64ffda
+
+! Black and Grey
+*.color0:       #0a192f
+*.color8:       #4a5568
+
+! Red
+*.color1:       #ef5350
+*.color9:       #ff5370
+
+! Green
+*.color2:       #64ffda
+*.color10:      #7fdbca
+
+! Yellow
+*.color3:       #ffb300
+*.color11:      #ffc857
+
+! Blue
+*.color4:       #82aaff
+*.color12:      #a3c3ff
+
+! Magenta
+*.color5:       #c792ea
+*.color13:      #d4b5ff
+
+! Cyan
+*.color6:       #64ffda
+*.color14:      #89ddff
+
+! White
+*.color7:       #ccd6f6
+*.color15:      #e6f1ff
+
+! i3wm colors
+i3wm.background:        #0a192f
+i3wm.foreground:        #e6f1ff
+i3wm.border:            #112240
+i3wm.indicator:         #64ffda
+i3wm.focused:           #82aaff
+
+! Polybar colors
+polybar.background:     #0a192fee
+polybar.background-alt: #112240aa
+polybar.foreground:     #e6f1ff
+polybar.foreground-alt: #8892b0
+polybar.primary:        #82aaff
+polybar.secondary:      #64ffda
+polybar.alert:          #ef5350
+polybar.accent:         #64ffda
+
+! Rofi colors
+rofi.background:        #0a192fee
+rofi.background-alt:    #112240aa
+rofi.foreground:        #e6f1ff
+rofi.accent:            #64ffda
+rofi.urgent:            #ef5350
+
+! Dunst colors
+dunst.background:       #0a192fee
+dunst.foreground:       #e6f1ff
+dunst.frame:            #64ffda
+dunst.critical:         #ef5350
