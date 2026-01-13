@@ -32,7 +32,7 @@ sudo pacman -S --needed --noconfirm \
     dunst \
     lightdm lightdm-gtk-greeter \
     xorg xorg-xinit xorg-xrandr xorg-xrdb \
-    ttf-jetbrains-mono-nerd \
+    ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji ttf-font-awesome \
     papirus-icon-theme \
     network-manager-applet \
     blueman \
