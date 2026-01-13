@@ -9,9 +9,9 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo -e "${GREEN}================================${NC}"
-echo -e "${GREEN}Arch i3wm X11 Setup Installation${NC}"
-echo -e "${GREEN}================================${NC}"
+echo -e "${GREEN}====================================${NC}"
+echo -e "${GREEN}= Arch i3wm X11 Setup Installation =${NC}"
+echo -e "${GREEN}====================================${NC}"
 echo ""
 
 if [ "$EUID" -eq 0 ]; then 
@@ -25,14 +25,13 @@ sudo pacman -Syu --noconfirm
 echo -e "${YELLOW}[2/8] Installing base packages...${NC}"
 sudo pacman -S --needed --noconfirm \
     i3-wm i3lock i3status \
-    picom \
     polybar \
     rofi \
     alacritty \
     dunst \
     lightdm lightdm-gtk-greeter \
     xorg xorg-xinit xorg-xrandr xorg-xrdb \
-    ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji ttf-font-awesome \
+    ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk woff2-font-awesome otf-font-awesome \
     papirus-icon-theme \
     network-manager-applet \
     blueman \
@@ -65,7 +64,7 @@ fi
 
 echo -e "${YELLOW}[4/8] Installing AUR packages...${NC}"
 yay -S --needed --noconfirm \
-    picom-jonaburg-git \
+    picom-git \
     starship \
     gtk-engine-murrine \
     nitrogen
@@ -130,9 +129,9 @@ EOF
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 echo ""
-echo -e "${GREEN}================================${NC}"
-echo -e "${GREEN}Installation Complete!${NC}"
-echo -e "${GREEN}================================${NC}"
+echo -e "${GREEN}==================================${NC}"
+echo -e "${GREEN}=     Installation Complete!     =${NC}"
+echo -e "${GREEN}==================================${NC}"
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo "1. Reboot your system"
@@ -152,4 +151,5 @@ echo "Print              - Screenshot (area)"
 echo ""
 echo -e "${GREEN}Enjoy your new setup!${NC}"
 echo -e "${RED}If you encounter any issues, please refer to the documentation or seek help from the community.${NC}"
+echo -e "${GREEN}Don't forget to provide a cup of coffee! :)${NC}"
 echo ""
