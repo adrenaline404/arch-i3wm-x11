@@ -30,7 +30,6 @@ sudo pacman -S --needed --noconfirm \
     rofi \
     alacritty \
     dunst \
-    nitrogen \
     lightdm lightdm-gtk-greeter \
     xorg xorg-xinit xorg-xrandr xorg-xrdb \
     ttf-jetbrains-mono-nerd \
@@ -52,7 +51,6 @@ sudo pacman -S --needed --noconfirm \
     xfce4-power-manager \
     polkit-gnome \
     lxappearance \
-    gtk-engine-murrine \
     gnome-themes-extra
 
 echo -e "${YELLOW}[3/8] Checking for AUR helper...${NC}"
@@ -68,7 +66,9 @@ fi
 echo -e "${YELLOW}[4/8] Installing AUR packages...${NC}"
 yay -S --needed --noconfirm \
     picom-jonaburg-git \
-    starship
+    starship \
+    gtk-engine-murrine \
+    nitrogen
 
 echo -e "${YELLOW}[5/8] Enabling LightDM...${NC}"
 sudo systemctl enable lightdm.service
