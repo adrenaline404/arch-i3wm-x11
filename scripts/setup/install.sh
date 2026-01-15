@@ -1,168 +1,130 @@
 #!/bin/bash
 
-# Arch i3wm X11 Installation Script
-
-set -e
-
+BOLD='\033[1m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
 NC='\033[0m'
 
-echo -e "${GREEN}======================================${NC}"
-echo -e "${GREEN}=| Arch i3wm X11 Setup Installation |=${NC}"
-echo -e "${GREEN}======================================${NC}"
-echo ""
+set -e
+trap 'echo -e "${RED}[ERROR] Script interrupted or failed on line $LINENO.${NC}"; exit 1' ERR
 
-if [ "$EUID" -eq 0 ]; then 
-    echo -e "${RED}Please do not run as root${NC}"
-    exit 1
+show_banner() {
+    clear
+    echo -e "${CYAN}${BOLD}"
+    echo "    _    ____   ____ _   _      _ _____                  __  __ __ "
+    echo "   / \  |  _ \ / ___| | | |    (_)___ /__      __  __   / / / // |"
+    echo "  / _ \ | |_) | |   | |_| |____| | |_ \ \ /\ / / |___|  \ \/ / | |"
+    echo " / ___ \|  _ <| |___|  _  |____| |___) \ V  V /          >  <  | |"
+    echo "/_/   \_\_| \_\\____|_| |_|    |_|____/ \_/\_/          /_/\_\ |_|"
+    echo "                                                                  "
+    echo -e "   :: Automated Setup :: ${GREEN}Arch Linux - i3wm - Setup${CYAN} ::"
+    echo -e "${NC}"
+    echo -e "${YELLOW}[!] Ensure you have a stable internet connection.${NC}"
+    echo -e "${YELLOW}[!] Do NOT run this script as root (sudo). It will ask for password when needed.${NC}"
+    echo ""
+}
+
+if [ "$EUID" -eq 0 ]; then
+  echo -e "${RED}[ERROR] Please run as a normal user, not root.${NC}"
+  exit 1
 fi
 
-echo -e "${YELLOW}[1/8] Updating system...${NC}"
-sudo pacman -Syu --noconfirm
+show_banner
+read -p "Press [Enter] to start installation..."
 
-echo -e "${YELLOW}[2/8] Installing base packages...${NC}"
-sudo pacman -S --needed --noconfirm \
-    i3-wm i3lock i3status \
-    polybar \
-    rofi \
-    alacritty \
-    dunst \
-    lightdm lightdm-gtk-greeter \
-    xorg xorg-xinit xorg-xrandr xorg-xrdb \
-    ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk woff2-font-awesome otf-font-awesome \
-    papirus-icon-theme \
-    network-manager-applet \
-    blueman \
-    pavucontrol \
-    pipewire \
-    pipewire-pulse \
-    pipewire-alsa \
-    pipewire-jack \
-    wireplumber \
-    thunar thunar-archive-plugin thunar-media-tags-plugin \
-    file-roller \
-    flameshot \
-    brightnessctl \
-    numlockx \
-    xss-lock \
-    xfce4-power-manager \
-    polkit-gnome \
-    lxappearance \
-    gnome-themes-extra
+echo -e "\n${BLUE}[1/5] Checking AUR Helper...${NC}"
 
-echo -e "${YELLOW}[3/8] Checking for AUR helper...${NC}"
-if ! command -v yay &> /dev/null; then
-    echo "Installing yay..."
+if ! command -v yay &> /dev/null && ! command -v paru &> /dev/null; then
+    echo -e "${YELLOW}[INFO] AUR helper not found. Installing yay-bin (Faster)...${NC}"
+    
+    echo -e "${CYAN}:: Installing git & base-devel...${NC}"
+    sudo pacman -S --needed --noconfirm git base-devel
+
     cd /tmp
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
+    rm -rf yay-bin
+    git clone https://aur.archlinux.org/yay-bin.git
+    cd yay-bin
     makepkg -si --noconfirm
-    cd ~
+    
+    echo -e "${GREEN}[OK] yay installed successfully.${NC}"
+    cd - > /dev/null
+else
+    echo -e "${GREEN}[OK] AUR helper detected.${NC}"
 fi
 
-echo -e "${YELLOW}[4/8] Installing AUR packages...${NC}"
-yay -S --needed --noconfirm \
-    picom-git \
-    starship \
-    gtk-engine-murrine \
-    nitrogen
+if command -v paru &> /dev/null; then HELPER="paru"; else HELPER="yay"; fi
 
-echo -e "${YELLOW}[5/8] Enabling LightDM...${NC}"
-sudo systemctl enable lightdm.service
+echo -e "\n${BLUE}[2/5] Installing Packages & Fonts (Anti-Tofu)...${NC}"
 
-echo -e "${YELLOW}[6/8] Creating directories...${NC}"
-mkdir -p ~/.config
-mkdir -p ~/Pictures/Screenshots
-mkdir -p ~/Pictures/Wallpapers
-mkdir -p ~/.local/share/fonts
+CORE_PKGS="i3-wm polybar rofi alacritty dunst nitrogen thunar flameshot brightnessctl polkit-gnome starship jq"
+AUDIO_PKGS="pipewire pipewire-pulse wireplumber pavucontrol"
+VISUAL_PKGS="picom-git i3lock-color-git lxappearance"
+FONT_PKGS="ttf-jetbrains-mono-nerd noto-fonts-emoji ttf-font-awesome ttf-nerd-fonts-symbols"
+UTIL_PKGS="xorg-xrdb xorg-xinit unzip"
 
-echo -e "${YELLOW}[7/8] Backing up existing configurations...${NC}"
-BACKUP_DIR=~/.config_backup_$(date +%Y%m%d_%H%M%S)
-mkdir -p "$BACKUP_DIR"
+echo -e "${CYAN}:: Installing required packages via $HELPER...${NC}"
+$HELPER -S --needed --noconfirm $CORE_PKGS $AUDIO_PKGS $VISUAL_PKGS $FONT_PKGS $UTIL_PKGS
 
-for dir in i3 picom polybar rofi alacritty dunst starship; do
-    if [ -d ~/.config/$dir ]; then
-        echo "Backing up $dir..."
-        cp -r ~/.config/$dir "$BACKUP_DIR/"
+echo -e "${CYAN}:: Refreshing Font Cache...${NC}"
+fc-cache -fv > /dev/null
+echo -e "${GREEN}[OK] Packages & Fonts installed.${NC}"
+
+echo -e "\n${BLUE}[3/5] Setting up Dotfiles...${NC}"
+
+REPO_DIR="$(pwd)"
+CONFIG_DIR="$HOME/.config"
+mkdir -p "$CONFIG_DIR"
+
+CONFIGS=("i3" "polybar" "picom" "rofi" "alacritty" "dunst" "starship")
+
+for cfg in "${CONFIGS[@]}"; do
+    TARGET="$CONFIG_DIR/$cfg"
+    SOURCE="$REPO_DIR/.config/$cfg"
+
+    if [ -d "$TARGET" ] || [ -f "$TARGET" ] && [ ! -L "$TARGET" ]; then
+        echo -e "${YELLOW}   -> Backing up existing $cfg to $cfg.bak${NC}"
+        mv "$TARGET" "$TARGET.bak.$(date +%s)"
     fi
+
+    rm -rf "$TARGET"
+
+    echo -e "   -> Linking $cfg"
+    ln -s "$SOURCE" "$TARGET"
 done
 
-echo -e "${YELLOW}[8/8] Installing dotfiles...${NC}"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+echo -e "${GREEN}[OK] Dotfiles linked.${NC}"
 
-cp -r "$SCRIPT_DIR/.config/"* ~/.config/
-cp "$SCRIPT_DIR/.Xresources" ~/
-cp "$SCRIPT_DIR/.xinitrc" ~/
-cp -r "$SCRIPT_DIR/themes" ~/
-cp -r "$SCRIPT_DIR/scripts" ~/
+echo -e "\n${BLUE}[4/5] Finalizing Permissions...${NC}"
 
-chmod +x ~/.config/polybar/launch.sh
-chmod +x ~/.config/rofi/scripts/*.sh
-chmod +x ~/scripts/theme-switcher/switch-theme.sh
+chmod +x "$REPO_DIR/scripts/setup/"*.sh
+chmod +x "$REPO_DIR/scripts/theme-switcher/"*.sh
+chmod +x "$REPO_DIR/scripts/utils/"*.sh
+chmod +x "$REPO_DIR/.config/polybar/launch.sh"
 
-echo -e "${YELLOW}Setting default theme to black...${NC}"
-~/scripts/theme-switcher/switch-theme.sh black
+if ! groups "$USER" | grep -q "\bvideo\b"; then
+    echo -e "${CYAN}:: Adding user $USER to video group (brightness control)...${NC}"
+    sudo usermod -aG video "$USER"
+fi
 
-echo -e "${YELLOW}Configuring GTK theme...${NC}"
-mkdir -p ~/.config/gtk-3.0
-cat > ~/.config/gtk-3.0/settings.ini << 'EOF'
-[Settings]
-gtk-theme-name=Adwaita-dark
-gtk-icon-theme-name=Papirus-Dark
-gtk-font-name=Sans 10
-gtk-cursor-theme-name=Adwaita
-gtk-cursor-theme-size=24
-gtk-toolbar-style=GTK_TOOLBAR_BOTH_HORIZ
-gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=0
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=hintfull
-gtk-xft-rgba=rgb
-EOF
+echo -e "${GREEN}[OK] Permissions set.${NC}"
 
-echo 'eval "$(starship init bash)"' >> ~/.bashrc
+echo -e "\n${BLUE}[5/5] Applying Default Theme...${NC}"
 
-# Setup brightness permissions
-echo -e "${YELLOW}Setting up brightness permissions...${NC}"
-sudo usermod -aG video $USER
-sudo tee /etc/udev/rules.d/90-backlight.rules > /dev/null << EOF
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
-EOF
-sudo udevadm control --reload-rules
-sudo udevadm trigger
+if [ -f "$REPO_DIR/scripts/theme-switcher/switch.sh" ]; then
+    "$REPO_DIR/scripts/theme-switcher/switch.sh" ocean
+    echo -e "${GREEN}[OK] Ocean theme applied.${NC}"
+else
+    echo -e "${RED}[ERROR] Theme switcher script not found!${NC}"
+fi
 
+echo -e "\n${GREEN}==========================================${NC}"
+echo -e "${BOLD}   INSTALLATION COMPLETE! ${NC}"
+echo -e "${GREEN}==========================================${NC}"
+echo -e "Please ${BOLD}REBOOT${NC} your system to finalize changes."
+echo -e "After reboot, select 'i3' from your login manager."
+echo -e "${RED}By: adrenaline404${NC}"
 echo ""
-echo -e "${GREEN}==================================${NC}"
-echo -e "${GREEN}=|    Installation Complete!    |=${NC}"
-echo -e "${GREEN}==================================${NC}"
-echo ""
-echo -e "${YELLOW}Next steps:${NC}"
-echo "1. Reboot your system"
-echo "2. Login through LightDM"
-echo "3. Press Super+Enter to open terminal"
-echo "4. Switch themes using: ~/scripts/theme-switcher/switch-theme.sh [black|ocean]"
-echo ""
-echo -e "${YELLOW}Key bindings:${NC}"
-echo "Super+Enter        - Terminal"
-echo "Super+d            - Application launcher"
-echo "Super+Shift+e      - Power menu"
-echo "Super+q            - Close window"
-echo "Super+f            - Fullscreen"
-echo "Super+Shift+Space  - Toggle floating"
-echo "Super+1-0          - Switch workspace"
-echo "Print              - Screenshot (area)"
-echo ""
-echo -e "${GREEN}======================================================================${NC}"
-echo -e "${GREEN}======================| Enjoy your new setup! |=======================${NC}"
-echo -e "${RED}====================| If you encounter any issues, |====================${NC}"
-echo -e "${RED}=| please refer to the documentation or seek help from the community. |=${NC}"
-echo -e "${GREEN}===========| Don't forget to provide a cup of coffee! :) |============${NC}"
-echo -e "${GREEN}======================================================================${NC}"
-echo ""
+read -p "Press [Enter] to exit..."

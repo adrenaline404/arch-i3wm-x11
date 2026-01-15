@@ -1,122 +1,51 @@
 configuration {
-    modi: "drun,run,window";
+    modi: "drun,run";
+    font: "JetBrainsMono Nerd Font 12";
     show-icons: true;
-    icon-theme: "Papirus-Dark";
-    display-drun: " Apps";
-    display-run: " Run";
-    display-window: " Windows";
-    drun-display-format: "{name}";
-    window-format: "{w} · {c} · {t}";
-    font: "JetBrainsMono Nerd Font 11";
+    display-drun: "Apps";
 }
 
-@theme "/dev/null"
-
-* {
-    bg: var(background);
-    fg: var(foreground);
-    button: var(background-alt);
-    
-    background: #1a1a1aee;
-    background-alt: #2a2a2aaa;
-    foreground: #ffffff;
-    selected: var(accent);
-    accent: #5294e2;
-    urgent: #e53935;
-    
-    background-color: transparent;
-    text-color: @fg;
-    
-    margin: 0;
-    padding: 0;
-    spacing: 0;
-}
+@import "theme.rasi"
 
 window {
-    location: center;
-    width: 700;
+    width: 40%;
+    transparency: "real";
     border-radius: 12px;
     background-color: @bg;
-}
-
-mainbox {
+    border: 2px;
+    border-color: @accent;
     padding: 20px;
 }
 
 inputbar {
-    background-color: @button;
-    border-radius: 8px;
-    padding: 12px 16px;
-    spacing: 12px;
-    children: [prompt, entry];
+    padding: 12px;
+    children: [ prompt, entry ];
+    background-color: transparent;
 }
 
 prompt {
     text-color: @accent;
+    padding: 0 10px 0 0;
 }
 
 entry {
-    placeholder: "Search...";
-    placeholder-color: @foreground;
-}
-
-message {
-    margin: 12px 0 0;
-    border-radius: 8px;
-    background-color: @button;
-    padding: 12px;
+    text-color: @fg;
 }
 
 listview {
     lines: 8;
     columns: 1;
-    fixed-height: false;
-    margin: 12px 0 0;
-    spacing: 8px;
+    background-color: transparent;
 }
 
 element {
-    padding: 10px 12px;
-    border-radius: 8px;
-    spacing: 12px;
-}
-
-element normal.normal {
-    background-color: transparent;
+    padding: 10px;
     text-color: @fg;
+    background-color: transparent;
+    border-radius: 6px;
 }
 
-element normal.urgent {
-    background-color: @urgent;
-    text-color: @bg;
-}
-
-element normal.active {
+element selected {
     background-color: @accent;
     text-color: @bg;
-}
-
-element selected.normal {
-    background-color: @accent;
-    text-color: @bg;
-}
-
-element selected.urgent {
-    background-color: @urgent;
-    text-color: @bg;
-}
-
-element selected.active {
-    background-color: @accent;
-    text-color: @bg;
-}
-
-element-icon {
-    size: 24px;
-    vertical-align: 0.5;
-}
-
-element-text {
-    text-color: inherit;
-    vertical-align: 0.5;
 }

@@ -1,0 +1,36 @@
+configuration {
+    show-icons: false;
+    font: "JetBrainsMono Nerd Font 24";
+}
+@import "theme.rasi"
+window {
+    transparency: "real";
+    background-color: @bg;
+    text-color: @fg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 12px;
+    width: 600px;
+}
+listview {
+    columns: 4;
+    lines: 1;
+    spacing: 20px;
+    padding: 40px;
+}
+element {
+    background-color: transparent;
+    text-color: @fg;
+    border-radius: 8px;
+    padding: 20px 10px;
+    horizontal-align: 0.5;
+}
+element selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+element-text {
+    horizontal-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
