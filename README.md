@@ -11,7 +11,7 @@ Designed with a focus on "Glassmorphism" aesthetics (Blur + Transparency + Round
 
 ## ✨ Features
 
-* **⚡ Optimized Performance:** Picom animations and blur tuned for Intel HD Graphics (Zero lag on Haswell CPUs).
+* **⚡ Optimized Performance:** Picom animations and blur tuned for Intel HD Graphics.
 * **🎨 Dual Theme System:** Instant hot-swapping between **Ocean** (Navy Blue) and **Black** (OLED/Dark) themes without restarting.
 * **🔊 Modern Audio Stack:** Full **PipeWire** integration with WirePlumber (replacing PulseAudio).
 * **💎 Glassmorphism UI:** Consistent rounded corners and blur across i3, Polybar, Rofi, and Dunst.
