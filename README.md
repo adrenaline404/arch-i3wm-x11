@@ -62,7 +62,9 @@ The Mod key is set to the **Windows / Super** key.
 
 ### 🖥️ Applications & System
 
-**Key Combination | Action**
+* **Key Combination | Action**
+
+```bash
 `Mod + Enter` : Open Terminal (Alacritty)
 `Mod + d` : Open App Launcher (Rofi)
 `Mod + b` : Open Web Browser (Firefox)
@@ -71,19 +73,25 @@ The Mod key is set to the **Windows / Super** key.
 `Mod + x` : Open Power Menu (Shutdown/Reboot)
 `Mod + Esc` : Lock Screen (Blur Effect)
 `Print` : Take Screenshot (Flameshot GUI)
+```
 
 ### 🧭 Window Navigation
 
-**Key Combination | Action**
+* **Key Combination | Action**
+
+```bash
 `Mod + h` / `←` : Focus Left
 `Mod + j` / `↓` : Focus Down
 `Mod + k` / `↑` : Focus Up
 `Mod + l` / `→` : Focus Right
 `Mod + Space` : Toggle Focus between Tiling/Floating
+```
 
 ### 🪟 Window Management
 
-**Key Combination | Action**
+* **Key Combination | Action**
+
+```bash
 `Mod + Shift + q` : Close focused window
 `Mod + Shift + h` / `←` : Move window Left
 `Mod + Shift + j` / `↓` : Move window Down
@@ -91,22 +99,29 @@ The Mod key is set to the **Windows / Super** key.
 `Mod + Shift + l` / `→` : Move window Right
 `Mod + f` : Toggle Fullscreen
 `Mod + Shift + Space` : Toggle Floating mode
+```
 
 ### 🔊 Hardware Controls
 
-**Key Combination | Action**
+* **Key Combination | Action**
+
+```bash
 `Vol Up` : Volume +5%
 `Vol Down` : Volume -5%
 `Mute` : Toggle Mute
 `Brightness Up` : Brightness +5%
 `Brightness Down` : Brightness -5%
+```
 
 ### 🔄 Session Management
 
-**Key Combination | Action**
+* **Key Combination | Action**
+
+```bash
 `Mod + Shift + c` : Reload i3 Config (In-place)
 `Mod + Shift + r` : Restart i3 (Restart Session)
 `Mod + Shift + e` : Logout / Exit i3
+```
 
 ---
 
@@ -117,6 +132,9 @@ You can switch themes instantly using the included script. This will update colo
 ```bash
 # Switch to Ocean Theme (Navy Blue)
 ~/arch-i3wm-x11/scripts/theme-switcher/switch.sh ocean
+```
+
+```bash
 # Switch to Black Theme (Deep Dark)
 ~/arch-i3wm-x11/scripts/theme-switcher/switch.sh black
 ```
@@ -170,11 +188,11 @@ Ensure your user is in the `video` group (handled by installer) and **REBOOT** y
 
 ## 🤝 Credits
 
-**WM:** [i3-wm](https://i3wm.org/)
-**Bar:** [Polybar](https://github.com/polybar/polybar)
-**Compositor:** [picom-git](https://github.com/yshui/picom)
-**Launcher:** [Rofi](https://github.com/davatorium/rofi)
-**Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
+* **WM:** [i3-wm](https://i3wm.org/)
+* **Bar:** [Polybar](https://github.com/polybar/polybar)
+* **Compositor:** [picom-git](https://github.com/yshui/picom)
+* **Launcher:** [Rofi](https://github.com/davatorium/rofi)
+* **Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
 
 ---
 
