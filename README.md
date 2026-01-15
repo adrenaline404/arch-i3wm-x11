@@ -2,21 +2,10 @@
 
 ![Arch Linux](https://img.shields.io/badge/Distro-Arch%20Linux-1793d1?style=for-the-badge&logo=arch-linux&logoColor=white)
 ![i3wm](https://img.shields.io/badge/WM-i3wm-e8e8e8?style=for-the-badge&logo=i3&logoColor=black)
-![Polybar](https://img.shields.io/badge/StatusBar-Polybar-4e4e4e?style=for-the-badge)
-![Picom](https://img.shields.io/badge/Compositor-Picom--git-7c4dff?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**A modern, aesthetic, and high-performance i3wm configuration for Arch Linux.**
+## **A modern, aesthetic, and high-performance i3wm configuration for Arch Linux.**
+
 Designed with a focus on "Glassmorphism" aesthetics (Blur + Transparency + Rounded Corners) while maintaining optimization for older hardware (specifically tuned for Intel HD Graphics 4400 / Haswell architecture).
-
----
-
-## 📸 Screenshots
-
-| **Ocean Theme (Default)** | **Black Theme** |
-
-|:---:|:---:|
-| ![Ocean Theme](themes/ocean/preview.jpg) | ![Black Theme](themes/black/preview.jpg) |
 
 ---
 
@@ -43,14 +32,23 @@ Designed with a focus on "Glassmorphism" aesthetics (Blur + Transparency + Round
 
 Run the following commands in your terminal. **Do not run as root**, the script will ask for sudo when needed.
 
+* **1. Clone the repository**
+
 ```bash
-# 1. Clone the repository
 git clone https://github.com/adrenaline404/arch-i3wm-x11.git
 cd arch-i3wm-x11
-# 2. Run the installer
+```
+
+* **2. Run the installer**
+
+```bash
 chmod +x scripts/setup/install.sh
 ./scripts/setup/install.sh
-# 3. Reboot your system
+```
+
+* **3. Reboot your system**
+
+```bash
 systemctl reboot
 ```
 
@@ -64,61 +62,51 @@ The Mod key is set to the **Windows / Super** key.
 
 ### 🖥️ Applications & System
 
-| Key Combination | Action |
-
-|---|---|
-| `Mod + Enter` | Open Terminal (Alacritty) |
-| `Mod + d` | Open App Launcher (Rofi) |
-| `Mod + b` | Open Web Browser (Firefox) |
-| `Mod + e` | Open File Manager (Thunar) |
-| `Mod + c` | Open Code Editor (VS Code) |
-| `Mod + x` | Open Power Menu (Shutdown/Reboot) |
-| `Mod + Esc` | Lock Screen (Blur Effect) |
-| `Print` | Take Screenshot (Flameshot GUI) |
+**Key Combination | Action**
+`Mod + Enter` : Open Terminal (Alacritty)
+`Mod + d` : Open App Launcher (Rofi)
+`Mod + b` : Open Web Browser (Firefox)
+`Mod + e` : Open File Manager (Thunar)
+`Mod + c` : Open Code Editor (VS Code)
+`Mod + x` : Open Power Menu (Shutdown/Reboot)
+`Mod + Esc` : Lock Screen (Blur Effect)
+`Print` : Take Screenshot (Flameshot GUI)
 
 ### 🧭 Window Navigation
 
-| Key Combination | Action |
-
-|---|---|
-| `Mod + h` / `←` | Focus Left |
-| `Mod + j` / `↓` | Focus Down |
-| `Mod + k` / `↑` | Focus Up |
-| `Mod + l` / `→` | Focus Right |
-| `Mod + Space` | Toggle Focus between Tiling/Floating |
+**Key Combination | Action**
+`Mod + h` / `←` : Focus Left
+`Mod + j` / `↓` : Focus Down
+`Mod + k` / `↑` : Focus Up
+`Mod + l` / `→` : Focus Right
+`Mod + Space` : Toggle Focus between Tiling/Floating
 
 ### 🪟 Window Management
 
-| Key Combination | Action |
-
-|---|---|
-| `Mod + Shift + q` | Close focused window |
-| `Mod + Shift + h` / `←` | Move window Left |
-| `Mod + Shift + j` / `↓` | Move window Down |
-| `Mod + Shift + k` / `↑` | Move window Up |
-| `Mod + Shift + l` / `→` | Move window Right |
-| `Mod + f` | Toggle Fullscreen |
-| `Mod + Shift + Space` | Toggle Floating mode |
+**Key Combination | Action**
+`Mod + Shift + q` : Close focused window
+`Mod + Shift + h` / `←` : Move window Left
+`Mod + Shift + j` / `↓` : Move window Down
+`Mod + Shift + k` / `↑` : Move window Up
+`Mod + Shift + l` / `→` : Move window Right
+`Mod + f` : Toggle Fullscreen
+`Mod + Shift + Space` : Toggle Floating mode
 
 ### 🔊 Hardware Controls
 
-| Key Combination | Action |
-
-|---|---|
-| `Vol Up` | Volume +5% |
-| `Vol Down` | Volume -5% |
-| `Mute` | Toggle Mute |
-| `Brightness Up` | Brightness +5% |
-| `Brightness Down` | Brightness -5% |
+**Key Combination | Action**
+`Vol Up` : Volume +5%
+`Vol Down` : Volume -5%
+`Mute` : Toggle Mute
+`Brightness Up` : Brightness +5%
+`Brightness Down` : Brightness -5%
 
 ### 🔄 Session Management
 
-| Key Combination | Action |
-
-|---|---|
-| `Mod + Shift + c` | Reload i3 Config (In-place) |
-| `Mod + Shift + r` | Restart i3 (Restart Session) |
-| `Mod + Shift + e` | Logout / Exit i3 |
+**Key Combination | Action**
+`Mod + Shift + c` : Reload i3 Config (In-place)
+`Mod + Shift + r` : Restart i3 (Restart Session)
+`Mod + Shift + e` : Logout / Exit i3
 
 ---
 
@@ -182,16 +170,12 @@ Ensure your user is in the `video` group (handled by installer) and **REBOOT** y
 
 ## 🤝 Credits
 
-```bash
-- **WM:** [i3-wm](https://i3wm.org/)
-- **Bar:** [Polybar](https://github.com/polybar/polybar)
-- **Compositor:** [picom-git](https://github.com/yshui/picom)
-- **Launcher:** [Rofi](https://github.com/davatorium/rofi)
-- **Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
-```
+**WM:** [i3-wm](https://i3wm.org/)
+**Bar:** [Polybar](https://github.com/polybar/polybar)
+**Compositor:** [picom-git](https://github.com/yshui/picom)
+**Launcher:** [Rofi](https://github.com/davatorium/rofi)
+**Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
 
 ---
 
-## Made with ❤️ for the Arch Linux Community
-
----
+> Made with ❤️ for the **Arch Linux** Community
