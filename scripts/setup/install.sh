@@ -9,9 +9,9 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo -e "${GREEN}====================================${NC}"
-echo -e "${GREEN}= Arch i3wm X11 Setup Installation =${NC}"
-echo -e "${GREEN}====================================${NC}"
+echo -e "${GREEN}======================================${NC}"
+echo -e "${GREEN}=| Arch i3wm X11 Setup Installation |=${NC}"
+echo -e "${GREEN}======================================${NC}"
 echo ""
 
 if [ "$EUID" -eq 0 ]; then 
@@ -128,9 +128,19 @@ EOF
 
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
+# Setup brightness permissions
+echo -e "${YELLOW}Setting up brightness permissions...${NC}"
+sudo usermod -aG video $USER
+sudo tee /etc/udev/rules.d/90-backlight.rules > /dev/null << EOF
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+EOF
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
 echo ""
 echo -e "${GREEN}==================================${NC}"
-echo -e "${GREEN}=     Installation Complete!     =${NC}"
+echo -e "${GREEN}=|    Installation Complete!    |=${NC}"
 echo -e "${GREEN}==================================${NC}"
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
@@ -149,7 +159,10 @@ echo "Super+Shift+Space  - Toggle floating"
 echo "Super+1-0          - Switch workspace"
 echo "Print              - Screenshot (area)"
 echo ""
-echo -e "${GREEN}Enjoy your new setup!${NC}"
-echo -e "${RED}If you encounter any issues, please refer to the documentation or seek help from the community.${NC}"
-echo -e "${GREEN}Don't forget to provide a cup of coffee! :)${NC}"
+echo -e "${GREEN}======================================================================${NC}"
+echo -e "${GREEN}======================| Enjoy your new setup! |=======================${NC}"
+echo -e "${RED}====================| If you encounter any issues, |====================${NC}"
+echo -e "${RED}=| please refer to the documentation or seek help from the community. |=${NC}"
+echo -e "${GREEN}===========| Don't forget to provide a cup of coffee! :) |============${NC}"
+echo -e "${GREEN}======================================================================${NC}"
 echo ""

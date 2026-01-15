@@ -34,19 +34,19 @@ style = "bold #43a047"
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
 style = "bold #ffb300"
-conflicted = "⚔️ "
+conflicted = "Conflicted"
 ahead = "⇡${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
 untracked = "?${count}"
-stashed = "📦"
+stashed = "Stashed"
 modified = "!${count}"
 staged = "+${count}"
 renamed = "»${count}"
 deleted = "✘${count}"
 
 [cmd_duration]
-min_time = 500
+min_time = 1000
 format = "took [$duration]($style) "
 style = "#ffca28"
 

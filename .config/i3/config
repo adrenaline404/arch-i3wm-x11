@@ -6,16 +6,16 @@ set $mod Mod4
 font pango:JetBrainsMono Nerd Font 10
 
 # Workspace names
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 "WS:1"
+set $ws2 "WS:2"
+set $ws3 "WS:3"
+set $ws4 "WS:4"
+set $ws5 "WS:5"
+set $ws6 "WS:6"
+set $ws7 "WS:7"
+set $ws8 "WS:8"
+set $ws9 "WS:9"
+set $ws10 "WS:10"
 
 # Border and gaps
 default_border pixel 2
@@ -55,17 +55,29 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+d exec --no-startup-id rofi -show run
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
-# Change focus
+# Change focus (vim-style)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Move focused window
+# Change focus (arrow keys)
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window (vim-style)
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
+
+# Move focused window (arrow keys)
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
 
 # Split orientation
 bindsym $mod+b split h
@@ -132,8 +144,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +25%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 25%-
 
 # Resize mode
 mode "resize" {
