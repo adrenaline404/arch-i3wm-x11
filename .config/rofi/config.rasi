@@ -12,6 +12,7 @@ window {
     transparency: "real";
     border-radius: 12px;
     background-color: @bg;
+    
     border: 2px;
     border-color: @accent;
     padding: 20px;
@@ -36,6 +37,8 @@ listview {
     lines: 8;
     columns: 1;
     background-color: transparent;
+
+    spacing: 5px;
 }
 
 element {
@@ -43,10 +46,28 @@ element {
     text-color: @fg;
     background-color: transparent;
     border-radius: 6px;
+
+    border: 0px;
 }
 
 element selected {
-    background-color: @accent;
-    text-color: @bg;
-    border: 0px;
+    background-color: @bg-alt; 
+    text-color: @accent;
+
+    border: 0px 0px 0px 4px;
+    border-color: @accent;
+
+    border-radius: 4px;
+}
+
+element-icon {
+    size: 24px;
+    padding: 0 10px 0 0;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
 }

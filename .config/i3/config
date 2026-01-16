@@ -1,5 +1,3 @@
-# ARCH-I3WM-X11 CONFIGURATION
-
 # --- VARIABLES ---
 set $mod Mod4
 set $term alacritty
@@ -39,13 +37,17 @@ exec --no-startup-id picom -b
 exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-# 4. SCRIPTS
+# 4. SCRIPTS (~/scripts)
 # Wallpaper
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
-# Polybar Launch
+# Polybar Launch (Gunakan script baru yang mendeteksi monitor)
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-# 5. Idle Handler (Lock screen)
+# --- LOCKSCREEN & IDLE TIMER (5 MENIT) ---
+exec --no-startup-id xset s 300 300
+exec --no-startup-id xset dpms 300 300 300
+
+# xss-lock
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/scripts/utils/lock.sh
 
 # --- KEYBINDINGS ---
@@ -105,5 +107,5 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-msg exit"
-# Manual Lock
+# Manual Lock (Win+Esc)
 bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"

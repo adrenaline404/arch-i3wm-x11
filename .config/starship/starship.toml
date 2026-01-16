@@ -1,12 +1,45 @@
 add_newline = true
-[character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[✗](bold red)"
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$character"""
+
+[username]
+style_user = "bold cyan"
+style_root = "bold red"
+format = "[$user]($style)@"
+show_always = true
+disabled = false
+
+[hostname]
+ssh_only = false
+format = "[$hostname](bold white) "
+disabled = false
+
+[battery]
+disabled = true
+
 [directory]
 style = "bold blue"
 truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+
 [git_branch]
 symbol = " "
 style = "bold purple"
+
+[git_status]
+style = "bold red"
+format = '([$all_status$ahead_behind]($style) )'
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+
 [package]
 disabled = true
