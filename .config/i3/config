@@ -7,9 +7,10 @@ set $filemanager thunar
 # Font: System-wide
 font pango:JetBrainsMono Nerd Font 10
 
-# --- VISUALS ---
+# --- VISUALS --- 
 gaps inner 12
 gaps outer 0
+gaps top 50
 default_border pixel 2
 default_floating_border pixel 2
 
@@ -28,14 +29,12 @@ client.urgent           #bd2c40 #bd2c40 #ffffff #bd2c40 #bd2c40
 # 1. Load Colors Database (Critical for Rofi/Polybar)
 exec --no-startup-id xrdb -merge ~/.Xresources
 
-# 2. Compositor (Animations & Blur)
-exec --no-startup-id picom -b
-
-# 3. Utilities
+# 3. Utilities & Compositors
 exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id $HOME/arch-i3wm-x11/scripts/utils/set-wallpaper.sh
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id picom -b
 
 # 4. Idle Handler (Lock screen after 10 mins)
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/arch-i3wm-x11/scripts/utils/lock.sh

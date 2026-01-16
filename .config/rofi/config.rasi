@@ -48,4 +48,5 @@ element {
 element selected {
     background-color: @accent;
     text-color: @bg;
+    border: 0px;
 }

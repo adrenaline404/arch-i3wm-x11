@@ -3,6 +3,7 @@ configuration {
     font: "JetBrainsMono Nerd Font 24";
 }
 @import "theme.rasi"
+
 window {
     transparency: "real";
     background-color: @bg;
@@ -12,12 +13,19 @@ window {
     border-radius: 12px;
     width: 600px;
 }
+
+inputbar {
+    enabled: false; 
+    children: [ prompt ];
+}
+
 listview {
     columns: 4;
     lines: 1;
-    spacing: 20px;
+    spacing: 30px;
     padding: 40px;
 }
+
 element {
     background-color: transparent;
     text-color: @fg;
@@ -25,10 +33,13 @@ element {
     padding: 20px 10px;
     horizontal-align: 0.5;
 }
+
 element selected {
     background-color: @accent;
     text-color: @bg;
+    border: 0px; 
 }
+
 element-text {
     horizontal-align: 0.5;
     background-color: transparent;
