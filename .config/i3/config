@@ -1,3 +1,5 @@
+# ARCH-I3WM-X11 CONFIGURATION
+
 # --- VARIABLES ---
 set $mod Mod4
 set $term alacritty
@@ -7,10 +9,11 @@ set $filemanager thunar
 # Font: System-wide
 font pango:JetBrainsMono Nerd Font 10
 
-# --- VISUALS --- 
+# --- VISUALS ---
 gaps inner 12
 gaps outer 0
 gaps top 50
+
 default_border pixel 2
 default_floating_border pixel 2
 
@@ -29,17 +32,24 @@ client.urgent           #bd2c40 #bd2c40 #ffffff #bd2c40 #bd2c40
 # 1. Load Colors Database (Critical for Rofi/Polybar)
 exec --no-startup-id xrdb -merge ~/.Xresources
 
-# 3. Utilities & Compositors
-exec --no-startup-id dunst
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec_always --no-startup-id $HOME/arch-i3wm-x11/scripts/utils/set-wallpaper.sh
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# 2. Compositor (Animations & Blur)
 exec --no-startup-id picom -b
 
-# 4. Idle Handler (Lock screen after 10 mins)
-exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/arch-i3wm-x11/scripts/utils/lock.sh
+# 3. Utilities
+exec --no-startup-id dunst
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# 4. SCRIPTS
+# Wallpaper
+exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
+# Polybar Launch
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# 5. Idle Handler (Lock screen)
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/scripts/utils/lock.sh
 
 # --- KEYBINDINGS ---
+
 # Apps
 bindsym $mod+Return exec $term
 bindsym $mod+b exec $browser
@@ -47,7 +57,10 @@ bindsym $mod+e exec $filemanager
 
 # Rofi Menus
 bindsym $mod+d exec "rofi -show drun -theme ~/.config/rofi/config.rasi"
-bindsym $mod+x exec "$HOME/arch-i3wm-x11/scripts/utils/powermenu.sh"
+
+# Scripts via ~/scripts
+bindsym $mod+x exec "$HOME/scripts/utils/powermenu.sh"
+bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
 
 # Window Management
 bindsym $mod+q kill
@@ -55,33 +68,42 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
-# Navigation (Vim + Arrows)
+# Navigation (Vim Style)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+
+# Navigation (Arrow Keys)
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# Move Window
+# Move Window (Vim Style)
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# Hardware Controls
+# Move Window (Arrow Keys)
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Hardware Controls (Audio via PipeWire/WirePlumber)
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Hardware Controls (Brightness)
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
-# Screenshot
-bindsym Print exec "$HOME/arch-i3wm-x11/scripts/utils/screenshot.sh"
-
-# System
+# System Session
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Escape exec "$HOME/arch-i3wm-x11/scripts/utils/lock.sh"
+bindsym $mod+Shift+e exec "i3-msg exit"
+# Manual Lock
+bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
