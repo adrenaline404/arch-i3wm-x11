@@ -11,19 +11,20 @@ BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
 CONFIG_DIR="$HOME/.config"
 
-echo -e "${BLUE}[INFO] Memulai Instalasi & Validasi Total...${NC}"
+echo -e "${BLUE}[INFO] Memulai Instalasi...${NC}"
 
 if command -v yay &> /dev/null; then HELPER="yay"; elif command -v paru &> /dev/null; then HELPER="paru"; else
     echo -e "${RED}[ERROR] Install 'yay' atau 'paru' dulu!${NC}"; exit 1
 fi
 
 echo -e "${GREEN}[1/5] Installing Packages...${NC}"
-CORE_PKGS="i3-wm polybar rofi alacritty dunst nitrogen thunar flameshot brightnessctl polkit-gnome starship jq libcanberra fastfetch xorg-xrandr arandr"
+CORE_PKGS="i3-wm polybar rofi alacritty dunst nitrogen feh thunar flameshot brightnessctl polkit-gnome starship jq libcanberra libcanberra-gtk3 fastfetch xorg-xrandr arandr"
 VISUAL_PKGS="picom-git i3lock-color-git lxappearance"
 FONT_PKGS="ttf-jetbrains-mono-nerd noto-fonts-emoji ttf-font-awesome ttf-nerd-fonts-symbols"
 AUDIO_PKGS="pipewire pipewire-pulse wireplumber pavucontrol"
 
 $HELPER -S --needed --noconfirm --answerdiff=None --answerclean=None --removemake $CORE_PKGS $VISUAL_PKGS $FONT_PKGS $AUDIO_PKGS
+
 fc-cache -fv > /dev/null
 
 echo -e "${GREEN}[2/5] Backing up existing configs...${NC}"
@@ -48,7 +49,6 @@ for cfg in "${CONFIGS[@]}"; do
 done
 
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
-echo "   -> Fixed permission for Polybar launch script."
 
 echo -e "${GREEN}[4/5] Generating Fastfetch Config...${NC}"
 mkdir -p "$CONFIG_DIR/fastfetch"
@@ -90,7 +90,9 @@ cp "$REPO_DIR/scripts/setup/restore.sh" "$SYSTEM_SCRIPT_DIR/restore.sh" 2>/dev/n
 chmod +x "$SYSTEM_SCRIPT_DIR/restore.sh"
 
 sudo usermod -aG video $USER
+
 "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ocean
 
-echo -e "${GREEN}[SUCCESS] Instalasi & Validasi Selesai!${NC}"
-echo -e "${BLUE}Silakan restart X11 session atau reboot komputer Anda.${NC}"
+echo -e "${BLUE}-------------------------${NC}"
+echo -e "${BLUE}[DONE] Instalasi Selesai.${NC}"
+echo -e "${BLUE}-------------------------${NC}"
