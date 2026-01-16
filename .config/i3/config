@@ -40,12 +40,12 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # 4. SCRIPTS (~/scripts)
 # Wallpaper
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
-# Polybar Launch (Gunakan script baru yang mendeteksi monitor)
+# Polybar Launch
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-# --- LOCKSCREEN & IDLE TIMER (5 MENIT) ---
-exec --no-startup-id xset s 300 300
-exec --no-startup-id xset dpms 300 300 300
+# --- LOCKSCREEN & IDLE TIMER (10 MENIT) ---
+exec --no-startup-id xset s 600 600
+exec --no-startup-id xset dpms 600 600 600
 
 # xss-lock
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/scripts/utils/lock.sh
