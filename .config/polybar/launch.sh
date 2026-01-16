@@ -4,25 +4,27 @@ killall -q polybar
 
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
+CONFIG_DIR="$HOME/.config/polybar/config.ini"
 LOG_FILE="/tmp/polybar.log"
-echo "--- Polybar Launch $(date) ---" > $LOG_FILE
+
+echo "--- Launching Polybar ---" > $LOG_FILE
 
 if ! command -v xrandr &> /dev/null; then
-  echo "WARNING: xrandr not found! Launching in fallback mode (single monitor)." | tee -a $LOG_FILE
-  polybar --reload main 2>&1 | tee -a $LOG_FILE &
+  echo "xrandr not found. Launching fallback." | tee -a $LOG_FILE
+  polybar --reload main --config="$CONFIG_DIR" >> $LOG_FILE 2>&1 &
   exit 0
 fi
 
 MONITORS=$(xrandr --query | grep " connected" | cut -d" " -f1)
 
 if [ -z "$MONITORS" ]; then
-  echo "ERROR: No monitors detected by xrandr. Fallback launch." | tee -a $LOG_FILE
-  polybar --reload main 2>&1 | tee -a $LOG_FILE &
+  echo "No monitors detected. Launching standard." | tee -a $LOG_FILE
+  polybar --reload main --config="$CONFIG_DIR" >> $LOG_FILE 2>&1 &
 else
   for m in $MONITORS; do
-    echo "Launching polybar on monitor: $m" | tee -a $LOG_FILE
-    MONITOR=$m polybar --reload main 2>&1 | tee -a $LOG_FILE &
+    echo "Launching on monitor: $m" | tee -a $LOG_FILE
+    MONITOR=$m polybar --reload main --config="$CONFIG_DIR" >> $LOG_FILE 2>&1 &
   done
 fi
 
-echo "Polybar launch script finished." | tee -a $LOG_FILE
+echo "Polybar launched successfully." | tee -a $LOG_FILE

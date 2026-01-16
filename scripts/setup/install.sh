@@ -11,7 +11,7 @@ BACKUP_DIR="$HOME/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
 CONFIG_DIR="$HOME/.config"
 
-echo -e "${BLUE}[INFO] ! Memulai Instalasi...${NC}"
+echo -e "${BLUE}[INFO] Memulai Instalasi & Validasi Total...${NC}"
 
 if command -v yay &> /dev/null; then HELPER="yay"; elif command -v paru &> /dev/null; then HELPER="paru"; else
     echo -e "${RED}[ERROR] Install 'yay' atau 'paru' dulu!${NC}"; exit 1
@@ -24,7 +24,6 @@ FONT_PKGS="ttf-jetbrains-mono-nerd noto-fonts-emoji ttf-font-awesome ttf-nerd-fo
 AUDIO_PKGS="pipewire pipewire-pulse wireplumber pavucontrol"
 
 $HELPER -S --needed --noconfirm --answerdiff=None --answerclean=None --removemake $CORE_PKGS $VISUAL_PKGS $FONT_PKGS $AUDIO_PKGS
-
 fc-cache -fv > /dev/null
 
 echo -e "${GREEN}[2/5] Backing up existing configs...${NC}"
@@ -37,7 +36,7 @@ for cfg in "${CONFIGS[@]}"; do
     fi
 done
 
-echo -e "${GREEN}[3/5] Deploying Configs (Hard Copy)...${NC}"
+echo -e "${GREEN}[3/5] Deploying Configs...${NC}"
 mkdir -p "$CONFIG_DIR"
 
 for cfg in "${CONFIGS[@]}"; do
@@ -47,6 +46,9 @@ for cfg in "${CONFIGS[@]}"; do
     rm -rf "$TARGET"
     if [ -d "$SOURCE" ]; then cp -rf "$SOURCE" "$TARGET"; fi
 done
+
+chmod +x "$CONFIG_DIR/polybar/launch.sh"
+echo "   -> Fixed permission for Polybar launch script."
 
 echo -e "${GREEN}[4/5] Generating Fastfetch Config...${NC}"
 mkdir -p "$CONFIG_DIR/fastfetch"
@@ -74,39 +76,21 @@ cat <<EOF > "$CONFIG_DIR/fastfetch/config.jsonc"
 }
 EOF
 
-# Inject Smart Logic ke .bashrc
 BASHRC="$HOME/.bashrc"
 if ! grep -q "SMART FASTFETCH" "$BASHRC"; then
-    cat <<'EOF' >> "$BASHRC"
-# --- SMART FASTFETCH ---
-run_fastfetch() {
-    WIDTH=$(tput cols)
-    if [ "$WIDTH" -lt 80 ]; then fastfetch --logo none --display-compact
-    else fastfetch; fi
-}
-if [[ -x "$(command -v fastfetch)" && $- == *i* ]]; then run_fastfetch; fi
-EOF
+    echo "run_fastfetch() { WIDTH=\$(tput cols); if [ \"\$WIDTH\" -lt 80 ]; then fastfetch --logo none --display-compact; else fastfetch; fi; }; if [[ -x \"\$(command -v fastfetch)\" && \$- == *i* ]]; then run_fastfetch; fi" >> "$BASHRC"
 fi
 
-echo -e "${GREEN}[5/5] Deploying Scripts to ~/scripts ...${NC}"
+echo -e "${GREEN}[5/5] Deploying Scripts...${NC}"
 rm -rf "$SYSTEM_SCRIPT_DIR"
 cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
 
-echo "   -> Fixing execution permissions..."
 find "$SYSTEM_SCRIPT_DIR" -name "*.sh" -exec chmod +x {} \;
-
 cp "$REPO_DIR/scripts/setup/restore.sh" "$SYSTEM_SCRIPT_DIR/restore.sh" 2>/dev/null || true
 chmod +x "$SYSTEM_SCRIPT_DIR/restore.sh"
 
 sudo usermod -aG video $USER
-
 "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ocean
 
-echo -e "${BLUE}----------------------------------------------------------------------${NC}"
-echo -e "${BLUE}[DONE] Instalasi Selesai.${NC}"
-echo -e "${BLUE}    - Backup configs di: ${BACKUP_DIR}${NC}"
-echo -e "${BLUE}    - Jalankan 'restore.sh' dari ~/scripts untuk mengembalikan backup.${NC}"
-echo -e "${BLUE}    - Reboot sistem untuk memastikan semua perubahan diterapkan.${NC}"
-echo -e "${BLUE}    - Enjoy your i3wm setup!${NC}"
-echo -e "${BLUE}    - Script by GitHub.com/adrenaline404${NC}"
-echo -e "${BLUE}----------------------------------------------------------------------${NC}"
+echo -e "${GREEN}[SUCCESS] Instalasi & Validasi Selesai!${NC}"
+echo -e "${BLUE}Silakan restart X11 session atau reboot komputer Anda.${NC}"

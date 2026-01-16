@@ -27,82 +27,67 @@ client.unfocused        #222222 #222222 #888888 #222222 #222222
 client.urgent           #bd2c40 #bd2c40 #ffffff #bd2c40 #bd2c40
 
 # --- AUTOSTART ---
-# 1. Load Colors Database (Critical for Rofi/Polybar)
+# Load Xresources
 exec --no-startup-id xrdb -merge ~/.Xresources
-
-# 2. Compositor (Animations & Blur)
+# Compositor
 exec --no-startup-id picom -b
-
-# 3. Utilities
+# Notification Daemon
 exec --no-startup-id dunst
+# Polkit
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# 4. SCRIPTS (~/scripts)
-# Wallpaper
+# WALLPAPER
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
-# Polybar Launch
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
-# --- LOCKSCREEN & IDLE TIMER (10 MENIT) ---
+# POLYBAR
+exec_always --no-startup-id "sleep 1; $HOME/.config/polybar/launch.sh"
+# Lockscreen & Idle
 exec --no-startup-id xset s 600 600
 exec --no-startup-id xset dpms 600 600 600
-
-# xss-lock
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/scripts/utils/lock.sh
+# Fastfetch Auto-Start (Optional)
+exec --no-startup-id alacritty -e fastfetch --hold
 
 # --- KEYBINDINGS ---
-
 # Apps
 bindsym $mod+Return exec $term
 bindsym $mod+b exec $browser
 bindsym $mod+e exec $filemanager
-
 # Rofi Menus
 bindsym $mod+d exec "rofi -show drun -theme ~/.config/rofi/config.rasi"
-
 # Scripts via ~/scripts
 bindsym $mod+x exec "$HOME/scripts/utils/powermenu.sh"
 bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
-
 # Window Management
 bindsym $mod+q kill
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-
 # Navigation (Vim Style)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
 # Navigation (Arrow Keys)
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
 # Move Window (Vim Style)
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
 # Move Window (Arrow Keys)
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
 # Hardware Controls (Audio via PipeWire/WirePlumber)
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-
 # Hardware Controls (Brightness)
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-
 # System Session
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
