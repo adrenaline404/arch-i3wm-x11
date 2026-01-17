@@ -20,9 +20,6 @@ ssh_only = false
 format = "[$hostname](bold white) "
 disabled = false
 
-[battery]
-disabled = true
-
 [directory]
 style = "bold blue"
 truncation_length = 3

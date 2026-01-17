@@ -19,7 +19,8 @@ i3lock \
 --date-color=$FGC \
 --layout-color=$FGC \
 --time-str="%H:%M" \
---date-str="%A, %d %B %Y" \
+--date-str="%d %B %Y" \
+--date-str="%A" \
 --verif-text="..." \
 --wrong-text="X" \
 --noinput-text=""

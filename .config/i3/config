@@ -1,16 +1,16 @@
-# --- VARIABLES ---
 set $mod Mod4
-set $term alacritty
+
+# --- DEFAULT APPLICATIONS ---
+set $term kitty
 set $browser firefox
 set $filemanager thunar
 
-# Font: System-wide
 font pango:JetBrainsMono Nerd Font 10
 
 # --- VISUALS ---
 gaps inner 12
 gaps outer 0
-gaps top 50
+gaps top 55
 
 default_border pixel 2
 default_floating_border pixel 2
@@ -20,77 +20,70 @@ set_from_resource $bg background #000000
 set_from_resource $fg foreground #ffffff
 set_from_resource $acc accent #5294e2
 
-# Class                 Border  Backgr. Text    Indic.  Child Border
 client.focused          $acc    $acc    $bg     $acc    $acc
 client.focused_inactive #333333 #333333 $fg     #333333 #333333
 client.unfocused        #222222 #222222 #888888 #222222 #222222
 client.urgent           #bd2c40 #bd2c40 #ffffff #bd2c40 #bd2c40
 
 # --- AUTOSTART ---
-# Load Xresources
 exec --no-startup-id xrdb -merge ~/.Xresources
-# Compositor
 exec --no-startup-id picom -b
-# Notification Daemon
 exec --no-startup-id dunst
-# Polkit
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-# WALLPAPER
+
+# Wallpaper & Polybar (Absolute Paths)
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
-# POLYBAR
 exec_always --no-startup-id "sleep 1; $HOME/.config/polybar/launch.sh"
-# Lockscreen & Idle
+
+# Screen Lock & Idle (10 Menit)
 exec --no-startup-id xset s 600 600
 exec --no-startup-id xset dpms 600 600 600
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $HOME/scripts/utils/lock.sh
-# Fastfetch Auto-Start (Optional)
-exec --no-startup-id alacritty -e fastfetch --hold
 
 # --- KEYBINDINGS ---
-# Apps
 bindsym $mod+Return exec $term
 bindsym $mod+b exec $browser
 bindsym $mod+e exec $filemanager
-# Rofi Menus
 bindsym $mod+d exec "rofi -show drun -theme ~/.config/rofi/config.rasi"
-# Scripts via ~/scripts
+
+# Scripts
 bindsym $mod+x exec "$HOME/scripts/utils/powermenu.sh"
 bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
-# Window Management
+
+# Window Control
 bindsym $mod+q kill
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
-# Navigation (Vim Style)
+
+# Navigation
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-# Navigation (Arrow Keys)
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-# Move Window (Vim Style)
+
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-# Move Window (Arrow Keys)
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-# Hardware Controls (Audio via PipeWire/WirePlumber)
+
+# Hardware Keys (Audio & Brightness)
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-# Hardware Controls (Brightness)
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-# System Session
+
+# System
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-msg exit"
-# Manual Lock (Win+Esc)
 bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
