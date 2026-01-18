@@ -87,3 +87,14 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-msg exit"
 bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
+
+# --- WINDOW RULES: FIX OVERSIZE DIALOGS ---
+for_window [window_role="GtkFileChooserDialog"] floating enable
+for_window [window_role="GtkFileChooserDialog"] resize set 800 600
+for_window [window_role="GtkFileChooserDialog"] move position center
+
+for_window [class="Thunar" window_type="dialog"] floating enable
+for_window [class="Thunar" window_type="dialog"] move position center
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable

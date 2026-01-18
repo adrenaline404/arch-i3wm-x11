@@ -3,73 +3,60 @@
   "logo": {
     "type": "kitty",
     "source": "~/.config/fastfetch/arch_logo.png",
-    "width": 30,
+    "width": 26,
     "padding": {
       "top": 1,
-      "left": 2,
-      "right": 4
+      "left": 1,
+      "right": 3
     }
   },
   "display": {
     "separator": "  ➜  ",
-    "color": "cyan",
-    "key": {
-        "width": 16
-    }
+    "color": "cyan"
   },
   "modules": [
     "break",
     {
       "type": "title",
       "format": "{user}@{host}",
-      "key": " User",
+      "key": "",
       "keyColor": "blue"
     },
     "break",
     {
       "type": "os",
-      "key": " OS",
+      "key": "",
       "keyColor": "blue"
     },
     {
       "type": "kernel",
-      "key": " Kernel",
+      "key": "",
       "keyColor": "blue"
     },
     {
       "type": "uptime",
-      "key": " Uptime",
+      "key": "",
       "keyColor": "blue"
     },
     {
       "type": "packages",
-      "key": " Packages",
+      "key": "",
       "keyColor": "blue"
     },
     {
       "type": "wm",
-      "key": " WM",
-      "keyColor": "blue"
-    },
-    {
-      "type": "terminal",
-      "key": " Terminal",
+      "key": "",
       "keyColor": "blue"
     },
     "break",
     {
       "type": "cpu",
-      "key": " CPU",
+      "key": "",
       "keyColor": "green"
     },
     {
       "type": "memory",
-      "key": " Memory",
-      "keyColor": "green"
-    },
-    {
-      "type": "disk",
-      "key": " Disk",
+      "key": "",
       "keyColor": "green"
     },
     "break",

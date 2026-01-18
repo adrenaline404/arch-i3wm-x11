@@ -1,15 +1,38 @@
 #!/bin/bash
-lock=""
-logout=""
-reboot=""
-shutdown=""
 
-options="$lock\n$logout\n$reboot\n$shutdown"
-chosen="$(echo -e "$options" | rofi -theme ~/.config/rofi/powermenu.rasi -dmenu -selected-row 0 -p "Power")"
+lock=" Lock"
+logout=" Logout"
+shutdown=" Poweroff"
+reboot=" Reboot"
+sleep=" Suspend"
 
-case $chosen in
-    $lock) ~/arch-i3wm-x11/scripts/utils/lock.sh ;;
-    $logout) i3-msg exit ;;
-    $reboot) systemctl reboot ;;
-    $shutdown) systemctl poweroff ;;
+selected_option=$(echo "$lock
+$logout
+$sleep
+$reboot
+$shutdown" | rofi -dmenu\
+                  -i\
+                  -p "Power"\
+                  -config "~/.config/rofi/config.rasi")
+
+case "$selected_option" in
+    $lock)
+        "$HOME/scripts/utils/lock.sh"
+        ;;
+    $logout)
+        i3-msg exit
+        ;;
+    $shutdown)
+        systemctl poweroff
+        ;;
+    $reboot)
+        systemctl reboot
+        ;;
+    $sleep)
+        amixer set Master mute
+        systemctl suspend
+        ;;
+    *)
+        echo "No match"
+        ;;
 esac

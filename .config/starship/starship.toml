@@ -1,3 +1,4 @@
+command_timeout = 2000
 add_newline = true
 
 format = """
@@ -7,6 +8,9 @@ $directory\
 $git_branch\
 $git_status\
 $character"""
+
+[battery]
+disabled = true
 
 [username]
 style_user = "bold cyan"
