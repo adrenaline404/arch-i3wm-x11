@@ -1,34 +1,34 @@
 #!/bin/bash
 
-lock=" Lock"
-logout=" Logout"
-shutdown=" Poweroff"
-reboot=" Reboot"
-sleep=" Suspend"
+lock="  Lock Screen"
+logout="  Logout"
+shutdown="  Shutdown"
+reboot="  Reboot"
+sleep="  Suspend"
 
 selected_option=$(echo "$lock
 $logout
 $sleep
 $reboot
-$shutdown" | rofi -dmenu\
-                  -i\
-                  -p "Power"\
-                  -config "~/.config/rofi/config.rasi")
+$shutdown" | rofi -dmenu \
+                  -i \
+                  -p "System Power" \
+                  -theme "~/.config/rofi/powermenu.rasi")
 
 case "$selected_option" in
-    $lock)
+    "$lock")
         "$HOME/scripts/utils/lock.sh"
         ;;
-    $logout)
+    "$logout")
         i3-msg exit
         ;;
-    $shutdown)
+    "$shutdown")
         systemctl poweroff
         ;;
-    $reboot)
+    "$reboot")
         systemctl reboot
         ;;
-    $sleep)
+    "$sleep")
         amixer set Master mute
         systemctl suspend
         ;;

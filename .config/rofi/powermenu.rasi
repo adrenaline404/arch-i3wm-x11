@@ -1,7 +1,8 @@
 configuration {
+    font: "JetBrainsMono Nerd Font Bold 12";
     show-icons: false;
-    font: "JetBrainsMono Nerd Font 24";
 }
+
 @import "theme.rasi"
 
 window {
@@ -11,37 +12,75 @@ window {
     border: 2px;
     border-color: @accent;
     border-radius: 12px;
-    width: 600px;
+    width: 300px;
+    location: center;
+    x-offset: 0;
+    y-offset: 0;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+    spacing: 10px;
+    padding: 20px;
 }
 
 inputbar {
-    enabled: false; 
+    background-color: transparent;
     children: [ prompt ];
+    expand: false;
+    margin: 0px 0px 10px 0px;
+}
+
+prompt {
+    background-color: @accent;
+    text-color: @bg;
+    padding: 10px 15px;
+    border-radius: 8px;
+    width: 100%;
+    horizontal-align: 0.5;
+    font: "JetBrainsMono Nerd Font Bold 14";
 }
 
 listview {
-    columns: 4;
-    lines: 1;
-    spacing: 30px;
-    padding: 40px;
+    background-color: transparent;
+    columns: 1;
+    lines: 5;
+    spacing: 8px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
 }
 
 element {
     background-color: transparent;
     text-color: @fg;
+    orientation: horizontal;
     border-radius: 8px;
-    padding: 20px 10px;
-    horizontal-align: 0.5;
-}
-
-element selected {
-    background-color: @accent;
-    text-color: @bg;
-    border: 0px; 
+    padding: 10px 15px;
 }
 
 element-text {
-    horizontal-align: 0.5;
     background-color: transparent;
     text-color: inherit;
+    expand: true;
+    horizontal-align: 0.0;
+    vertical-align: 0.5;
+    margin: 0px 0px 0px 5px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @bg;
+    border: 0px;
+}
+
+element selected.urgent {
+    background-color: #bd2c40;
+    text-color: @fg;
 }

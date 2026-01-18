@@ -1,32 +1,59 @@
 [global]
-    monitor = 0
-    follow = mouse
-    width = 300
-    height = 100
     origin = top-right
-    offset = 20x20
+    
+    offset = 12x65
+
+    width = 320
+    height = 100
     notification_limit = 5
-    transparency = 10
+
     corner_radius = 12
-    font = JetBrainsMono Nerd Font 10
-    padding = 12
-    horizontal_padding = 12
+    
     frame_width = 2
     frame_color = "#5294e2"
-    separator_color = frame
+    
+    padding = 12
+    horizontal_padding = 12
+    text_icon_padding = 10
+    
+    transparency = 10
+    
+    font = JetBrainsMono Nerd Font 10
+
+    format = "<b>%s</b>\n%b"
+    
     icon_position = left
     min_icon_size = 48
     max_icon_size = 64
+    enable_recursive_icon_lookup = true
+    
+    progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    sort = yes
+    idle_threshold = 120
+    sticky_history = yes
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
 
 [urgency_low]
-    background = "#0d0d0d"
-    foreground = "#ffffff"
+    background = "#222222"
+    foreground = "#dfdfdf"
+    frame_color = "#5294e2"
+    timeout = 5
 
 [urgency_normal]
-    background = "#0d0d0d"
+    background = "#222222"
     foreground = "#ffffff"
+    frame_color = "#5294e2"
+    timeout = 10
 
 [urgency_critical]
-    background = "#0d0d0d"
-    foreground = "#ff5555"
+    background = "#bd2c40"
+    foreground = "#ffffff"
     frame_color = "#ff5555"
+    timeout = 0
