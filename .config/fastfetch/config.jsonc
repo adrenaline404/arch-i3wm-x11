@@ -18,45 +18,55 @@
     "break",
     {
       "type": "title",
-      "format": "{user}@{host}",
-      "key": "",
+      "format": "Archlinux",
+      "key": " User",
       "keyColor": "blue"
     },
     "break",
     {
       "type": "os",
-      "key": "",
+      "key": " OS",
       "keyColor": "blue"
     },
     {
       "type": "kernel",
-      "key": "",
+      "key": " Kernel",
       "keyColor": "blue"
     },
     {
       "type": "uptime",
-      "key": "",
+      "key": " Uptime",
       "keyColor": "blue"
     },
     {
       "type": "packages",
-      "key": "",
+      "key": " Packages",
       "keyColor": "blue"
     },
     {
       "type": "wm",
-      "key": "",
+      "key": " WM",
+      "keyColor": "blue"
+    },
+    {
+      "type": "terminal",
+      "key": " Terminal",
       "keyColor": "blue"
     },
     "break",
     {
       "type": "cpu",
-      "key": "",
+      "key": " CPU",
       "keyColor": "green"
     },
     {
       "type": "memory",
-      "key": "",
+      "key": " Memory",
+      "keyColor": "green"
+    },
+    {
+      "type": "disk",
+      "key": " Disk",
       "keyColor": "green"
     },
     "break",
