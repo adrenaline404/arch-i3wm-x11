@@ -1,4 +1,6 @@
-command_timeout = 2000
+# ~/.config/starship.toml
+
+command_timeout = 3000
 add_newline = true
 
 format = """
