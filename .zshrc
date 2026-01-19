@@ -29,8 +29,10 @@ run_fastfetch_smart() {
     local width=$(tput cols)
     
     if [ "$width" -ge 60 ]; then
-        if [ ! -f "$HOME/.config/fastfetch/arch_logo.png" ]; then
-             curl -sL "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Archlinux-icon-crystal-64.svg/1024px-Archlinux-icon-crystal-64.svg.png" -o "$HOME/.config/fastfetch/arch_logo.png"
+        local logo_file="$HOME/.config/fastfetch/blackarch_logo.png"
+        
+        if [ ! -f "$logo_file" ]; then
+             curl -sL "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/BlackArch_Logo.svg/1024px-BlackArch_Logo.svg.png" -o "$logo_file"
         fi
         
         clear

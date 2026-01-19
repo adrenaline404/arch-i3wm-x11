@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
@@ -13,7 +14,7 @@ if command -v yay &> /dev/null; then HELPER="yay"; elif command -v paru &> /dev/
     echo -e "${RED}[ERROR] AUR helper (yay/paru) not found!${NC}"; exit 1
 fi
 
-echo -e "${GREEN}[1/6] Installing Packages...${NC}"
+echo -e "${GREEN}[1/7] Installing Packages...${NC}"
 
 PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx"
 
@@ -26,6 +27,7 @@ PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-f
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
 
 PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc"
+
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
@@ -33,7 +35,7 @@ $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $P
 echo -e "${GREEN}Refreshing Font Cache...${NC}"
 fc-cache -fv > /dev/null
 
-echo -e "${GREEN}[2/6] Setting up Zsh & Oh My Zsh...${NC}"
+echo -e "${GREEN}[2/7] Setting up Zsh & Oh My Zsh...${NC}"
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "   -> Installing Oh My Zsh..."
@@ -62,7 +64,7 @@ fi
 REPO_DIR="$(pwd)"
 CONFIG_DIR="$HOME/.config"
 
-echo -e "${GREEN}[3/6] Deploying Configs...${NC}"
+echo -e "${GREEN}[3/7] Deploying Configs...${NC}"
 mkdir -p "$CONFIG_DIR"
 
 CONFIG_LIST=("i3" "polybar" "picom" "rofi" "kitty" "dunst" "fastfetch")
@@ -85,7 +87,19 @@ else
     echo -e "${RED}[ERROR] .zshrc not found in repo!${NC}"
 fi
 
-echo -e "${GREEN}[4/6] Deploying Scripts...${NC}"
+mkdir -p "$CONFIG_DIR/kitty"
+touch "$CONFIG_DIR/kitty/current-theme.conf"
+
+echo -e "${GREEN}[4/7] Setting up Fastfetch Assets...${NC}"
+FASTFETCH_DIR="$CONFIG_DIR/fastfetch"
+mkdir -p "$FASTFETCH_DIR"
+
+if [ ! -f "$FASTFETCH_DIR/blackarch_logo.png" ]; then
+    echo "   -> Downloading BlackArch Logo..."
+    curl -sL "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/BlackArch_Logo.svg/1024px-BlackArch_Logo.svg.png" -o "$FASTFETCH_DIR/blackarch_logo.png"
+fi
+
+echo -e "${GREEN}[5/7] Deploying Scripts...${NC}"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
 rm -rf "$SYSTEM_SCRIPT_DIR"
 cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
@@ -94,7 +108,7 @@ chmod 755 "$SYSTEM_SCRIPT_DIR"
 find "$SYSTEM_SCRIPT_DIR" -name "*.sh" -exec chmod +x {} \;
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
-echo -e "${GREEN}[5/6] Finalizing...${NC}"
+echo -e "${GREEN}[6/7] Finalizing System...${NC}"
 
 sudo usermod -aG video,input $USER
 
@@ -112,10 +126,9 @@ if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
 fi
 
 echo -e ""
-echo -e "${GREEN}[6/6] Installation Complete!${NC}"
-echo -e "${BLUE}[DONE] System Ready. Shell changed to Zsh.${NC}"
-echo -e "${BLUE}You can further customize your Zsh setup by editing the .zshrc file in your home directory.${NC}"
-echo -e "${BLUE}Please REBOOT to apply shell and group changes.${NC}"
+echo -e "${GREEN}[7/7] Installation Complete!${NC}"
+echo -e "${YELLOW}Themes can be switched using the theme-switcher script located in ~/scripts/theme-switcher/${NC}"
+echo -e "${YELLOW}Please restart your system to apply all changes.${NC}"
+echo -e ""
 echo -e "${RED}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
-echo -e "${RED}Thank you for using this installer!${NC}"
 echo -e ""
