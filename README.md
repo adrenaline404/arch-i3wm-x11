@@ -5,8 +5,6 @@
 
 ## **A modern, aesthetic, and high-performance i3wm configuration for Arch Linux.**
 
-Designed with a focus on "Glassmorphism" aesthetics (Blur + Transparency + Rounded Corners) while maintaining optimization for older hardware (specifically tuned for Intel HD Graphics 4400 / Haswell architecture).
-
 ---
 
 > Made with ❤️ for the **Arch Linux** Community
