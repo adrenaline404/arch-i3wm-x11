@@ -4,28 +4,28 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo -e "${BLUE}[INFO] Starting Ultimate Installation...${NC}"
+echo -e "${BLUE}[INFO] Starting Installation (Zsh Edition)...${NC}"
 
 if command -v yay &> /dev/null; then HELPER="yay"; elif command -v paru &> /dev/null; then HELPER="paru"; else
-    echo -e "${RED}[ERROR] Install 'yay' or 'paru' first!${NC}"; exit 1
+    echo -e "${RED}[ERROR] AUR helper (yay/paru) not found!${NC}"; exit 1
 fi
 
-echo -e "${GREEN}[1/5] Installing Comprehensive Package List...${NC}"
+echo -e "${GREEN}[1/6] Installing Packages...${NC}"
 
 PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx"
 
 PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh brightnessctl"
 
-PKGS_TERM="kitty starship fastfetch bash-completion jq ripgrep bat lsd"
+PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
 
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
 
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
 
 PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc"
-
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
@@ -33,10 +33,36 @@ $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $P
 echo -e "${GREEN}Refreshing Font Cache...${NC}"
 fc-cache -fv > /dev/null
 
+echo -e "${GREEN}[2/6] Setting up Zsh & Oh My Zsh...${NC}"
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "   -> Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    echo "   -> Oh My Zsh already installed."
+fi
+
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+    echo "   -> Cloning zsh-autosuggestions..."
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+fi
+
+if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+    echo "   -> Cloning zsh-syntax-highlighting..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+fi
+
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+    echo "   -> Changing default shell to Zsh (Password required)..."
+    sudo usermod -s /usr/bin/zsh $USER
+fi
+
 REPO_DIR="$(pwd)"
 CONFIG_DIR="$HOME/.config"
 
-echo -e "${GREEN}[2/5] Deploying Configs...${NC}"
+echo -e "${GREEN}[3/6] Deploying Configs...${NC}"
 mkdir -p "$CONFIG_DIR"
 
 CONFIG_LIST=("i3" "polybar" "picom" "rofi" "kitty" "dunst" "fastfetch")
@@ -52,10 +78,14 @@ if [ -f "$REPO_DIR/.config/starship.toml" ]; then
     cp "$REPO_DIR/.config/starship.toml" "$CONFIG_DIR/starship.toml"
 fi
 
-mkdir -p "$CONFIG_DIR/kitty"
-touch "$CONFIG_DIR/kitty/current-theme.conf"
+echo "   -> Deploying .zshrc..."
+if [ -f "$REPO_DIR/.zshrc" ]; then
+    cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
+else
+    echo -e "${RED}[ERROR] .zshrc not found in repo!${NC}"
+fi
 
-echo -e "${GREEN}[3/5] Deploying Scripts...${NC}"
+echo -e "${GREEN}[4/6] Deploying Scripts...${NC}"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
 rm -rf "$SYSTEM_SCRIPT_DIR"
 cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
@@ -64,28 +94,8 @@ chmod 755 "$SYSTEM_SCRIPT_DIR"
 find "$SYSTEM_SCRIPT_DIR" -name "*.sh" -exec chmod +x {} \;
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
-echo -e "${GREEN}[4/5] Configuring Shell...${NC}"
-BASHRC="$HOME/.bashrc"
-sed -i '/fastfetch/d' "$BASHRC"
-sed -i '/starship init/d' "$BASHRC"
+echo -e "${GREEN}[5/6] Finalizing...${NC}"
 
-cat << 'EOF' >> "$BASHRC"
-
-eval "$(starship init bash)"
-
-run_fastfetch_smart() {
-    if [ "$(tput cols)" -ge 60 ]; then
-        if [ ! -f "$HOME/.config/fastfetch/arch_logo.png" ]; then
-             curl -sL "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Archlinux-icon-crystal-64.svg/1024px-Archlinux-icon-crystal-64.svg.png" -o "$HOME/.config/fastfetch/arch_logo.png"
-        fi
-        clear
-        fastfetch
-    fi
-}
-if [[ $- == *i* ]]; then run_fastfetch_smart; fi
-EOF
-
-echo -e "${GREEN}[5/5] Finalizing...${NC}"
 sudo usermod -aG video,input $USER
 
 mkdir -p "$HOME/.config/gtk-3.0"
@@ -95,20 +105,17 @@ gtk-theme-name=Arc-Dark
 gtk-icon-theme-name=Papirus-Dark
 gtk-font-name=Sans 10
 gtk-cursor-theme-name=Adwaita
-gtk-cursor-theme-size=0
-gtk-toolbar-style=GTK_TOOLBAR_BOTH
-gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=1
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=hintfull
 EOF
 
 if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
     "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ocean
 fi
 
-echo -e "${BLUE}[DONE] System Ready. REBOOT NOW.${NC}"
+echo -e ""
+echo -e "${GREEN}[6/6] Installation Complete!${NC}"
+echo -e "${BLUE}[DONE] System Ready. Shell changed to Zsh.${NC}"
+echo -e "${BLUE}You can further customize your Zsh setup by editing the .zshrc file in your home directory.${NC}"
+echo -e "${BLUE}Please REBOOT to apply shell and group changes.${NC}"
+echo -e "${RED}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
+echo -e "${RED}Thank you for using this installer!${NC}"
+echo -e ""
