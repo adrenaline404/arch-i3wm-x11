@@ -1,23 +1,23 @@
 *background: #000000
-*foreground: #ffffff
-*cursorColor: #ffffff
-*accent: #bd2c40
+*foreground: #e0e0e0
+*cursorColor: #b02a3a
+*accent: #b02a3a
 
-*color0:  #1a1a1a
-*color1:  #bd2c40
+*color0:  #101010
+*color1:  #b02a3a
 *color2:  #5ab738
 *color3:  #d5911a
 *color4:  #407ee7
-*color5:  #6666ea
+*color5:  #955ae6
 *color6:  #00ad9c
-*color7:  #e5e5e5
-*color8:  #666666
-*color9:  #cd4b5b
+*color7:  #e0e0e0
+*color8:  #444444
+*color9:  #ff3333
 *color10: #87d26b
 *color11: #e9b14f
 *color12: #6d9ced
-*color13: #9595f7
+*color13: #aa88ff
 *color14: #4dcbbb
 *color15: #ffffff
 
-*.alpha: 0.80
+*.alpha: 0.85
