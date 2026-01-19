@@ -1,4 +1,22 @@
-! Ocean Theme
-*background: #0f1c2e
-*foreground: #e6f1ff
-*accent:     #64ffda
+*background: #222222
+*foreground: #dfdfdf
+*accent: #5294e2
+
+*color0:  #222222
+*color1:  #bd2c40
+*color2:  #719611
+*color3:  #d9992f
+*color4:  #5294e2
+*color5:  #aa749f
+*color6:  #00a8c6
+*color7:  #ffffff
+*color8:  #666666
+*color9:  #cd4b5b
+*color10: #87d26b
+*color11: #e9b14f
+*color12: #6d9ced
+*color13: #9595f7
+*color14: #4dcbbb
+*color15: #ffffff
+
+*.alpha: 0.80

@@ -2,9 +2,9 @@
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
     "type": "kitty",
-    "source": "~/.config/fastfetch/blackarch_logo.png",
-    "width": 18,
-    "height": 9,
+    "source": "~/.config/fastfetch/lain_logo.png",
+    "width": 16,
+    "height": 12,
     "padding": {
       "top": 1,
       "left": 2,
@@ -13,7 +13,7 @@
   },
   "display": {
     "separator": " ➜  ",
-    "color": "red",
+    "color": "magenta",
     "key": {
         "width": 12
     }
@@ -22,56 +22,56 @@
     "break",
     {
       "type": "title",
-      "format": "{user}@{host}",
+      "format": "Arch Linux",
       "key": " User",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     "break",
     {
       "type": "os",
       "key": " OS",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     {
       "type": "kernel",
       "key": " Kernel",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     {
       "type": "uptime",
       "key": " Uptime",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     {
       "type": "packages",
       "key": " Pkgs",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     {
       "type": "wm",
       "key": " WM",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     {
       "type": "terminal",
       "key": " Term",
-      "keyColor": "red"
+      "keyColor": "magenta"
     },
     "break",
     {
       "type": "cpu",
       "key": " CPU",
-      "keyColor": "white"
+      "keyColor": "cyan"
     },
     {
       "type": "memory",
       "key": " RAM",
-      "keyColor": "white"
+      "keyColor": "cyan"
     },
     {
       "type": "disk",
       "key": " Disk",
-      "keyColor": "white"
+      "keyColor": "cyan"
     },
     "break",
     "colors"
