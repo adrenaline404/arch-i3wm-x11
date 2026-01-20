@@ -4,7 +4,13 @@ IMAGE=/tmp/i3lock.png
 
 maim -u "$IMAGE"
 
-convert "$IMAGE" -scale 10% -scale 1000% -fill black -colorize 40% "$IMAGE"
+convert "$IMAGE" \
+    -filter Gaussian \
+    -resize 25% \
+    -blur 0x15 \
+    -resize 400% \
+    -fill black -colorize 45% \
+    "$IMAGE"
 
 i3lock \
   -i "$IMAGE" \
@@ -15,13 +21,16 @@ i3lock \
   --clock \
   --time-str="%H:%M" \
   --time-color=2e9ef4ff \
-  --time-size=120 \
+  --time-size=28 \
   --time-font="JetBrainsMono Nerd Font" \
   \
   --date-str="%d %B %Y" \
+  --date-color=ffffffff \
+  --date-size=12 \
+  --date-font="JetBrainsMono Nerd Font" \
   --date-str="%A" \
   --date-color=ffffffff \
-  --date-size=30 \
+  --date-size=14 \
   --date-font="JetBrainsMono Nerd Font" \
   \
   --keyhl-color=2e9ef4ff \
@@ -32,7 +41,7 @@ i3lock \
   --inside-color=00000000 \
   --ringver-color=50fa7bff \
   --ringwrong-color=ff5555ff \
-  --ring-color=2e9ef422 \
+  --ring-color=2e9ef433 \
   \
   --verif-text="" \
   --wrong-text="" \
