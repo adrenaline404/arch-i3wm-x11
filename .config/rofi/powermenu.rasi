@@ -1,6 +1,5 @@
 configuration {
     show-icons: false;
-    font: "JetBrainsMono Nerd Font 24";
 }
 
 @import "theme.rasi"
@@ -9,35 +8,28 @@ window {
     transparency: "real";
     background-color: @bg;
     text-color: @fg;
-    
     location: center;
     anchor: center;
-    
     width: 600px;
-    height: 160px;
-    
-    x-offset: 0;
-    y-offset: 0;
-    
+    height: 180px;
     border: 2px;
     border-color: @accent;
     border-radius: 12px;
-    
-    padding: 20px;
+    padding: 0px;
 }
 
 mainbox {
     background-color: transparent;
     children: [ listview ];
-    spacing: 15px;
-    padding: 15px;
+    spacing: 0px;
+    padding: 30px;
 }
 
 listview {
     background-color: transparent;
     columns: 4;
     lines: 1;
-    spacing: 30px;
+    spacing: 20px;
     cycle: true;
     dynamic: true;
     layout: vertical;
@@ -47,21 +39,22 @@ element {
     background-color: transparent;
     text-color: @fg;
     orientation: vertical;
-    border-radius: 10px;
-    padding: 25px 0px 25px 0px;
+    border-radius: 8px;
+    padding: 20px 0px 20px 0px;
 }
 
 element-text {
     background-color: transparent;
     text-color: inherit;
-    font: "JetBrainsMono Nerd Font 32";
+    font: "JetBrainsMono Nerd Font 40";
     horizontal-align: 0.5;
     vertical-align: 0.5;
+    margin: 0px;
 }
 
 element selected {
     background-color: @accent;
     text-color: @bg;
     border: 0px;
-    border-radius: 10px;
+    border-radius: 8px;
 }

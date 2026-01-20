@@ -75,12 +75,19 @@ chmod 755 "$SYSTEM_SCRIPT_DIR"
 chmod -R +x "$SYSTEM_SCRIPT_DIR"
 
 chmod +x "$SYSTEM_SCRIPT_DIR/setup/install.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/set-wallpaper.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
+
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/network-menu.sh"
+
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
 sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"

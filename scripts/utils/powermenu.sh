@@ -7,35 +7,35 @@ shutdown=""
 
 rofi_cmd() {
 	rofi -dmenu \
-		-p "Goodbye" \
+		-p "Power" \
 		-theme ~/.config/rofi/powermenu.rasi
 }
 
 run_cmd() {
-	if [[ $1 == "--opt1" ]]; then
+	if [[ $1 == "--lock" ]]; then
 		"$HOME/scripts/utils/lock.sh"
-	elif [[ $1 == "--opt2" ]]; then
+	elif [[ $1 == "--logout" ]]; then
 		i3-msg exit
-	elif [[ $1 == "--opt3" ]]; then
+	elif [[ $1 == "--reboot" ]]; then
 		systemctl reboot
-	elif [[ $1 == "--opt4" ]]; then
+	elif [[ $1 == "--shutdown" ]]; then
 		systemctl poweroff
 	fi
 }
 
-chosen="$(printf "%s\n%s\n%s\n%s" "$lock" "$logout" "$reboot" "$shutdown" | rofi_cmd)"
+chosen="$(echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi_cmd)"
 
 case ${chosen} in
     $lock)
-		run_cmd --opt1
+		run_cmd --lock
         ;;
     $logout)
-		run_cmd --opt2
+		run_cmd --logout
         ;;
     $reboot)
-		run_cmd --opt3
+		run_cmd --reboot
         ;;
     $shutdown)
-		run_cmd --opt4
+		run_cmd --shutdown
         ;;
 esac
