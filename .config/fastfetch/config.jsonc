@@ -23,27 +23,14 @@
   "modules": [
     "break",
     {
-      "type": "title",
-      "format": "{user}",
-      "key": "USER",
-      "keyColor": "blue"
-    },
-    {
-      "type": "host",
-      "format": "{hostname}",
-      "key": "HOST",
-      "keyColor": "blue"
-    },
-    "break",
-    {
       "type": "os",
       "key": "DISTRO",
-      "keyColor": "cyan"
+      "keyColor": "blue"
     },
     {
       "type": "kernel",
       "key": "KERNEL",
-      "keyColor": "cyan"
+      "keyColor": "blue"
     },
     {
       "type": "uptime",
