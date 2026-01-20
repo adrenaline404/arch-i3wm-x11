@@ -1,38 +1,42 @@
 #!/bin/bash
 
-lock="  Lock Screen"
+lock="  Lock"
 logout="  Logout"
-shutdown="  Shutdown"
 reboot="  Reboot"
-sleep="  Suspend"
+shutdown="  Shutdown"
 
-selected_option=$(echo "$lock
-$logout
-$sleep
-$reboot
-$shutdown" | rofi -dmenu \
-                  -i \
-                  -p "System Power" \
-                  -theme "~/.config/rofi/powermenu.rasi")
+rofi_cmd() {
+	rofi -dmenu \
+		-p "Power Menu" \
+		-mesg "Uptime: $(uptime -p | sed -e 's/up //g')" \
+		-theme ~/.config/rofi/config.rasi
+}
 
-case "$selected_option" in
-    "$lock")
-        "$HOME/scripts/utils/lock.sh"
+run_cmd() {
+	if [[ $1 == "--opt1" ]]; then
+		"$HOME/scripts/utils/lock.sh"
+	elif [[ $1 == "--opt2" ]]; then
+		i3-msg exit
+	elif [[ $1 == "--opt3" ]]; then
+		systemctl reboot
+	elif [[ $1 == "--opt4" ]]; then
+		systemctl poweroff
+	fi
+}
+
+chosen="$(printf "%s\n%s\n%s\n%s" "$lock" "$logout" "$reboot" "$shutdown" | rofi_cmd)"
+
+case ${chosen} in
+    $lock)
+		run_cmd --opt1
         ;;
-    "$logout")
-        i3-msg exit
+    $logout)
+		run_cmd --opt2
         ;;
-    "$shutdown")
-        systemctl poweroff
+    $reboot)
+		run_cmd --opt3
         ;;
-    "$reboot")
-        systemctl reboot
-        ;;
-    "$sleep")
-        amixer set Master mute
-        systemctl suspend
-        ;;
-    *)
-        echo "No match"
+    $shutdown)
+		run_cmd --opt4
         ;;
 esac

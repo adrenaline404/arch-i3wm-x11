@@ -1,26 +1,35 @@
 #!/bin/bash
-BG=$(xrdb -query | grep "*background" | awk '{print $2}')
-FG=$(xrdb -query | grep "*foreground" | awk '{print $2}')
-ACC=$(xrdb -query | grep "*accent" | awk '{print $2}')
 
-BGC=${BG:1}
-FGC=${FG:1}
-ACCC=${ACC:1}
+TMPBG=/tmp/screen.png
+scrot "$TMPBG"
+
+convert "$TMPBG" -filter Gaussian -thumbnail 20% -sample 500% "$TMPBG"
+convert "$TMPBG" -fill "black" -colorize 50% "$TMPBG"
 
 i3lock \
---blur 5 \
---clock \
---indicator \
---inside-color=00000000 \
---ring-color=$ACCC \
---line-color=00000000 \
---keyhl-color=$FGC \
---time-color=$FGC \
---date-color=$FGC \
---layout-color=$FGC \
---time-str="%H:%M" \
---date-str="%d %B %Y" \
---date-str="%A" \
---verif-text="..." \
---wrong-text="X" \
---noinput-text=""
+  -i "$TMPBG" \
+  --time-color=ffffffff \
+  --date-color=ffffffff \
+  --layout-color=ffffffff \
+  --keyhl-color=bd2c40ff \
+  --bshl-color=bd2c40ff \
+  --separator-color=00000000 \
+  --insidever-color=00000000 \
+  --insidewrong-color=00000000 \
+  --inside-color=00000000 \
+  --ringver-color=5294e2ff \
+  --ringwrong-color=bd2c40ff \
+  --ring-color=ffffff33 \
+  --line-color=00000000 \
+  --verif-text="Verifying..." \
+  --wrong-text="Access Denied" \
+  --noinput-text="" \
+  --lock-text="Locked" \
+  --lockfailed-text="Failed" \
+  --clock \
+  --time-str="%H:%M" \
+  --date-str="%d %B %Y" \
+  --date-str="%A" \
+  --indicator
+
+rm "$TMPBG"

@@ -4,7 +4,6 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
-YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo -e "${BLUE}[INFO] Starting Installation...${NC}"
@@ -15,28 +14,18 @@ fi
 
 echo -e "${GREEN}[1/7] Installing Packages...${NC}"
 
-# System & Xorg
 PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx"
-# Window Manager
 PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh brightnessctl"
-# Terminal & Shell
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
-# Fonts (Essential)
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
-# Themes
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
-# Apps
-PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc"
-# Audio
+PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick scrot"
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
-
-echo -e "${GREEN}Refreshing Font Cache...${NC}"
 fc-cache -fv > /dev/null
 
 echo -e "${GREEN}[2/7] Setting up Zsh...${NC}"
-
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
@@ -46,7 +35,6 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
-    echo "   -> Changing shell to Zsh..."
     sudo usermod -s /usr/bin/zsh $USER
 fi
 
@@ -56,7 +44,6 @@ CONFIG_DIR="$HOME/.config"
 mkdir -p "$CONFIG_DIR"
 
 CONFIG_LIST=("i3" "polybar" "picom" "rofi" "kitty" "dunst" "fastfetch")
-
 for cfg in "${CONFIG_LIST[@]}"; do
     rm -rf "$CONFIG_DIR/$cfg"
     [ -d "$REPO_DIR/.config/$cfg" ] && cp -rf "$REPO_DIR/.config/$cfg" "$CONFIG_DIR/$cfg"
@@ -67,10 +54,8 @@ done
 mkdir -p "$CONFIG_DIR/kitty" && touch "$CONFIG_DIR/kitty/current-theme.conf"
 
 echo -e "${GREEN}[4/7] Generating Assets...${NC}"
-FASTFETCH_DIR="$CONFIG_DIR/fastfetch"
-mkdir -p "$FASTFETCH_DIR"
-
-cat <<EOF > "$FASTFETCH_DIR/arch_small.txt"
+mkdir -p "$CONFIG_DIR/fastfetch"
+cat <<EOF > "$CONFIG_DIR/fastfetch/arch_small.txt"
       /\\
      /  \\
     /    \\
@@ -80,23 +65,26 @@ cat <<EOF > "$FASTFETCH_DIR/arch_small.txt"
 /_-''    ''-_\\
 EOF
 
-echo -e "${GREEN}[5/7] Deploying Scripts & Fixing Permissions...${NC}"
+echo -e "${GREEN}[5/7] Deploying Scripts & Permissions...${NC}"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
-
 rm -rf "$SYSTEM_SCRIPT_DIR"
 cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
 
 chmod 755 "$SYSTEM_SCRIPT_DIR"
 
-echo "   -> Applying +x permission to all scripts..."
 chmod -R +x "$SYSTEM_SCRIPT_DIR"
 
+chmod +x "$SYSTEM_SCRIPT_DIR/setup/install.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/set-wallpaper.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
-sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR" "$HOME/.zshrc"
+sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"
 
-echo -e "${GREEN}[6/7] Finalizing System...${NC}"
-
+echo -e "${GREEN}[6/7] Finalizing...${NC}"
 sudo usermod -aG video,input $USER
 
 mkdir -p "$HOME/.config/gtk-3.0"
@@ -108,17 +96,8 @@ gtk-font-name=Sans 10
 EOF
 
 if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
-    echo "   -> Applying Default Theme: Black..."
-    "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
-else
-    echo -e "${RED}[WARN] Switch script not executable? Retrying fix...${NC}"
-    chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
     "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
 fi
 
-echo -e ""
-echo -e "${GREEN}[7/7] INSTALLATION COMPLETE!${NC}"
-echo -e "${YELLOW}Thank you for using this setup script!${NC}"
-echo -e "${BLUE}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
-echo -e "${BLUE}[DONE] System Ready. Please REBOOT now.${NC}"
-echo -e ""
+echo -e "${BLUE}[DONE] System Ready.${NC}"
+echo -e "${BLUE} You may now reboot your system.${NC}"
