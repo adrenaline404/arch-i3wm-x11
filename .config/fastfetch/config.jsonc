@@ -2,10 +2,10 @@
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
     "type": "file",
-    "source": "~/.config/fastfetch/blackarch_ascii.txt",
+    "source": "~/.config/fastfetch/arch_small.txt",
     "color": {
-      "1": "red",
-      "2": "red"
+      "1": "cyan",
+      "2": "blue"
     },
     "padding": {
       "top": 1,
@@ -14,60 +14,67 @@
     }
   },
   "display": {
-    "separator": " ➜  ",
-    "color": "red",
+    "separator": "  ",
+    "color": "cyan",
     "key": {
-        "width": 12
+        "width": 10
     }
   },
   "modules": [
     "break",
     {
       "type": "title",
-      "format": "Arch Linux",
-      "key": " User",
-      "keyColor": "red"
+      "format": "{user}",
+      "key": "USER",
+      "keyColor": "blue"
+    },
+    {
+      "type": "host",
+      "format": "{hostname}",
+      "key": "HOST",
+      "keyColor": "blue"
     },
     "break",
     {
       "type": "os",
-      "key": " OS",
-      "keyColor": "red"
+      "key": "DISTRO",
+      "keyColor": "cyan"
     },
     {
       "type": "kernel",
-      "key": " Kernel",
-      "keyColor": "red"
+      "key": "KERNEL",
+      "keyColor": "cyan"
     },
     {
       "type": "uptime",
-      "key": " Uptime",
-      "keyColor": "red"
+      "key": "UPTIME",
+      "keyColor": "cyan"
     },
     {
       "type": "packages",
-      "key": " Pkgs",
-      "keyColor": "red"
+      "key": "PKGS",
+      "keyColor": "cyan"
     },
     {
       "type": "wm",
-      "key": " WM",
-      "keyColor": "red"
+      "key": "WM",
+      "keyColor": "cyan"
     },
     {
       "type": "terminal",
-      "key": " Term",
-      "keyColor": "red"
+      "key": "TERM",
+      "keyColor": "cyan"
     },
     "break",
     {
       "type": "cpu",
-      "key": " CPU",
+      "format": "{1}",
+      "key": "CPU",
       "keyColor": "white"
     },
     {
       "type": "memory",
-      "key": " RAM",
+      "key": "RAM",
       "keyColor": "white"
     },
     "break",

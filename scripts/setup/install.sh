@@ -4,6 +4,7 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo -e "${BLUE}[INFO] Starting Installation...${NC}"
@@ -13,18 +14,29 @@ if command -v yay &> /dev/null; then HELPER="yay"; elif command -v paru &> /dev/
 fi
 
 echo -e "${GREEN}[1/7] Installing Packages...${NC}"
+
+# System & Xorg
 PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx"
+# Window Manager
 PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh brightnessctl"
+# Terminal & Shell
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
+# Fonts (Essential)
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
+# Themes
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
+# Apps
 PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc"
+# Audio
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
+
+echo -e "${GREEN}Refreshing Font Cache...${NC}"
 fc-cache -fv > /dev/null
 
 echo -e "${GREEN}[2/7] Setting up Zsh...${NC}"
+
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
@@ -44,6 +56,7 @@ CONFIG_DIR="$HOME/.config"
 mkdir -p "$CONFIG_DIR"
 
 CONFIG_LIST=("i3" "polybar" "picom" "rofi" "kitty" "dunst" "fastfetch")
+
 for cfg in "${CONFIG_LIST[@]}"; do
     rm -rf "$CONFIG_DIR/$cfg"
     [ -d "$REPO_DIR/.config/$cfg" ] && cp -rf "$REPO_DIR/.config/$cfg" "$CONFIG_DIR/$cfg"
@@ -53,65 +66,37 @@ done
 [ -f "$REPO_DIR/.zshrc" ] && cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 mkdir -p "$CONFIG_DIR/kitty" && touch "$CONFIG_DIR/kitty/current-theme.conf"
 
-echo -e "${GREEN}[4/7] Creating ASCII Art Assets...${NC}"
+echo -e "${GREEN}[4/7] Generating Assets...${NC}"
 FASTFETCH_DIR="$CONFIG_DIR/fastfetch"
 mkdir -p "$FASTFETCH_DIR"
-cat <<EOF > "$FASTFETCH_DIR/blackarch_ascii.txt"
-                                                   ･
-                                              ･ﾞﾍﾍﾟﾟﾟﾟﾟﾍ
-                                                  ､､･
-                                                  ｡､ｪ
-                                                  ﾞﾟｪ
-                                                  ｡ﾟｪ
-                                                  ｡ﾟｪ
-                                                  ｡ﾟｪ
-                                                 ･｡ﾟｪ
-                                             ･･ﾆﾍﾍﾟﾟﾞﾞﾞ･･
-                                                ･､､｡ﾞ･
-                                                ･｡､ﾞ｡･
-                                                ･｡ﾟﾞｧ｡
-                                                ･ｴﾟﾞｩｪ
-                                               ｪﾊﾍﾟﾝｩ･ｪ
-                                               ﾟﾍﾟﾞｩｩｩ･ﾟ
-                                              ﾟﾍﾟﾞｩｩｩｩｩﾟﾟ
-                                             ﾟﾍﾟﾞｩｩｩｩｩｩｩﾟﾟ
-                                            ﾆｴﾟﾟｩｩｩｩｩｩｩｩｩﾟﾟ
-                                           ､ｴﾟﾟｩｩｩｩｩｩｩｩｩｩｩﾟﾟ
-                                          ﾞｰ｡､ﾃｩｩｩｩｩｩｩｩｩｩｩｩﾟﾟ
-                                         ､   ･､､ﾊｩｩｩｩｩｩｩｩｩｩｩｪﾟ
-                                        ﾟｴﾍﾞ･  ﾞﾆ､･ｩｩｩｩｩｩｩｩｩｩﾞﾟ
-                                      ｪﾟﾍﾟﾟﾟﾟﾟﾍﾞ･ﾞﾞﾝｩｩｩｩｩｩｩｩｩｩ･ﾟ･
-                                     ､ﾊﾍﾟﾞｩｩｩｫﾞﾟﾟﾟﾞｧｩｩｩｩｩｩｩｩｩｩｩ･ﾟ･
-                                    ･ﾝﾍﾟﾝｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩﾉﾟｪ
-                                   ﾆｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩﾉﾟﾞ
-                                  ｰｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩﾉﾟﾞ
-                                 ｴｴﾟﾟｫｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｬﾟﾟ
-                                ﾆｴﾟﾟｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩﾟﾟ
-                              ｪﾟﾍﾟﾞｩｩｩｩｩｩｩｩｩｩｩｩﾐ･･ﾍﾍﾍｰｨ･･ﾃｩｩｩｩｩｩｩｩｩｩｩｩﾞﾟ
-                             ｭﾝﾍﾟﾞｩｩｩｩｩｩｩｩｩｩｩﾐﾟ  ･､･･   ･､､ｫｩｩｩｩｩｩｩｩｩｩｩﾞﾟ･
-                            ﾆｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩﾐ･    ･｡ﾟ､    ﾞ｡､･ｩｩｩｩｩｩｩｩｩｩｩﾉﾟ｡
-                           ｴｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩﾐｨ     ･｡､､      ｡､･ｩｩｩｩｩｩｩｩｩｩｩﾉﾟﾞ
-                          ﾃｴﾟﾟｬｩｩｩｩｩｩｩｩｩｩｩ･      ･｡ﾟｪ      ｪ｡､･ｩｩｩｩｩｩｩｩｩｩｩﾉﾟﾟ
-                        ｪﾟﾍﾟﾟｩｩｩｩｩｩｩｩｩｩｩｩｺｪ      ･｡ﾟｪ       ｧ｡､ﾉｩｩｩｩｩｩﾞﾟ･･､･､ﾟ
-                       ｪﾊﾍﾟﾞｩｩｩｩｩｩｩｩｩｩｩｩｩ･ﾞ       ｡ﾟｪ       ｧ｡､ﾝｩｩｩｩｩｩﾉｪﾞ･   ﾟﾆ､
-                      ﾆｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩｩｩｩｩ･ﾞ       ｡､､       ｧ｡ﾟﾊｩｩｩｩｩｩｩｬﾞﾟﾟﾟｭ
-                     ｴｴﾍﾟﾝｩｩｩｩｩｩｩｩｩｩｩｩｩｩｩ･ｪ       ｡ﾟｪ       ﾃ｡ﾟﾞｩｩｩｩｩｩｩｩｩｩｬﾞﾟﾟﾍｪ
-                    ﾊｴﾟﾟｫｩｩｩｩｩｩｩｩｩﾐﾐ･･ﾟ･          ｡ﾟｪ         ﾞﾟｰﾆ､､･ﾐﾉｩｩｩｩｩｩｬﾞﾟﾟﾟ･
-                  ｪﾟﾍﾟﾟｩｩｩｩｩﾉﾐ･･ﾟ                 ｡､､                ﾞｰﾆ､､ﾐﾃｩｩｩｩｫﾞﾟﾟ
-                 ｭﾊﾍﾟﾞｩｩﾐ･･･                      ｡ﾟｪ                     ﾞｰﾆ､､ｫﾉｩｬﾟﾟ
-                ﾆｴﾍﾟﾞｫｰﾞ                          ｡ﾟ､                          ･･､､･､ﾟ･
-               ｴｴﾍﾟ                               ｡ﾟ､                              ﾞ･､､｡
-              ﾟﾞ                                  ﾞﾟﾞ                                  ﾞ･
+
+cat <<EOF > "$FASTFETCH_DIR/arch_small.txt"
+      /\\
+     /  \\
+    /    \\
+   /      \\
+  /   ,,   \\
+ /   |  |   \\
+/_-''    ''-_\\
 EOF
 
-echo -e "${GREEN}[5/7] Deploying Scripts...${NC}"
-rm -rf "$HOME/scripts"
-cp -rf "$REPO_DIR/scripts" "$HOME/scripts"
-chmod 755 "$HOME/scripts"
-find "$HOME/scripts" -name "*.sh" -exec chmod +x {} \;
+echo -e "${GREEN}[5/7] Deploying Scripts & Fixing Permissions...${NC}"
+SYSTEM_SCRIPT_DIR="$HOME/scripts"
+
+rm -rf "$SYSTEM_SCRIPT_DIR"
+cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
+
+chmod 755 "$SYSTEM_SCRIPT_DIR"
+
+echo "   -> Applying +x permission to all scripts..."
+chmod -R +x "$SYSTEM_SCRIPT_DIR"
+
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
-echo -e "${GREEN}[6/7] Finalizing...${NC}"
+sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR" "$HOME/.zshrc"
+
+echo -e "${GREEN}[6/7] Finalizing System...${NC}"
+
 sudo usermod -aG video,input $USER
 
 mkdir -p "$HOME/.config/gtk-3.0"
@@ -122,15 +107,18 @@ gtk-icon-theme-name=Papirus-Dark
 gtk-font-name=Sans 10
 EOF
 
-if [ -x "$HOME/scripts/theme-switcher/switch.sh" ]; then
-    echo "   -> Applying Default Theme: Black (Void)..."
-    "$HOME/scripts/theme-switcher/switch.sh" black
+if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
+    echo "   -> Applying Default Theme: Black..."
+    "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
+else
+    echo -e "${RED}[WARN] Switch script not executable? Retrying fix...${NC}"
+    chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
+    "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
 fi
 
 echo -e ""
-echo -e "${BLUE}[DONE] System Ready. Glassmorphism Active.${NC}"
-echo -e "${BLUE}Use the theme-switcher script to change themes.${NC}"
-echo -e "${BLUE}Path: ~/scripts/theme-switcher/switch.sh${NC}"
+echo -e "${GREEN}[7/7] INSTALLATION COMPLETE!${NC}"
+echo -e "${YELLOW}Thank you for using this setup script!${NC}"
 echo -e "${BLUE}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
-echo -e "${BLUE}You can now reboot your system to start using i3wm.${NC}"
+echo -e "${BLUE}[DONE] System Ready. Please REBOOT now.${NC}"
 echo -e ""
