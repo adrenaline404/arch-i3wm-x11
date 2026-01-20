@@ -1,6 +1,6 @@
 configuration {
-    font: "JetBrainsMono Nerd Font Bold 12";
     show-icons: false;
+    font: "JetBrainsMono Nerd Font 24";
 }
 
 @import "theme.rasi"
@@ -9,44 +9,35 @@ window {
     transparency: "real";
     background-color: @bg;
     text-color: @fg;
+    
+    location: center;
+    anchor: center;
+    
+    width: 600px;
+    height: 160px;
+    
+    x-offset: 0;
+    y-offset: 0;
+    
     border: 2px;
     border-color: @accent;
     border-radius: 12px;
-    width: 300px;
-    location: center;
-    x-offset: 0;
-    y-offset: 0;
+    
+    padding: 20px;
 }
 
 mainbox {
     background-color: transparent;
-    children: [ inputbar, listview ];
-    spacing: 10px;
-    padding: 20px;
-}
-
-inputbar {
-    background-color: transparent;
-    children: [ prompt ];
-    expand: false;
-    margin: 0px 0px 10px 0px;
-}
-
-prompt {
-    background-color: @accent;
-    text-color: @bg;
-    padding: 10px 15px;
-    border-radius: 8px;
-    width: 100%;
-    horizontal-align: 0.5;
-    font: "JetBrainsMono Nerd Font Bold 14";
+    children: [ listview ];
+    spacing: 15px;
+    padding: 15px;
 }
 
 listview {
     background-color: transparent;
-    columns: 1;
-    lines: 5;
-    spacing: 8px;
+    columns: 4;
+    lines: 1;
+    spacing: 30px;
     cycle: true;
     dynamic: true;
     layout: vertical;
@@ -55,32 +46,22 @@ listview {
 element {
     background-color: transparent;
     text-color: @fg;
-    orientation: horizontal;
-    border-radius: 8px;
-    padding: 10px 15px;
+    orientation: vertical;
+    border-radius: 10px;
+    padding: 25px 0px 25px 0px;
 }
 
 element-text {
     background-color: transparent;
     text-color: inherit;
-    expand: true;
-    horizontal-align: 0.0;
+    font: "JetBrainsMono Nerd Font 32";
+    horizontal-align: 0.5;
     vertical-align: 0.5;
-    margin: 0px 0px 0px 5px;
 }
 
-element normal.normal {
-    background-color: transparent;
-    text-color: @fg;
-}
-
-element selected.normal {
+element selected {
     background-color: @accent;
     text-color: @bg;
     border: 0px;
-}
-
-element selected.urgent {
-    background-color: #bd2c40;
-    text-color: @fg;
+    border-radius: 10px;
 }

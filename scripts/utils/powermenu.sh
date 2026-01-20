@@ -1,15 +1,14 @@
 #!/bin/bash
 
-lock="  Lock"
-logout="  Logout"
-reboot="  Reboot"
-shutdown="  Shutdown"
+lock=""
+logout=""
+reboot=""
+shutdown=""
 
 rofi_cmd() {
 	rofi -dmenu \
-		-p "Power Menu" \
-		-mesg "Uptime: $(uptime -p | sed -e 's/up //g')" \
-		-theme ~/.config/rofi/config.rasi
+		-p "Goodbye" \
+		-theme ~/.config/rofi/powermenu.rasi
 }
 
 run_cmd() {
