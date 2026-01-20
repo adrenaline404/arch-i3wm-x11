@@ -7,9 +7,16 @@ set $filemanager thunar
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id picom -b
 exec --no-startup-id dunst
+exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
 exec_always --no-startup-id "sleep 1; $HOME/.config/polybar/launch.sh"
+
+# --- POWER MANAGEMENT, IDLE TIMEOUTS, LOCK SCREEN ---
+exec --no-startup-id xset s 1500 25
+exec --no-startup-id xset dpms 1800 1800 1800
+bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
+exec --no-startup-id xss-lock --transfer-sleep-lock -- "$HOME/scripts/utils/lock.sh"
 
 # --- VISUALS ---
 font pango:JetBrainsMono Nerd Font 10
@@ -119,7 +126,3 @@ bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
-
-# LOCK SCREEN
-exec --no-startup-id xss-lock --transfer-sleep-lock -- "$HOME/scripts/utils/lock.sh"
-bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
