@@ -80,6 +80,7 @@ chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/set-wallpaper.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/network-menu.sh"
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
 sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"

@@ -57,12 +57,12 @@
       "type": "cpu",
       "format": "{1}",
       "key": "CPU",
-      "keyColor": "white"
+      "keyColor": "blue"
     },
     {
       "type": "memory",
       "key": "RAM",
-      "keyColor": "white"
+      "keyColor": "blue"
     },
     "break",
     "colors"
