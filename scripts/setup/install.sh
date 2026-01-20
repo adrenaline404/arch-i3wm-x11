@@ -19,7 +19,7 @@ PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh bright
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
-PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick scrot maim xss-lock libnotify dmenu"
+PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick scrot maim xss-lock libnotify dmenu polkit-gnome"
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
