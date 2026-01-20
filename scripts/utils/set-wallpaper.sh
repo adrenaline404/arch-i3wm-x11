@@ -4,7 +4,7 @@ THEME_FILE="$HOME/.config/current_theme"
 if [ -f "$THEME_FILE" ]; then
     THEME=$(cat "$THEME_FILE")
 else
-    THEME="ocean"
+    THEME="black"
 fi
 
 WALLPAPER_PATH="$HOME/.config/i3/themes/$THEME/wallpaper.jpg"

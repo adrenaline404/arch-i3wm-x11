@@ -1,35 +1,47 @@
 #!/bin/bash
 
-TMPBG=/tmp/screen.png
-scrot "$TMPBG"
+IMAGE=/tmp/i3lock.png
 
-convert "$TMPBG" -filter Gaussian -thumbnail 20% -sample 500% "$TMPBG"
-convert "$TMPBG" -fill "black" -colorize 50% "$TMPBG"
+maim -u "$IMAGE"
+
+convert "$IMAGE" -scale 10% -scale 1000% -fill black -colorize 40% "$IMAGE"
 
 i3lock \
-  -i "$TMPBG" \
-  --time-color=ffffffff \
+  -i "$IMAGE" \
+  --nofork \
+  --ignore-empty-password \
+  --line-uses-inside \
+  \
+  --clock \
+  --time-str="%H:%M" \
+  --time-color=2e9ef4ff \
+  --time-size=120 \
+  --time-font="JetBrainsMono Nerd Font" \
+  \
+  --date-str="%d %B %Y" \
+  --date-str="%A" \
   --date-color=ffffffff \
-  --layout-color=ffffffff \
-  --keyhl-color=bd2c40ff \
-  --bshl-color=bd2c40ff \
+  --date-size=30 \
+  --date-font="JetBrainsMono Nerd Font" \
+  \
+  --keyhl-color=2e9ef4ff \
+  --bshl-color=ff5555ff \
   --separator-color=00000000 \
   --insidever-color=00000000 \
   --insidewrong-color=00000000 \
   --inside-color=00000000 \
-  --ringver-color=5294e2ff \
-  --ringwrong-color=bd2c40ff \
-  --ring-color=ffffff33 \
-  --line-color=00000000 \
-  --verif-text="Verifying..." \
-  --wrong-text="Access Denied" \
+  --ringver-color=50fa7bff \
+  --ringwrong-color=ff5555ff \
+  --ring-color=2e9ef422 \
+  \
+  --verif-text="" \
+  --wrong-text="" \
   --noinput-text="" \
-  --lock-text="Locked" \
-  --lockfailed-text="Failed" \
-  --clock \
-  --time-str="%H:%M" \
-  --date-str="%d %B %Y" \
-  --date-str="%A" \
+  --lock-text="" \
+  --lockfailed-text="" \
+  \
+  --radius=120 \
+  --ring-width=8 \
   --indicator
 
-rm "$TMPBG"
+rm "$IMAGE"

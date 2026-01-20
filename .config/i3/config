@@ -119,3 +119,7 @@ bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
+
+# LOCK SCREEN
+exec --no-startup-id xss-lock --transfer-sleep-lock -- "$HOME/scripts/utils/lock.sh"
+bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
