@@ -3,7 +3,7 @@ set $term kitty
 set $browser firefox
 set $filemanager thunar
 
-# --- STARTUP ---
+# STARTUP
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id picom -b
 exec --no-startup-id dunst
@@ -12,13 +12,13 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
 exec_always --no-startup-id "sleep 1; $HOME/.config/polybar/launch.sh"
 
-# --- POWER MANAGEMENT, IDLE TIMEOUTS, LOCK SCREEN ---
+# POWER MANAGEMENT, IDLE TIMEOUTS, LOCK SCREEN
 exec --no-startup-id xset s 1500 25
 exec --no-startup-id xset dpms 1800 1800 1800
 bindsym $mod+Escape exec "$HOME/scripts/utils/lock.sh"
 exec --no-startup-id xss-lock --transfer-sleep-lock -- "$HOME/scripts/utils/lock.sh"
 
-# --- VISUALS ---
+# VISUALS
 font pango:JetBrainsMono Nerd Font 10
 gaps inner 10
 gaps outer 0
@@ -37,7 +37,7 @@ client.focused_inactive #333333 #333333 $fg     #333333   #333333
 client.unfocused        #222222 #222222 #888888 #222222   #222222
 client.urgent           $alert  $alert  $fg     $alert    $alert
 
-# --- BASIC KEYBINDS ---
+# BASIC KEYBINDS
 bindsym $mod+Return exec $term
 bindsym $mod+b exec $browser
 bindsym $mod+e exec $filemanager
@@ -48,7 +48,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-msg exit"
 bindsym $mod+x exec "$HOME/scripts/utils/powermenu.sh"
 
-# --- WINDOW NAVIGATION (VIM & ARROW) ---
+# WINDOW NAVIGATION (VIM & ARROW)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -58,7 +58,7 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# --- MOVING WINDOWS ---
+# MOVING WINDOWS
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
@@ -68,7 +68,7 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# --- WORKSPACE NAVIGATION (1-10) ---
+# WORKSPACE NAVIGATION (1-10)
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
 bindsym $mod+3 workspace number 3
@@ -80,7 +80,7 @@ bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
 
-# --- MOVE TO WORKSPACE ---
+# MOVE TO WORKSPACE (1-10)
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
@@ -92,12 +92,12 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
-# --- SMART NAVIGATION (NEXT/PREV) ---
+# SMART NAVIGATION (NEXT/PREV)
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Tab workspace back_and_forth
 
-# --- RESIZE & LAYOUT ---
+# RESIZE & LAYOUT
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
@@ -112,17 +112,25 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# --- WINDOW RULES ---
+# WINDOW RULES
 for_window [window_role="GtkFileChooserDialog"] floating enable, resize set 800 600, move position center
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Lxappearance"] floating enable
 
-# --- HARDWARE KEYS ---
+# HARDWARE KEYS
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym Print exec "$HOME/scripts/utils/screenshot.sh"
+
+# SCRATCHPAD (DROPDOWN TERMINAL)
+bindsym $mod+u exec --no-startup-id i3-msg '[instance="sp_term"] scratchpad show' || kitty --class sp_term
+for_window [instance="sp_term"] floating enable, resize set 80 ppt 60 ppt, move position center, border pixel 2
+
+# CLIPBOARD MANAGER (GREENCLIP)
+exec --no-startup-id greenclip daemon >/dev/null
+bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme ~/.config/rofi/config.rasi

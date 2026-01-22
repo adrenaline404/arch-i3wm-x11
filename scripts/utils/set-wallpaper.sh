@@ -23,6 +23,6 @@ if command -v feh &> /dev/null; then
 elif command -v nitrogen &> /dev/null; then
     nitrogen --set-zoom-fill "$WALLPAPER_PATH" --save &> /dev/null
 else
-    echo "[ERROR] Install 'feh' untuk pengalaman terbaik."
+    echo "[ERROR] Install 'feh' or 'nitrogen' to set wallpapers."
     exit 1
 fi

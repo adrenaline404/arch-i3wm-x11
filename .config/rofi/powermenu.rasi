@@ -46,7 +46,7 @@ element {
 element-text {
     background-color: transparent;
     text-color: inherit;
-    font: "JetBrainsMono Nerd Font 40";
+    font: "JetBrainsMono Nerd Font 32";
     horizontal-align: 0.5;
     vertical-align: 0.5;
     margin: 0px;

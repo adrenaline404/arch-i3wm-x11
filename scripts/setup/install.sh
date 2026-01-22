@@ -14,12 +14,20 @@ fi
 
 echo -e "${GREEN}[1/7] Installing Packages...${NC}"
 
-PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx"
+# PACKAGE LIST
+# SYSTEM UTILITIES & XORG
+PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx pacman-contrib bluez bluez-utils"
+# WINDOW MANAGER & DESKTOP
 PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh brightnessctl"
+# TERMINAL & SHELL
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
+# FONTS
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
+# THEME & APPEARANCE
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
-PKGS_APPS="thunar thunar-archive-plugin thunar-volman file-roller gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick scrot maim xss-lock libnotify dmenu polkit-gnome"
+# APPLICATIONS & TOOLS
+PKGS_APPS="thunar thunar-archive-plugin thunar-volman tumbler ffmpegthumbnailer file-roller unzip p7zip gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick maim xss-lock libnotify polkit-gnome rofi-greenclip"
+# AUDIO
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
 $HELPER -S --needed --noconfirm --removemake $PKGS_SYSTEM $PKGS_I3 $PKGS_TERM $PKGS_FONTS $PKGS_THEME $PKGS_APPS $PKGS_AUDIO
@@ -69,27 +77,18 @@ echo -e "${GREEN}[5/7] Deploying Scripts & Permissions...${NC}"
 SYSTEM_SCRIPT_DIR="$HOME/scripts"
 rm -rf "$SYSTEM_SCRIPT_DIR"
 cp -rf "$REPO_DIR/scripts" "$SYSTEM_SCRIPT_DIR"
-
 chmod 755 "$SYSTEM_SCRIPT_DIR"
-
 chmod -R +x "$SYSTEM_SCRIPT_DIR"
 
 chmod +x "$SYSTEM_SCRIPT_DIR/setup/install.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/set-wallpaper.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/network-menu.sh"
-
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/caffeine.sh"
-
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/updates.sh"
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
 sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"
