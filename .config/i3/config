@@ -11,6 +11,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id $HOME/scripts/utils/set-wallpaper.sh
 exec_always --no-startup-id "sleep 1; $HOME/.config/polybar/launch.sh"
+exec --no-startup-id nitrogen --restore
 
 # POWER MANAGEMENT, IDLE TIMEOUTS, LOCK SCREEN
 exec --no-startup-id xset s 1500 25
