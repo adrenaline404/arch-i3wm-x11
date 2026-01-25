@@ -16,7 +16,7 @@ echo -e "${GREEN}[1/7] Installing Packages...${NC}"
 
 # PACKAGE LIST
 # SYSTEM UTILITIES & XORG
-PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx pacman-contrib bluez bluez-utils"
+PKGS_SYSTEM="base-devel xorg-server xorg-xinit xorg-xrandr xorg-xset xorg-xrdb arandr xclip xdotool numlockx pacman-contrib bluez bluez-utils acpi"
 # WINDOW MANAGER & DESKTOP
 PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh brightnessctl"
 # TERMINAL & SHELL
@@ -26,7 +26,7 @@ PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-f
 # THEME & APPEARANCE
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
 # APPLICATIONS & TOOLS
-PKGS_APPS="thunar thunar-archive-plugin thunar-volman tumbler ffmpegthumbnailer file-roller unzip p7zip gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick maim xss-lock libnotify polkit-gnome rofi-greenclip"
+PKGS_APPS="thunar thunar-archive-plugin thunar-volman tumbler ffmpegthumbnailer file-roller unzip p7zip gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick maim xss-lock libnotify polkit-gnome rofi-greenclip blueman playerctl"
 # AUDIO
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
@@ -89,6 +89,7 @@ chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/network-menu.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/caffeine.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/updates.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/dashboard.sh"
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
 sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"
@@ -108,5 +109,9 @@ if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
     "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
 fi
 
-echo -e "${BLUE}[DONE] System Ready.${NC}"
-echo -e "${BLUE} You may now reboot your system.${NC}"
+echo -e ""
+echo -e "${GREEN}[7/7] Installation Complete!${NC}"
+echo -e "${BLUE}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
+echo -e "${BLUE}Enjoy your new i3wm setup!${NC}"
+echo -e "${GREEN}Reboot your system to apply all changes.${NC}"
+echo -e ""
