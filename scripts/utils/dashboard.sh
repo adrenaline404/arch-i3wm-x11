@@ -1,5 +1,9 @@
 #!/bin/bash
 
+exec 1>>/tmp/dashboard.log 2>&1
+
+killall rofi || true
+
 TIME=$(date "+%H:%M")
 DATE=$(date "+%A, %d %B %Y")
 WEATHER=$(curl -s --max-time 2 "wttr.in/?format=%C+%t")

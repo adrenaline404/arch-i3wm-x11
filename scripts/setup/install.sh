@@ -22,7 +22,7 @@ PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh bright
 # TERMINAL & SHELL
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
 # FONTS
-PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono"
+PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono ttf-font-awesome noto-fonts-emoji"
 # THEME & APPEARANCE
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
 # APPLICATIONS & TOOLS
@@ -111,10 +111,11 @@ fi
 
 echo -e "${GREEN}[Refresh Font Cache]${NC}"
 fc-cache -fv > /dev/null
+echo -e "${GREEN}[Font Cache Refreshed]${NC}"
 
 echo -e ""
 echo -e "${GREEN}[7/7] Installation Complete!${NC}"
-echo -e "${BLUE}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
-echo -e "${BLUE}Enjoy your new i3wm setup!${NC}"
-echo -e "${GREEN}Reboot your system to apply all changes.${NC}"
+echo -e "${RED}Github: https://github.com/adrenaline404/arch-i3wm-x11${NC}"
+echo -e "${RED}Enjoy your new i3wm setup!${NC}"
+echo -e "${RED}Reboot your system to apply all changes.${NC}"
 echo -e ""

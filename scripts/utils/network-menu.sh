@@ -1,5 +1,9 @@
 #!/bin/bash
 
+exec 1>>/tmp/network-menu.log 2>&1
+
+killall rofi || true
+
 ROFI_CMD="rofi -dmenu -i -p '  Wi-Fi' -theme ~/.config/rofi/config.rasi"
 
 WIFI_STATUS=$(nmcli radio wifi)
