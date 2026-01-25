@@ -1,73 +1,106 @@
 configuration {
-    modi: "drun,run";
     font: "JetBrainsMono Nerd Font 12";
     show-icons: true;
     display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Window";
+    display-Network: "Network";
 }
 
-@import "theme.rasi"
+* {
+    background: #000000CC;
+    foreground: #FFFFFF;
+    selected: #2e9ef4;
+    active: #50fa7b;
+    urgent: #ff5555;
+}
 
 window {
-    width: 40%;
     transparency: "real";
-    border-radius: 12px;
-    background-color: @bg;
-    
+    background-color: @background;
+    text-color: @foreground;
     border: 2px;
-    border-color: @accent;
+    border-color: @selected;
+    border-radius: 12px;
+    width: 500px;
+    location: center;
+    anchor: center;
+    x-offset: 0;
+    y-offset: 0;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, message, listview ];
     padding: 20px;
 }
 
 inputbar {
-    padding: 12px;
-    children: [ prompt, entry ];
     background-color: transparent;
+    text-color: @foreground;
+    children: [ prompt, entry ];
+    margin: 0px 0px 10px 0px;
 }
 
 prompt {
-    text-color: @accent;
-    padding: 0 10px 0 0;
+    background-color: @selected;
+    text-color: #000000;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin: 0px 10px 0px 0px;
 }
 
 entry {
-    text-color: @fg;
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "Search...";
+    placeholder-color: #555555;
+}
+
+message {
+    background-color: transparent;
+    margin: 10px 0px;
+    padding: 10px;
+    border-radius: 6px;
+    text-color: @selected; 
+}
+
+textbox {
+    text-color: inherit;
+    background-color: transparent;
 }
 
 listview {
-    lines: 8;
-    columns: 1;
     background-color: transparent;
-
+    columns: 1;
+    lines: 6;
     spacing: 5px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
 }
 
 element {
-    padding: 10px;
-    text-color: @fg;
     background-color: transparent;
+    text-color: @foreground;
+    orientation: horizontal;
     border-radius: 6px;
-
-    border: 0px;
-}
-
-element selected {
-    background-color: @bg-alt; 
-    text-color: @accent;
-
-    border: 0px 0px 0px 4px;
-    border-color: @accent;
-
-    border-radius: 4px;
+    padding: 8px;
 }
 
 element-icon {
     size: 24px;
-    padding: 0 10px 0 0;
     background-color: transparent;
 }
 
 element-text {
-    vertical-align: 0.5;
     background-color: transparent;
     text-color: inherit;
+    vertical-align: 0.5;
+    margin: 0px 0px 0px 10px;
+}
+
+element selected {
+    background-color: @selected;
+    text-color: #000000;
 }

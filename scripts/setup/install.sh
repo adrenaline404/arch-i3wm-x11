@@ -22,11 +22,11 @@ PKGS_I3="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen feh bright
 # TERMINAL & SHELL
 PKGS_TERM="kitty zsh starship fastfetch bash-completion jq ripgrep bat lsd"
 # FONTS
-PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols"
+PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-font-awesome noto-fonts-emoji ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono"
 # THEME & APPEARANCE
 PKGS_THEME="lxappearance arc-gtk-theme papirus-icon-theme qt5ct"
 # APPLICATIONS & TOOLS
-PKGS_APPS="thunar thunar-archive-plugin thunar-volman tumbler ffmpegthumbnailer file-roller unzip p7zip gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick maim xss-lock libnotify polkit-gnome rofi-greenclip blueman playerctl"
+PKGS_APPS="thunar thunar-archive-plugin thunar-volman tumbler ffmpegthumbnailer file-roller unzip p7zip gvfs gvfs-mtp flameshot pavucontrol network-manager-applet blueman firefox vlc imagemagick maim xss-lock libnotify polkit-gnome rofi-greenclip blueman playerctl dmenu"
 # AUDIO
 PKGS_AUDIO="pipewire pipewire-pulse wireplumber alsa-utils"
 
@@ -82,14 +82,14 @@ chmod -R +x "$SYSTEM_SCRIPT_DIR"
 
 chmod +x "$SYSTEM_SCRIPT_DIR/setup/install.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh"
-chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
-chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/set-wallpaper.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/lock.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/powermenu.sh"
+chmod +x "$SYSTEM_SCRIPT_DIR/utils/dashboard.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/screenshot.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/network-menu.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/caffeine.sh"
 chmod +x "$SYSTEM_SCRIPT_DIR/utils/updates.sh"
-chmod +x "$SYSTEM_SCRIPT_DIR/utils/dashboard.sh"
 chmod +x "$CONFIG_DIR/polybar/launch.sh"
 
 sudo chown -R $USER:$USER "$CONFIG_DIR" "$SYSTEM_SCRIPT_DIR"
@@ -108,6 +108,9 @@ EOF
 if [ -x "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" ]; then
     "$SYSTEM_SCRIPT_DIR/theme-switcher/switch.sh" black
 fi
+
+echo -e "${GREEN}[Refresh Font Cache]${NC}"
+fc-cache -fv > /dev/null
 
 echo -e ""
 echo -e "${GREEN}[7/7] Installation Complete!${NC}"
