@@ -1,18 +1,19 @@
 configuration {
-    font: "JetBrainsMono Nerd Font 12";
+    font: "JetBrainsMono Nerd Font Bold 11";
     show-icons: true;
     display-drun: "Apps";
     display-run: "Run";
-    display-window: "Window";
-    display-Network: "Network";
+    display-window: "Win";
 }
 
 * {
-    background: #000000CC;
+    background: #000000E6;
+    background-alt: #1a1a1aFF;
     foreground: #FFFFFF;
     selected: #2e9ef4;
     active: #50fa7b;
     urgent: #ff5555;
+    border-color: #2e9ef4;
 }
 
 window {
@@ -23,50 +24,45 @@ window {
     border-color: @selected;
     border-radius: 12px;
     width: 500px;
-    location: center;
-    anchor: center;
-    x-offset: 0;
-    y-offset: 0;
+    padding: 10px;
 }
 
 mainbox {
     background-color: transparent;
     children: [ inputbar, message, listview ];
-    padding: 20px;
+    spacing: 10px;
 }
 
 inputbar {
-    background-color: transparent;
+    background-color: @background-alt;
     text-color: @foreground;
     children: [ prompt, entry ];
-    margin: 0px 0px 10px 0px;
+    border-radius: 8px;
+    padding: 8px;
 }
 
 prompt {
     background-color: @selected;
     text-color: #000000;
-    padding: 5px 10px;
-    border-radius: 6px;
-    margin: 0px 10px 0px 0px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0px 5px 0px 0px;
 }
 
 entry {
     background-color: transparent;
     text-color: @foreground;
     placeholder: "Search...";
-    placeholder-color: #555555;
 }
 
 message {
-    background-color: transparent;
-    margin: 10px 0px;
-    padding: 10px;
-    border-radius: 6px;
-    text-color: @selected; 
+    background-color: @background-alt;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 textbox {
-    text-color: inherit;
+    text-color: @selected;
     background-color: transparent;
 }
 
@@ -77,7 +73,6 @@ listview {
     spacing: 5px;
     cycle: true;
     dynamic: true;
-    layout: vertical;
 }
 
 element {
@@ -90,6 +85,7 @@ element {
 
 element-icon {
     size: 24px;
+    margin: 0 10px 0 0;
     background-color: transparent;
 }
 
@@ -97,7 +93,6 @@ element-text {
     background-color: transparent;
     text-color: inherit;
     vertical-align: 0.5;
-    margin: 0px 0px 0px 10px;
 }
 
 element selected {
