@@ -21,12 +21,12 @@ i3lock \
   --clock \
   --time-str="%H:%M" \
   --time-color=2e9ef4ff \
-  --time-size=64 \
+  --time-size=58 \
   --time-font="JetBrainsMono Nerd Font" \
   \
   --date-str="%A, %d %B %Y" \
   --date-color=ffffffff \
-  --date-size=8 \
+  --date-size=12 \
   --date-font="JetBrainsMono Nerd Font" \
   \
   --keyhl-color=2e9ef4ff \
