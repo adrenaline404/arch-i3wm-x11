@@ -1,0 +1,63 @@
+configuration {
+    font: "JetBrainsMono Nerd Font 12";
+    show-icons: true;
+    display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Window";
+}
+
+@import "~/.config/i3/themes/current/rofi.rasi"
+
+window {
+    transparency: "real";
+    background-color: @background;
+    border: 2px;
+    border-color: @primary;
+    border-radius: 12px;
+    width: 600px;
+    padding: 15px;
+}
+
+inputbar {
+    background-color: transparent;
+    text-color: @foreground;
+    children: [ prompt, entry ];
+    margin: 0px 0px 10px 0px;
+}
+
+prompt {
+    background-color: @primary;
+    text-color: #000000;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 0px 10px 0px 0px;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "Search...";
+}
+
+listview {
+    background-color: transparent;
+    lines: 8;
+    columns: 1;
+}
+
+element {
+    background-color: transparent;
+    text-color: @foreground;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+element selected {
+    background-color: @primary;
+    text-color: #000000;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 10px 0 0;
+}

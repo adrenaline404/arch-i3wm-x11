@@ -1,44 +1,22 @@
-# Editor / IDE
 .vscode/
 .idea/
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# Swap / temp
-*.swp
 *~
-
-# Environment files
 .env
 .env.*.local
-
-# Python
 __pycache__/
 *.py[cod]
-
-# Node / build
 node_modules/
 dist/
-
-# Caches
 .cache/
-
-# Misc
 *.local
-
-# Backup files
 *.bak
 *.backup
-*~
 .*.swp
 .*.swo
-
-# User-specific files
 *.log
 *.cache
-
-# Temporary files
 tmp/
 temp/
+dotfiles_backup_*
