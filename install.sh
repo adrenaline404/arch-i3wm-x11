@@ -13,13 +13,13 @@ log() { echo -e "${BLUE}[INFO]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
 
 clear
-echo -e "${BLUE}>>> STARTING INSTALLER...${NC}"
+echo -e "${BLUE}>>> STARTING REPAIR & INSTALLATION...${NC}"
 
-log "Checking for conflicting packages..."
-CONFLICTS=("i3lock" "rofi")
+log "Cleaning conflicts..."
+CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git") 
 for pkg in "${CONFLICTS[@]}"; do
     if pacman -Qq "$pkg" &> /dev/null; then
-        log "Removing conflicting package: $pkg..."
+        log "Removing: $pkg..."
         sudo pacman -Rdd --noconfirm "$pkg"
     fi
 done
@@ -32,26 +32,26 @@ if ! command -v yay &> /dev/null; then
     cd "$REPO_DIR" || exit
 fi
 
-log "Installing ALL required packages..."
+log "Installing Packages..."
 
-PKGS_SYS="i3-wm polybar dunst picom nitrogen i3lock-color-git \
+PKGS_SYS="i3-wm polybar dunst nitrogen i3lock-color-git \
           xorg-server xorg-xinit xorg-xset xorg-xrandr xss-lock \
           polkit-gnome lxappearance qt5ct brightnessctl playerctl \
+          libcanberra libcanberra-gtk3 \
           network-manager-applet blueman pavucontrol flameshot \
           thunar thunar-archive-plugin file-roller gvfs gvfs-mtp unzip"
+
+PKGS_COMP="picom-git"
 
 PKGS_SHELL="kitty zsh starship fastfetch eza bat ripgrep \
             zsh-syntax-highlighting zsh-autosuggestions"
 
-PKGS_ROFI="rofi"
-
 PKGS_FONTS="ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-font-awesome \
-            noto-fonts-emoji ttf-material-design-icons-desktop-git \
-            ttf-fira-code ttf-liberation"
+            noto-fonts-emoji noto-fonts-cjk ttf-material-design-icons-desktop-git"
 
 PKGS_THEME="papirus-icon-theme arc-gtk-theme"
 
-yay -Syu --noconfirm --needed $PKGS_SYS $PKGS_SHELL $PKGS_ROFI $PKGS_FONTS $PKGS_THEME
+yay -Syu --noconfirm --needed $PKGS_SYS $PKGS_COMP $PKGS_SHELL $PKGS_FONTS $PKGS_THEME
 
 log "Deploying Configs..."
 mkdir -p "$BACKUP_DIR"
@@ -67,14 +67,13 @@ cp -r "$REPO_DIR/scripts" "$HOME/.config/i3/"
 cp -r "$REPO_DIR/themes" "$HOME/.config/i3/"
 cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 
-log "Setting Permissions & Groups..."
+log "Fixing Permissions & Groups..."
 chmod +x "$HOME/.config/i3/scripts/"*.sh
 chmod +x "$HOME/.config/polybar/launch.sh"
 
 sudo usermod -aG video "$USER"
-sudo usermod -aG input "$USER"
 
-log "Applying Void Red Theme..."
+log "Initializing Theme..."
 bash "$HOME/.config/i3/scripts/theme_switcher.sh" "void-red"
 
-echo -e "${GREEN}INSTALLATION COMPLETE! REBOOT NOW.${NC}"
+echo -e "${GREEN}SUCCESS! REBOOT NOW.${NC}"
