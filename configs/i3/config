@@ -1,81 +1,63 @@
+# --- VARIABLES ---
 set $mod Mod4
 set $term kitty
 set $scripts ~/.config/i3/scripts
 
+# --- LOOK & FEEL ---
 font pango:JetBrainsMono Nerd Font 10
-
-floating_modifier $mod
-
 gaps inner 10
-gaps outer 5
-
+gaps outer 0
 default_border pixel 2
-default_floating_border pixel 2
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #FF0000 #FF0000 #FFFFFF #FF0000   #FF0000
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-
+# --- AUTOSTART (ESSENTIALS) ---
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $scripts/lock.sh
+
+# Network & Bluetooth Applets (Tray Icons)
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
-exec --no-startup-id dunst
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy
 
+# Compositor & Wallpaper
 exec_always --no-startup-id picom -b
 exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
+# Apps
 bindsym $mod+Return exec $term
+bindsym $mod+d exec $scripts/rofi_launcher.sh
 bindsym $mod+b exec firefox
 bindsym $mod+e exec thunar
+
+# Window Management
 bindsym $mod+q kill
+bindsym $mod+Shift+Space floating toggle
+bindsym $mod+f fullscreen toggle
 
-bindsym $mod+d exec $scripts/rofi_launcher.sh
-bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
-bindsym $mod+Shift+w exec $scripts/rofi_network.sh
-bindsym $mod+Shift+s exec $scripts/rofi_screenshot.sh
-bindsym $mod+t exec $scripts/theme_switcher.sh gui
-
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
-bindsym XF86MonBrightnessUp exec brightnessctl s +5%
-bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
-
+# Focus (Vim Style)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# Move
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-bindsym $mod+f fullscreen toggle
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+# Menus (GUI)
+bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
+bindsym $mod+Shift+w exec $scripts/rofi_network.sh
+bindsym $mod+Shift+s exec flameshot gui
+bindsym $mod+t exec $scripts/theme_switcher.sh gui
 
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+Shift+v layout toggle split
+# Hardware Controls (Brightness & Audio)
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86MonBrightnessUp exec brightnessctl s +5%
+bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 
+# Reload/Restart i3
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Lxappearance"] floating enable, resize set 800 600
-for_window [class="Nitrogen"] floating enable
-for_window [class="Blueman-manager"] floating enable
-for_window [class="nm-connection-editor"] floating enable
-for_window [class="Qt5ct"] floating enable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="task_dialog"] floating enable
