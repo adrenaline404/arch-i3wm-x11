@@ -1,63 +1,63 @@
-# --- VARIABLES ---
 set $mod Mod4
 set $term kitty
 set $scripts ~/.config/i3/scripts
 
-# --- LOOK & FEEL ---
 font pango:JetBrainsMono Nerd Font 10
+
 gaps inner 10
 gaps outer 0
+gaps top 50 
+
 default_border pixel 2
 
-# --- AUTOSTART (ESSENTIALS) ---
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $scripts/lock.sh
-
-# Network & Bluetooth Applets (Tray Icons)
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
-
-# Compositor & Wallpaper
 exec_always --no-startup-id picom -b
 exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-# Apps
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $scripts/rofi_launcher.sh
 bindsym $mod+b exec firefox
 bindsym $mod+e exec thunar
-
-# Window Management
 bindsym $mod+q kill
 bindsym $mod+Shift+Space floating toggle
 bindsym $mod+f fullscreen toggle
 
-# Focus (Vim Style)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Move
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# Menus (GUI)
 bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
 bindsym $mod+Shift+w exec $scripts/rofi_network.sh
 bindsym $mod+Shift+s exec flameshot gui
 bindsym $mod+t exec $scripts/theme_switcher.sh gui
 
-# Hardware Controls (Brightness & Audio)
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86MonBrightnessUp exec brightnessctl s +5%
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
+bindsym XF86AudioPlay exec playerctl play-pause
 
-# Reload/Restart i3
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="Nitrogen"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="nm-connection-editor"] floating enable
