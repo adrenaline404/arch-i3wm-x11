@@ -1,5 +1,10 @@
 * {
-    background: #000000E6;
+    background: #050a1aE6;
+    bg-alt: #0a1533;
     foreground: #FFFFFF;
     primary: #2e9ef4;
+    disabled: #707880;
+    
+    background-color: @background;
+    text-color: @foreground;
 }

@@ -1,7 +1,9 @@
 * {
-    background: #000000E6; 
+    background: #1a0505E6; 
+    bg-alt: #330a0a;
     foreground: #FFFFFF;
-    primary: #FF0000;
+    primary: #FF5555;
+    disabled: #707880;
     
     background-color: @background;
     text-color: @foreground;

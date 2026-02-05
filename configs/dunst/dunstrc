@@ -2,49 +2,46 @@
     monitor = 0
     follow = mouse
     width = 300
-    height = 300
+    height = 100
+    
     origin = top-right
-    offset = 20x50
+    
+    offset = 15x55
+    
     scale = 0
     notification_limit = 5
-
     progress_bar = true
     progress_bar_height = 10
     frame_width = 2
     frame_color = "#2e9ef4"
     separator_color = frame
     sort = yes
-    
     font = JetBrainsMono Nerd Font 10
     line_height = 0
-
     markup = full
     format = "<b>%s</b>\n%b"
     alignment = left
     vertical_alignment = center
     show_age_threshold = 60
     word_wrap = yes
-    ellipsize = middle
     ignore_newline = no
     stack_duplicates = true
-    hide_duplicate_count = false
     show_indicators = yes
-
-    transparency = 10
-    background = "#000000"
-    foreground = "#FFFFFF"
+    icon_position = left
+    max_icon_size = 48
     
+    transparency = 10
     corner_radius = 10
-
+    
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#1a1a1a"
+    background = "#000000"
     foreground = "#888888"
     frame_color = "#2e9ef4"
-    timeout = 10
+    timeout = 5
 
 [urgency_normal]
     background = "#000000"

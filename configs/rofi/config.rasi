@@ -1,54 +1,66 @@
 configuration {
+    modi: "drun,run,window";
     font: "JetBrainsMono Nerd Font 12";
     show-icons: true;
-    display-drun: "Apps";
-    display-run: "Run";
-    display-window: "Window";
+    icon-theme: "Papirus";
+    display-drun: "";
+    display-run: "";
+    display-window: "";
+    drun-display-format: "{name}";
 }
 
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    transparency: "real";
-    background-color: @background;
+    width: 450px;
+    height: 360px;
     border: 2px;
     border-color: @primary;
     border-radius: 12px;
-    width: 600px;
-    padding: 15px;
+    background-color: @background;
+    padding: 0px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+    padding: 20px;
 }
 
 inputbar {
-    background-color: transparent;
-    text-color: @foreground;
+    background-color: @bg-alt;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0 0 15px 0;
     children: [ prompt, entry ];
-    margin: 0px 0px 10px 0px;
 }
 
 prompt {
-    background-color: @primary;
-    text-color: #000000;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin: 0px 10px 0px 0px;
+    background-color: transparent;
+    text-color: @primary;
+    padding: 0 10px 0 0;
+    font: "JetBrainsMono Nerd Font 14";
 }
 
 entry {
     background-color: transparent;
     text-color: @foreground;
-    placeholder: "Search...";
+    placeholder: "Search Applications...";
+    placeholder-color: @disabled;
 }
 
 listview {
     background-color: transparent;
-    lines: 8;
     columns: 1;
+    lines: 6;
+    spacing: 5px;
+    scrollbar: false;
 }
 
 element {
     background-color: transparent;
     text-color: @foreground;
-    padding: 8px;
+    padding: 8px 10px;
     border-radius: 6px;
 }
 
@@ -60,4 +72,11 @@ element selected {
 element-icon {
     size: 24px;
     margin: 0 10px 0 0;
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
 }
