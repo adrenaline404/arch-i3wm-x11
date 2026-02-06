@@ -106,7 +106,7 @@ echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            xorg-server xorg-xinit xorg-xset xorg-xrandr \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
-           network-manager-applet blueman pavucontrol flameshot \
+           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"
@@ -178,6 +178,13 @@ fi
 
 log "Applying Default Theme (Void Red)..."
 bash "$HOME/.config/i3/scripts/theme_switcher.sh" "void-red"
+
+if [ -f "$HOME/.config/i3/scripts/lock_colors.rc" ]; then
+    log "Lockscreen colors generated successfully."
+else
+    warn "Failed to generate lockscreen colors. Trying manual fallback..."
+    echo 'LOCK_RING="#FF0000cc"' > "$HOME/.config/i3/scripts/lock_colors.rc"
+fi
 
 echo -e "${GREEN}"
 echo "=========================================================================="

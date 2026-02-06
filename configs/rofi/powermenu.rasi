@@ -1,0 +1,56 @@
+configuration {
+    show-icons: true;
+    font: "JetBrainsMono Nerd Font 14";
+}
+
+@import "~/.config/i3/themes/current/rofi.rasi"
+
+window {
+    width: 300px;
+    height: 340px;
+    border: 2px;
+    border-color: @primary;
+    border-radius: 12px;
+    background-color: @background;
+    padding: 0px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ listview ];
+    padding: 20px;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 5;
+    spacing: 10px;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    text-color: @foreground;
+    padding: 12px 15px;
+    border-radius: 8px;
+}
+
+element selected {
+    background-color: @primary;
+    text-color: #000000;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 10px 0 0;
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}

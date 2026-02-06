@@ -24,3 +24,5 @@ alias project='cd ~/arch-i3wm-x11'
 if [[ -o interactive ]]; then
     fastfetch --config ~/.config/fastfetch.jsonc
 fi
+
+export GTK_MODULES=canberra-gtk-module

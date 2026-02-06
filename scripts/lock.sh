@@ -1,33 +1,42 @@
 #!/bin/bash
 
+COLOR_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
+
+if [ -f "$COLOR_CONFIG" ]; then
+    source "$COLOR_CONFIG"
+else
+    LOCK_RING="#FF0000cc"
+    LOCK_INSIDE="#00000000"
+    LOCK_TEXT="#FF0000ee"
+    LOCK_WRONG="#880000bb"
+    LOCK_VERIFY="#ff5555bb"
+fi
+
 BLANK='#00000000'
 CLEAR='#ffffff22'
-DEFAULT='#2e9ef4cc'
-TEXT='#2e9ef4ee'
-WRONG='#ff5555bb'
-VERIFY='#50fa7bbb'
 
 i3lock \
 --blur 5 \
---indicator \
---bar-indicator \
---bar-pos="y+h" \
---bar-direction=1 \
---bar-max-height=50 \
---bar-base-width=50 \
---bar-color=000000cc \
---keyhl-color=$DEFAULT \
---bshl-color=$WRONG \
---separator-color=$DEFAULT \
---verif-color=$VERIFY \
---wrong-color=$WRONG \
---layout-color=$TEXT \
---date-color=$TEXT \
---time-color=$TEXT \
---screen 1 \
 --clock \
+--indicator \
+--inside-color=$LOCK_INSIDE \
+--ring-color=$LOCK_RING \
+--line-color=$BLANK \
+--keyhl-color=$LOCK_WRONG \
+--ringver-color=$LOCK_VERIFY \
+--separator-color=$LOCK_RING \
+--insidever-color=$LOCK_INSIDE \
+--ringwrong-color=$LOCK_WRONG \
+--insidewrong-color=$LOCK_INSIDE \
+--verif-color=$LOCK_TEXT \
+--wrong-color=$LOCK_TEXT \
+--time-color=$LOCK_TEXT \
+--date-color=$LOCK_TEXT \
+--layout-color=$LOCK_TEXT \
 --time-str="%H:%M:%S" \
 --date-str="%A, %d %B %Y" \
---verify-text="Verifying..." \
---wrong-text="Incorrect!" \
---no-modkey-text
+--verif-text="Verifying..." \
+--wrong-text="Wrong!" \
+--no-modkey-text \
+--ignore-empty-password \
+--pass-media-keys

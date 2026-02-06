@@ -1,6 +1,10 @@
 #!/bin/bash
+
+ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/powermenu.rasi -p 'Power'"
+
 OPTIONS="  Shutdown\n  Reboot\n  Suspend\n  Lock\n  Logout"
-CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Power" -theme ~/.config/rofi/config.rasi)
+
+CHOICE=$(echo -e "$OPTIONS" | eval $ROFI_CMD)
 
 case "$CHOICE" in
     *Shutdown) poweroff ;;
