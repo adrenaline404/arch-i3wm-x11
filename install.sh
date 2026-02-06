@@ -106,7 +106,7 @@ echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            xorg-server xorg-xinit xorg-xset xorg-xrandr \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
-           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager \
+           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"
@@ -163,6 +163,9 @@ echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
 log "Setting Executable Permissions..."
 chmod +x "$HOME/.config/i3/scripts/"*.sh
 chmod +x "$HOME/.config/polybar/launch.sh"
+
+log "Generating Dynamic Fastfetch Presets..."
+bash "$REPO_DIR/scripts/setup_fastfetch.sh"
 
 log "Creating Udev Rules for Backlight Control..."
 echo 'ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"' | sudo tee /etc/udev/rules.d/90-backlight.rules > /dev/null
