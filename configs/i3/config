@@ -11,6 +11,14 @@ gaps top 50
 default_border pixel 2
 default_floating_border pixel 2
 
+for_window [class="^.*"] border pixel 2
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #FF0000 #FF0000 #FFFFFF #FF0000   #FF0000
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+
 # AUTOSTART
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $scripts/lock.sh

@@ -1,3 +1,6 @@
+command_timeout = 1000
+scan_timeout = 100
+
 format = """
 [░▒▓](#2e9ef4)\
 [  ](bg:#2e9ef4 fg:#000000)\

@@ -21,8 +21,8 @@ alias ...='cd ../..'
 alias config='cd ~/.config/i3'
 alias project='cd ~/arch-i3wm-x11'
 
+export GTK_MODULES=canberra-gtk-module
+
 if [[ -o interactive ]]; then
     fastfetch --config ~/.config/fastfetch.jsonc
 fi
-
-export GTK_MODULES=canberra-gtk-module
