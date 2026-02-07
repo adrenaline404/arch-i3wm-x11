@@ -106,7 +106,7 @@ echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            xorg-server xorg-xinit xorg-xset xorg-xrandr \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
-           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu \
+           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme papirus-folders-git"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"

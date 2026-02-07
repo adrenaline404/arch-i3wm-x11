@@ -39,8 +39,10 @@ bindsym $mod+q kill
 # Menus (GUI)
 bindsym $mod+d exec $scripts/rofi_launcher.sh
 bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
-bindsym $mod+Shift+w exec $scripts/rofi_network.sh
+bindsym $mod+Shift+n exec $scripts/rofi_network.sh
 bindsym $mod+t exec $scripts/theme_switcher.sh gui
+# Wallpaper Manager (Mod + Shift + w)
+bindsym $mod+Shift+w exec ~/.config/i3/scripts/wallpaper_manager.sh
 
 # Screenshots (Flameshot)
 # Print Screen -> GUI Selection
