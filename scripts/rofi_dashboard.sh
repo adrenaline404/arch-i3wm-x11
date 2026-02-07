@@ -10,7 +10,6 @@ fi
 
 RAW_CAL=$(TERM=dumb cal | col -bx)
 TODAY=$(date +%-d)
-
 CALENDAR=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span weight='ultrabold' color='$THEME_COLOR'>\2<\/span>\3/")
 
 TIME=$(date "+%H:%M")
@@ -30,7 +29,7 @@ else
     SONG_INFO="No Media"
 fi
 
-SONG_INFO=${SONG_INFO:0:40}
+SONG_INFO=${SONG_INFO:0:35}
 SONG_INFO=$(echo "$SONG_INFO" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
 
 HEADER_TEXT="<span size='xx-large' weight='bold' color='$THEME_COLOR'>$TIME</span>
@@ -38,10 +37,10 @@ HEADER_TEXT="<span size='xx-large' weight='bold' color='$THEME_COLOR'>$TIME</spa
 
 <span font_family='Monospace'>$CALENDAR</span>
 
-<span size='small' color='#888888'>Now Playing:</span>
+<span size='small' color='#999999'>Now Playing:</span>
 <span weight='bold' color='$THEME_COLOR'>$SONG_INFO</span>"
 
-OPTIONS="$ICON_STATE\n Previous\n Next"
+OPTIONS=" Previous\n$ICON_STATE\n Next"
 
 CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$HEADER_TEXT")
 

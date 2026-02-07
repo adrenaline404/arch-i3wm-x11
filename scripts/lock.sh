@@ -14,6 +14,8 @@ fi
 
 BLANK='#00000000'
 
+DATE_LAYOUT="%d %B %Y%n%n%n%n%A"
+
 i3lock \
 --blur 1 \
 --clock \
@@ -44,21 +46,21 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=75 \
---time-pos="ix:iy+20" \
+--time-size=65 \
+--time-pos="ix:iy+6" \
 \
---date-str="%A, %d %B %Y" \
+--date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=22 \
---date-pos="ix:iy-60" \
+--date-size=16 \
+--date-pos="ix:iy" \
 \
 --verif-text="Verifying..." \
 --verif-size=25 \
---verif-pos="ix:iy+100" \
+--verif-pos="ix:iy+110" \
 \
 --wrong-text="Access Denied" \
 --wrong-size=25 \
---wrong-pos="ix:iy+100" \
+--wrong-pos="ix:iy+110" \
 \
 --no-modkey-text \
 --ignore-empty-password \
