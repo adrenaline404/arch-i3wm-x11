@@ -13,9 +13,6 @@ else
 fi
 
 BLANK='#00000000'
-CLEAR='#ffffff22'
-
-DATE_FORMAT="%d %B %Y%n%n%n%A"
 
 i3lock \
 --blur 1 \
@@ -47,21 +44,21 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=60 \
---time-pos="ix:iy+12" \
+--time-size=75 \
+--time-pos="ix:iy+20" \
 \
---date-str="$DATE_FORMAT" \
+--date-str="%A, %d %B %Y" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=18 \
---date-pos="ix:iy" \
+--date-size=22 \
+--date-pos="ix:iy-60" \
 \
 --verif-text="Verifying..." \
 --verif-size=25 \
---verif-pos="ix:iy+240" \
+--verif-pos="ix:iy+100" \
 \
 --wrong-text="Access Denied" \
 --wrong-size=25 \
---wrong-pos="ix:iy+240" \
+--wrong-pos="ix:iy+100" \
 \
 --no-modkey-text \
 --ignore-empty-password \
