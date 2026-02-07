@@ -6,11 +6,11 @@ configuration {
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    width: 320px;
-    height: 520px;
+    width: 360px;
+    height: 550px;
     border: 2px;
     border-color: @primary;
-    border-radius: 15px;
+    border-radius: 20px;
     background-color: @background;
     padding: 0px;
     location: center;
@@ -25,9 +25,9 @@ mainbox {
 
 message {
     background-color: transparent;
-    padding: 0 0 15px 0;
-    margin: 0 0 10px 0;
-    border: 0px 0px 2px 0px;
+    padding: 10px;
+    margin: 0 0 20px 0;
+    border: 0px 0px 1px 0px;
     border-color: @primary;
 }
 
@@ -36,7 +36,7 @@ textbox {
     text-color: @foreground;
     vertical-align: 0.5;
     horizontal-align: 0.5;
-    markup: true; 
+    markup: true;
 }
 
 listview {
@@ -52,8 +52,8 @@ listview {
 element {
     background-color: @bg-alt;
     text-color: @foreground;
-    padding: 15px 5px;
-    border-radius: 8px;
+    padding: 20px 5px;
+    border-radius: 10px;
     orientation: vertical;
 }
 
@@ -67,5 +67,5 @@ element-text {
     text-color: inherit;
     vertical-align: 0.5;
     horizontal-align: 0.5;
-    font: "JetBrainsMono Nerd Font 16";
+    font: "JetBrainsMono Nerd Font 14";
 }
