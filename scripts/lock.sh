@@ -16,7 +16,7 @@ BLANK='#00000000'
 CLEAR='#ffffff22'
 
 i3lock \
---blur 5 \
+--blur 1 \
 --clock \
 --indicator \
 \
@@ -45,7 +45,7 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=80 \
+--time-size=68 \
 --time-pos="ix:iy+30" \
 \
 --date-str="%A, %d %B %Y" \

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROFI_THEME="~/.config/rofi/dashboard.rasi"
+ROFI_THEME="$HOME/.config/rofi/dashboard.rasi"
 TITLE="Dashboard"
 
 TODAY=$(date +%-d)
