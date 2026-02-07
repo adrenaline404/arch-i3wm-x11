@@ -23,7 +23,7 @@ show_header() {
     echo -e "${NC}"
     echo -e "${BLUE}  >>> AUTOMATED INSTALLER & SETUP FOR ARCH LINUX (i3-wm)${NC}"
     echo -e "${BLUE}  >>> DEVELOPER: https://github.com/adrenaline404${NC}"
-    echo "=========================================================================="
+    echo " "
     echo ""
 }
 
@@ -190,15 +190,15 @@ else
 fi
 
 echo -e "${GREEN}"
-echo "=========================================================================="
+echo " "
 echo "   INSTALLATION SUCCESSFUL!"
-echo "   Developer: https://github.com/adrenaline404"
-echo "--------------------------------------------------------------------------"
+echo "   Developer: adrenaline404"
+echo " "
 echo "   [!] IMPORTANT:"
 echo "   1. A reboot is REQUIRED for brightness & group permissions to work."
 echo "   2. Select 'i3' session at login screen."
 echo "   3. Backup of your old configs is at: $BACKUP_DIR"
-echo "=========================================================================="
+echo " "
 echo -e "${NC}"
 
 read -p "Do you want to reboot now? [y/N]: " reboot_choice

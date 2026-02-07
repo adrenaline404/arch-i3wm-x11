@@ -15,6 +15,8 @@ fi
 BLANK='#00000000'
 CLEAR='#ffffff22'
 
+DATE_FORMAT="%d %B %Y%n%n%n%A"
+
 i3lock \
 --blur 1 \
 --clock \
@@ -45,13 +47,13 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=68 \
---time-pos="ix:iy+30" \
+--time-size=60 \
+--time-pos="ix:iy+12" \
 \
---date-str="%A, %d %B %Y" \
+--date-str="$DATE_FORMAT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=20 \
---date-pos="ix:iy+180" \
+--date-size=18 \
+--date-pos="ix:iy" \
 \
 --verif-text="Verifying..." \
 --verif-size=25 \

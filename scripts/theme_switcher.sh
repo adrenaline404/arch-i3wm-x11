@@ -8,8 +8,9 @@ LOCK_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
 GTK_SETTINGS="$HOME/.config/gtk-3.0/settings.ini"
 
 if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
-    OPT_RED="\nVoid Red"
-    OPT_BLUE="\nVoid Blue"
+
+    OPT_RED="  Void Red"
+    OPT_BLUE="  Void Blue"
     
     OPTIONS="$OPT_RED\n$OPT_BLUE"
     
@@ -24,9 +25,11 @@ if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
     esac
 fi
 
+# Update Symlink
 rm -rf "$LINK_TARGET"
 ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
 
+# Update GTK & Dunst & Icons
 if [ "$THEME" == "void-red" ]; then
     papirus-folders -C red --theme Papirus-Dark &
     sed -i 's/frame_color = "#[0-9a-fA-F]*"/frame_color = "#ff5555"/g' "$DUNST_CONFIG"
@@ -36,6 +39,7 @@ elif [ "$THEME" == "void-blue" ]; then
     sed -i 's/frame_color = "#[0-9a-fA-F]*"/frame_color = "#2e9ef4"/g' "$DUNST_CONFIG"
 fi
 
+# Update GTK 3.0 Settings
 mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$GTK_SETTINGS" <<EOF
 [Settings]
@@ -55,6 +59,7 @@ gtk-xft-hinting=1
 gtk-xft-hintstyle=hintmedium
 EOF
 
+# Update Lockscreen Colors
 echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
 if [ "$THEME" == "void-red" ]; then
     echo 'LOCK_RING="#FF0000cc"' >> "$LOCK_CONFIG"
@@ -70,12 +75,15 @@ elif [ "$THEME" == "void-blue" ]; then
     echo 'LOCK_VERIFY="#50fa7bbb"' >> "$LOCK_CONFIG"
 fi
 
+# Apply Wallpaper
 if [ -f "$LINK_TARGET/wallpaper.jpg" ]; then
     nitrogen --set-zoom-fill "$LINK_TARGET/wallpaper.jpg" --save
 fi
 
+# Reload Services
 ~/.config/polybar/launch.sh
 i3-msg reload
 killall dunst && dunst &
 
+# Notification
 notify-send "System Synced" "Theme applied: $THEME"
