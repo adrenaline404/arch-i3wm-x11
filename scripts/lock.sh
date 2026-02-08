@@ -47,20 +47,20 @@ i3lock \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
 --time-size=64 \
---time-pos="ix:iy-15" \
+--time-pos="ix:iy-12" \
 \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=14 \
---date-pos="ix:iy+40" \
+--date-size=12 \
+--date-pos="ix:iy+28" \
 \
 --verif-text="Verifying..." \
---verif-size=25 \
---verif-pos="ix:iy+110" \
+--verif-size=30 \
+--verif-pos="ix:iy" \
 \
 --wrong-text="Access Denied" \
---wrong-size=25 \
---wrong-pos="ix:iy+110" \
+--wrong-size=30 \
+--wrong-pos="ix:iy" \
 \
 --no-modkey-text \
 --ignore-empty-password \
