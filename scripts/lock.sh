@@ -47,12 +47,12 @@ i3lock \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
 --time-size=64 \
---time-pos="ix:iy-12" \
+--time-pos="ix:iy+10" \
 \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=12 \
---date-pos="ix:iy+28" \
+--date-size=14 \
+--date-pos="ix:iy+30" \
 \
 --verif-text="Verifying..." \
 --verif-size=30 \
