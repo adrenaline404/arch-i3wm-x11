@@ -14,7 +14,7 @@ get_count() {
     if [ "$updates" -gt 0 ]; then
         echo " $updates"
     else
-        echo ""
+        echo ""
     fi
 }
 
