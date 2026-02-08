@@ -14,7 +14,7 @@ fi
 
 BLANK='#00000000'
 
-DATE_LAYOUT="%d %B %Y%n%n%n%n%A"
+DATE_LAYOUT="%A, %d %B %Y"
 
 i3lock \
 --blur 1 \
@@ -46,13 +46,13 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=65 \
---time-pos="ix:iy+6" \
+--time-size=64 \
+--time-pos="ix:iy-15" \
 \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
---date-size=16 \
---date-pos="ix:iy" \
+--date-size=14 \
+--date-pos="ix:iy+40" \
 \
 --verif-text="Verifying..." \
 --verif-size=25 \

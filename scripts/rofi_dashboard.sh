@@ -8,45 +8,67 @@ if [[ -z "$THEME_COLOR" || "$THEME_COLOR" != \#* ]]; then
     THEME_COLOR="#FFFFFF"
 fi
 
-RAW_CAL=$(TERM=dumb cal | col -bx)
-TODAY=$(date +%-d)
-CALENDAR=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span weight='ultrabold' color='$THEME_COLOR'>\2<\/span>\3/")
-
 TIME=$(date "+%H:%M")
 DATE=$(date "+%A, %d %B %Y")
 
-PLAYER_STATUS=$(playerctl status 2>/dev/null)
-if [ "$PLAYER_STATUS" == "Playing" ]; then
-    ICON_STATE=" Pause"
-    SONG_INFO=$(playerctl metadata --format "{{ artist }} - {{ title }}" 2>/dev/null)
-    [ -z "$SONG_INFO" ] && SONG_INFO="Playing..."
-elif [ "$PLAYER_STATUS" == "Paused" ]; then
-    ICON_STATE=" Play"
-    SONG_INFO=$(playerctl metadata --format "{{ artist }} - {{ title }}" 2>/dev/null)
-    [ -z "$SONG_INFO" ] && SONG_INFO="Paused"
+RAW_CAL=$(TERM=dumb cal | col -bx)
+TODAY=$(date +%-d)
+CALENDAR=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span weight='heavy' color='$THEME_COLOR'>\2<\/span>\3/")
+
+if command -v pamixer &> /dev/null; then
+    VOL_INFO=$(pamixer --get-volume)
+    IS_MUTED=$(pamixer --get-mute)
+    [ "$IS_MUTED" = "true" ] && VOL_ICON="" || VOL_ICON=""
 else
-    ICON_STATE=" Play"
-    SONG_INFO="No Media"
+    VOL_INFO="N/A"
+    VOL_ICON=""
 fi
 
-SONG_INFO=${SONG_INFO:0:35}
-SONG_INFO=$(echo "$SONG_INFO" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
+PLAYER_STATUS=$(playerctl status 2>/dev/null)
 
-HEADER_TEXT="<span size='xx-large' weight='bold' color='$THEME_COLOR'>$TIME</span>
-<span size='large'>$DATE</span>
+if [ "$PLAYER_STATUS" == "Playing" ]; then
+    ICON_STATE=" Pause"
+    ARTIST=$(playerctl metadata artist 2>/dev/null)
+    TITLE_SONG=$(playerctl metadata title 2>/dev/null)
+    
+    [ -z "$ARTIST" ] && ARTIST="Unknown"
+    [ -z "$TITLE_SONG" ] && TITLE_SONG="Playing..."
+    
+elif [ "$PLAYER_STATUS" == "Paused" ]; then
+    ICON_STATE=" Play"
+    ARTIST="Music"
+    TITLE_SONG="Paused"
+else
+    ICON_STATE=" Play"
+    ARTIST="No Media"
+    TITLE_SONG="Idle"
+fi
 
-<span font_family='Monospace'>$CALENDAR</span>
+ARTIST=${ARTIST:0:20}
+TITLE_SONG=${TITLE_SONG:0:30}
 
-<span size='small' color='#999999'>Now Playing:</span>
-<span weight='bold' color='$THEME_COLOR'>$SONG_INFO</span>"
+ARTIST=$(echo "$ARTIST" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
+TITLE_SONG=$(echo "$TITLE_SONG" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
 
-OPTIONS=" Previous\n$ICON_STATE\n Next"
+HEADER_TEXT="<span font_weight='bold' size='48pt' color='$THEME_COLOR'>$TIME</span>
+<span font_weight='light' size='14pt' color='#ffffff'>$DATE</span>
+
+<span font_family='Monospace' size='11pt'>$CALENDAR</span>
+
+<span size='10pt' color='#888888'>Now Playing ($VOL_ICON $VOL_INFO%):</span>
+<span font_weight='bold' size='12pt' color='$THEME_COLOR'>$TITLE_SONG</span>
+<span font_weight='light' size='9pt' color='#cccccc'>$ARTIST</span>"
+
+OPTIONS=" Prev\n$ICON_STATE\n Next\n Vol -\n Mute\n Vol +"
 
 CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$HEADER_TEXT")
 
 case "$CHOICE" in
     *Play) playerctl play ;;
     *Pause) playerctl pause ;;
-    *Previous) playerctl previous ;;
+    *Prev) playerctl previous ;;
     *Next) playerctl next ;;
+    *Vol\ -) pamixer -d 5 ;;
+    *Vol\ +) pamixer -i 5 ;;
+    *Mute) pamixer -t ;;
 esac
