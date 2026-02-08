@@ -6,70 +6,70 @@ TITLE="Dashboard"
 THEME_COLOR=$(grep 'LOCK_RING' $HOME/.config/i3/scripts/lock_colors.rc | cut -d'"' -f2 | cut -c1-7)
 [ -z "$THEME_COLOR" ] && THEME_COLOR="#FFFFFF"
 
-RAW_CAL=$(cal | sed 's/..$//')
-TODAY=$(date +%-d)
-
-mapfile -t CAL_ARRAY <<< "$(cal)"
+FONT_MONO="font_family='Monospace'"
 
 TIME_BIG=$(date "+%H:%M")
-DATE_FULL=$(date "+%A")
-DATE_NUM=$(date "+%d %B %Y")
+DATE_DAY=$(date "+%A")
+DATE_FULL=$(date "+%d %B %Y")
 
-W_RAW=$(curl -s --connect-timeout 2 "wttr.in/?format=%c%t|%C|%w|%h&m")
+TODAY=$(date +%-d)
+RAW_CAL=$(LC_ALL=C cal)
+mapfile -t CAL_LINES <<< "$RAW_CAL"
+
+W_RAW=$(curl -s --connect-timeout 2 "wttr.in/?format=%c%t|%C|%w&m")
+
 if [ -z "$W_RAW" ]; then
-    W_L1="  Offline"
-    W_L2="No Internet"
-    W_L3="Check Conn."
-    W_L4=""
+    W_L1=" Offline"
+    W_L2="No Data"
+    W_L3="Check Wifi"
 else
-    IFS='|' read -r W_TEMP W_COND W_WIND W_HUMID <<< "$W_RAW"
-    W_L1="${W_TEMP}"
-    W_L2="${W_COND}"
-    W_L3=" ${W_WIND}"
-    W_L4=" ${W_HUMID}"
+    IFS='|' read -r W_L1 W_L2 W_L3 <<< "$W_RAW"
+    W_L1=${W_L1:0:15}
+    W_L2=${W_L2:0:15}
+    W_L3=" ${W_L3:0:12}"
 fi
 
 UPTIME=$(uptime -p | sed 's/up //;s/ hours/h/;s/ minutes/m/')
-KERNEL=$(uname -r | cut -d'-' -f1)
+UPTIME=${UPTIME:0:15}
 
-SEP="<span color='#444444'> │ </span>"
-
-print_row() {
-    printf "%-22s%b%-28s%b%-22s\n" "$1" "$SEP" "$2" "$SEP" "$3"
+make_row() {
+    local left="$1"
+    local center="$2"
+    local right="$3"
+    
+    printf "%-22s │ %-30s │ %-20s\n" "$left" "$center" "$right"
 }
 
-center_text() {
+center_t() {
     local text="$1"
-    local width=28
+    local width=30
     local padding=$(( (width - ${#text}) / 2 ))
-    printf "%${padding}s%s%${padding}s" "" "$text" ""
+    printf "%${padding}s%s" "" "$text"
 }
 
-L1=$(print_row "${CAL_ARRAY[0]}" "$(center_text "$TIME_BIG")" "$W_L1")
+L1=$(make_row "${CAL_LINES[0]}" "$(center_t "$TIME_BIG")" " $W_L1")
 
-L2=$(print_row "${CAL_ARRAY[2]}" "$(center_text "$DATE_FULL")" "$W_L2")
+L2=$(make_row "${CAL_LINES[2]}" "$(center_t "$DATE_DAY")" " $W_L2")
 
-L3=$(print_row "${CAL_ARRAY[3]}" "$(center_text "$DATE_NUM")" "$W_L3")
+L3=$(make_row "${CAL_LINES[3]}" "$(center_t "$DATE_FULL")" " $W_L3")
 
-L4=$(print_row "${CAL_ARRAY[4]}" "" "$W_L4")
+L4=$(make_row "${CAL_LINES[4]}" "" "")
+L5=$(make_row "${CAL_LINES[5]}" "$(center_t "Uptime:")" "")
+L6=$(make_row "${CAL_LINES[6]}" "$(center_t "$UPTIME")" "")
 
-L5=$(print_row "${CAL_ARRAY[5]}" "$(center_text "Uptime:")" " $UPTIME")
+FINAL_STR="$L1\n$L2\n$L3\n$L4\n$L5\n$L6"
 
-L6=$(print_row "${CAL_ARRAY[6]}" "$(center_text "$UPTIME")" " $KERNEL")
+FINAL_STR="<span $FONT_MONO size='11pt'>$FINAL_STR</span>"
 
-[ ! -z "${CAL_ARRAY[7]}" ] && L7=$(print_row "${CAL_ARRAY[7]}" "" "")
+FINAL_STR=$(echo "$FINAL_STR" | sed "s/$TIME_BIG/<span weight='heavy' size='28pt' color='$THEME_COLOR'>$TIME_BIG<\/span>/")
 
-FINAL_TEXT="$L1\n$L2\n$L3\n$L4\n$L5\n$L6\n$L7"
+FINAL_STR=$(echo "$FINAL_STR" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
 
-FINAL_TEXT=$(echo "$FINAL_TEXT" | sed "s/$TIME_BIG/<span weight='heavy' size='xx-large' color='$THEME_COLOR'>$TIME_BIG<\/span>/")
-
-FINAL_TEXT=$(echo "$FINAL_TEXT" | sed -r "s/(^| )($TODAY)($| )/\1<span weight='heavy' background='$THEME_COLOR' color='#000000'> \2 <\/span>\3/")
-
-FINAL_TEXT="${FINAL_TEXT//${W_TEMP}/<span weight='bold' color='$THEME_COLOR'>${W_TEMP}</span>}"
+FINAL_STR="${FINAL_STR//$W_L1/<span color='$THEME_COLOR' weight='bold'>$W_L1</span>}"
 
 OPTIONS=" Refresh\n Wifi\n Close"
 
-CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$FINAL_TEXT")
+CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$FINAL_STR")
 
 case "$CHOICE" in
     *Refresh) ~/.config/i3/scripts/rofi_dashboard.sh & ;;

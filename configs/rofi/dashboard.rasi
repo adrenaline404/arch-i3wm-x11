@@ -1,13 +1,13 @@
 configuration {
     show-icons: false;
-    font: "JetBrainsMono Nerd Font Mono Bold 12";
+    font: "JetBrainsMono Nerd Font Bold 12";
 }
 
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
     width: 950px;
-    height: 400px;
+    height: 420px;
     border: 3px;
     border-color: @primary;
     border-radius: 15px;
@@ -21,7 +21,7 @@ mainbox {
     background-color: transparent;
     children: [ message, listview ];
     padding: 20px;
-    spacing: 15px;
+    spacing: 10px;
 }
 
 message {
@@ -35,10 +35,9 @@ message {
 textbox {
     background-color: transparent;
     text-color: @foreground;
+    horizontal-align: 0.0;
     vertical-align: 0.5;
-    horizontal-align: 0.5;
     markup: true;
-    horizontal-align: 0.0; 
 }
 
 listview {
@@ -57,7 +56,7 @@ element {
     text-color: @foreground;
     orientation: vertical;
     border-radius: 10px;
-    padding: 12px 10px;
+    padding: 15px 10px;
     border: 2px;
     border-color: transparent;
 }
