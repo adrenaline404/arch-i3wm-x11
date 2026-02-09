@@ -1,35 +1,34 @@
 configuration {
     show-icons: false;
-    font: "JetBrainsMono Nerd Font Bold 12";
+    font: "JetBrainsMono Nerd Font Mono Bold 11";
 }
 
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    width: 950px;
-    height: 420px;
-    border: 3px;
+    width: 650px;
+    height: 320px;
+    
+    border: 2px;
     border-color: @primary;
-    border-radius: 15px;
+    border-radius: 12px;
     background-color: @background;
-    padding: 0px;
+    
     location: center;
     anchor: center;
 }
 
 mainbox {
     background-color: transparent;
-    children: [ message, listview ];
+    children: [ message ];
     padding: 20px;
-    spacing: 10px;
 }
 
 message {
     background-color: transparent;
-    padding: 10px;
+    padding: 0px;
     margin: 0px;
-    border: 0px 0px 2px 0px;
-    border-color: @primary;
+    border: 0px;
 }
 
 textbox {
@@ -40,37 +39,6 @@ textbox {
     markup: true;
 }
 
-listview {
-    background-color: transparent;
-    columns: 3;
-    lines: 1;
-    spacing: 20px;
-    cycle: true;
-    scrollbar: false;
-    flow: horizontal;
-    margin: 10px 0 0 0;
-}
-
-element {
-    background-color: @bg-alt;
-    text-color: @foreground;
-    orientation: vertical;
-    border-radius: 10px;
-    padding: 15px 10px;
-    border: 2px;
-    border-color: transparent;
-}
-
-element selected {
-    background-color: @primary;
-    text-color: #000000;
-    border-color: @foreground;
-}
-
-element-text {
-    background-color: transparent;
-    text-color: inherit;
-    vertical-align: 0.5;
-    horizontal-align: 0.5;
-    font: "JetBrainsMono Nerd Font Bold 12";
+listview, inputbar, prompt, entry {
+    enabled: false;
 }
