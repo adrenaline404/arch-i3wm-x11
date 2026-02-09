@@ -134,8 +134,9 @@ if ask_user "Install Web Browser (Firefox)?" "Y"; then
     install_pkg "Firefox" "firefox"
 fi
 
-if ask_user "Install Basic Dev Tools (Git, Python, VSCode-Bin)?" "N"; then
-    PKGS_DEV="git python python-pip visual-studio-code-bin"
+if ask_user "Install Basic Dev Tools (Git, Python, VSCode-Bin)?" "Y"; then
+    PKGS_DEV="git python python-pip visual-studio-code-bin \
+              tk python-gobject python-cairo python-matplotlib python-pillow"
     install_pkg "Developer Tools" "$PKGS_DEV"
 fi
 
@@ -159,7 +160,6 @@ cp -r "$REPO_DIR/scripts" "$HOME/.config/i3/"
 cp -r "$REPO_DIR/themes" "$HOME/.config/i3/"
 cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 
-# NEOVIM FRESH STATE & BOOTSTRAP
 log "Configuring Neovim environment..."
 if [ -d "$HOME/.local/share/nvim" ] || [ -d "$HOME/.cache/nvim" ]; then
     if ask_user "Perform Fresh Install for Neovim (Clean old cache/plugins)?" "Y"; then
@@ -190,6 +190,11 @@ bash "$REPO_DIR/scripts/setup_fastfetch.sh"
 log "Creating Udev Rules for Backlight Control..."
 echo 'ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"' | sudo tee /etc/udev/rules.d/90-backlight.rules > /dev/null
 echo 'ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"' | sudo tee -a /etc/udev/rules.d/90-backlight.rules > /dev/null
+
+log "Configuring Python Matplotlib Backend (Fix Freezing Issues)..."
+mkdir -p "$HOME/.config/matplotlib"
+echo "backend: TkAgg" > "$HOME/.config/matplotlib/matplotlibrc"
+echo -e "${GREEN}[OK] Matplotlib configured to use TkAgg backend.${NC}"
 
 log "Adding user to required groups..."
 sudo usermod -aG video,input,storage,audio "$USER"
