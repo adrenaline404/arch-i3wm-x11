@@ -16,16 +16,16 @@ safe_text() {
 
 TIME_NOW=$(date "+%H:%M")
 DATE_NOW=$(date "+%A, %d %B %Y")
-
 TODAY=$(date +%-d)
-RAW_CAL=$(LC_ALL=C cal)
+
+RAW_CAL=$(LC_ALL=C cal | sed '/^$/d')
 mapfile -t CAL_LINES <<< "$RAW_CAL"
 
-W_RAW=$(curl -s --connect-timeout 3 "wttr.in/?format=%l\n%C\n%t\n%w&m")
+W_RAW=$(curl -s --connect-timeout 2 "wttr.in/?format=%l\n%C\n%t\n%w&m")
 
-if [ -z "$W_RAW" ] || [ $? -ne 0 ]; then
-    LOC="System Local"
-    COND="Offline"
+if [ -z "$W_RAW" ] || [ $(echo "$W_RAW" | wc -l) -lt 4 ]; then
+    LOC="Local System"
+    COND="Offline / Error"
     TEMP="--°C"
     WIND="No Data"
 else
@@ -35,28 +35,39 @@ else
     TEMP=$(safe_text "${W_DATA[2]}")
     WIND=$(safe_text "${W_DATA[3]}")
     
-    LOC=${LOC:0:20}
+    LOC=${LOC:0:18}
 fi
 
-SP="   │   " 
+SP="   │   "
 
-L1=$(printf "%-22s%s<span weight='heavy' size='24pt' color='%s'>%s</span>" "${CAL_LINES[0]}" "$SP" "$THEME_COLOR" "$TIME_NOW")
+get_cal_line() {
+    local line="${CAL_LINES[$1]}"
+    if [ -z "$line" ]; then
+        printf "%-22s" " "
+    else
+        printf "%-22s" "$line"
+    fi
+}
 
-L2=$(printf "%-22s%s<span color='#aaaaaa'>%s</span>" "" "$SP" "$DATE_NOW")
+ROW1=$(printf "%s%s<span weight='heavy' size='22pt' color='%s'>%s</span>" "$(get_cal_line 0)" "$SP" "$THEME_COLOR" "$TIME_NOW")
 
-L3=$(printf "%-22s%s<span color='%s'> </span> %s" "${CAL_LINES[2]}" "$SP" "$THEME_COLOR" "$LOC")
+ROW2=$(printf "%s%s<span color='#aaaaaa'>%s</span>" "$(get_cal_line 1)" "$SP" "$DATE_NOW")
 
-L4=$(printf "%-22s%s<span color='%s'> </span> %s" "${CAL_LINES[3]}" "$SP" "$THEME_COLOR" "$COND")
+ROW3=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 2)" "$SP" "$THEME_COLOR" "$LOC")
 
-L5=$(printf "%-22s%s<span color='%s'> </span> %s" "${CAL_LINES[4]}" "$SP" "$THEME_COLOR" "$TEMP")
+ROW4=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 3)" "$SP" "$THEME_COLOR" "$COND")
 
-L6=$(printf "%-22s%s<span color='%s'> </span> %s" "${CAL_LINES[5]}" "$SP" "$THEME_COLOR" "$WIND")
+ROW5=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 4)" "$SP" "$THEME_COLOR" "$TEMP")
 
-L7=$(printf "%-22s%s" "${CAL_LINES[6]}" "$SP")
+ROW6=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 5)" "$SP" "$THEME_COLOR" "$WIND")
 
-FINAL_TEXT="$L1\n$L2\n\n$L3\n$L4\n$L5\n$L6\n$L7"
+ROW7=$(printf "%s%s" "$(get_cal_line 6)" "$SP")
 
-FINAL_TEXT="<span $FONT size='12pt'>$FINAL_TEXT</span>"
+ROW8=$(printf "%s%s" "$(get_cal_line 7)" "$SP")
+
+FINAL_TEXT="$ROW1\n$ROW2\n\n$ROW3\n$ROW4\n$ROW5\n$ROW6\n$ROW7\n$ROW8"
+
+FINAL_TEXT="<span $FONT size='11pt'>$FINAL_TEXT</span>"
 
 FINAL_TEXT=$(echo "$FINAL_TEXT" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
 

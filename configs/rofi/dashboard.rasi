@@ -6,8 +6,8 @@ configuration {
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    width: 650px;
-    height: 320px;
+    width: 680px;
+    height: 300px;
     
     border: 2px;
     border-color: @primary;
@@ -21,14 +21,14 @@ window {
 mainbox {
     background-color: transparent;
     children: [ message ];
-    padding: 20px;
+    padding: 25px;
 }
 
 message {
     background-color: transparent;
+    border: 0px;
     padding: 0px;
     margin: 0px;
-    border: 0px;
 }
 
 textbox {
@@ -39,6 +39,6 @@ textbox {
     markup: true;
 }
 
-listview, inputbar, prompt, entry {
+listview, inputbar, entry, prompt, case-indicator {
     enabled: false;
 }
