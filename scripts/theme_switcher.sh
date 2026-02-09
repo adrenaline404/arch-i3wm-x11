@@ -3,7 +3,9 @@
 THEME=$1
 THEME_ROOT="$HOME/.config/i3/themes"
 LINK_TARGET="$THEME_ROOT/current"
-DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
+
+DUNST_COLORS="$HOME/.config/dunst/colors.ini"
+STARSHIP_CONFIG="$HOME/.config/starship.toml"
 LOCK_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
 GTK_SETTINGS="$HOME/.config/gtk-3.0/settings.ini"
 
@@ -25,21 +27,79 @@ if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
     esac
 fi
 
-# Update Symlink
+if [ ! -d "$THEME_ROOT/$THEME" ]; then
+    notify-send "Error" "Theme '$THEME' not found!"
+    exit 1
+fi
+
 rm -rf "$LINK_TARGET"
 ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
 
-# Update GTK & Dunst & Icons
 if [ "$THEME" == "void-red" ]; then
     papirus-folders -C red --theme Papirus-Dark &
-    sed -i 's/frame_color = "#[0-9a-fA-F]*"/frame_color = "#ff5555"/g' "$DUNST_CONFIG"
-    
+
+    cat > "$DUNST_COLORS" <<EOF
+[urgency_low]
+    background = "#000000CC"
+    foreground = "#888888"
+    frame_color = "#ff5555"
+    timeout = 5
+
+[urgency_normal]
+    background = "#000000CC"
+    foreground = "#ffffff"
+    frame_color = "#ff5555"
+    timeout = 5
+
+[urgency_critical]
+    background = "#000000CC"
+    foreground = "#ff5555"
+    frame_color = "#ff5555"
+    timeout = 0
+EOF
+
+    sed -i 's/^palette = .*/palette = "void_red"/' "$STARSHIP_CONFIG"
+
+    echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
+    echo 'LOCK_RING="#ff5555cc"' >> "$LOCK_CONFIG"
+    echo 'LOCK_TEXT="#ff5555ee"' >> "$LOCK_CONFIG"
+    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
+    echo 'LOCK_WRONG="#880000bb"' >> "$LOCK_CONFIG"
+    echo 'LOCK_VERIFY="#ffffffbb"' >> "$LOCK_CONFIG"
+
 elif [ "$THEME" == "void-blue" ]; then
     papirus-folders -C blue --theme Papirus-Dark &
-    sed -i 's/frame_color = "#[0-9a-fA-F]*"/frame_color = "#2e9ef4"/g' "$DUNST_CONFIG"
+
+    cat > "$DUNST_COLORS" <<EOF
+[urgency_low]
+    background = "#000000CC"
+    foreground = "#888888"
+    frame_color = "#2e9ef4"
+    timeout = 5
+
+[urgency_normal]
+    background = "#000000CC"
+    foreground = "#ffffff"
+    frame_color = "#2e9ef4"
+    timeout = 5
+
+[urgency_critical]
+    background = "#000000CC"
+    foreground = "#ff5555"
+    frame_color = "#ff5555"
+    timeout = 0
+EOF
+
+    sed -i 's/^palette = .*/palette = "void_blue"/' "$STARSHIP_CONFIG"
+
+    echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
+    echo 'LOCK_RING="#2e9ef4cc"' >> "$LOCK_CONFIG"
+    echo 'LOCK_TEXT="#2e9ef4ee"' >> "$LOCK_CONFIG"
+    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
+    echo 'LOCK_WRONG="#ff5555bb"' >> "$LOCK_CONFIG"
+    echo 'LOCK_VERIFY="#ffffffbb"' >> "$LOCK_CONFIG"
 fi
 
-# Update GTK 3.0 Settings
 mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$GTK_SETTINGS" <<EOF
 [Settings]
@@ -59,31 +119,15 @@ gtk-xft-hinting=1
 gtk-xft-hintstyle=hintmedium
 EOF
 
-# Update Lockscreen Colors
-echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
-if [ "$THEME" == "void-red" ]; then
-    echo 'LOCK_RING="#FF0000cc"' >> "$LOCK_CONFIG"
-    echo 'LOCK_TEXT="#FF0000ee"' >> "$LOCK_CONFIG"
-    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
-    echo 'LOCK_WRONG="#880000bb"' >> "$LOCK_CONFIG"
-    echo 'LOCK_VERIFY="#ff5555bb"' >> "$LOCK_CONFIG"
-elif [ "$THEME" == "void-blue" ]; then
-    echo 'LOCK_RING="#2e9ef4cc"' >> "$LOCK_CONFIG"
-    echo 'LOCK_TEXT="#2e9ef4ee"' >> "$LOCK_CONFIG"
-    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
-    echo 'LOCK_WRONG="#ff5555bb"' >> "$LOCK_CONFIG"
-    echo 'LOCK_VERIFY="#50fa7bbb"' >> "$LOCK_CONFIG"
-fi
-
-# Apply Wallpaper
 if [ -f "$LINK_TARGET/wallpaper.jpg" ]; then
     nitrogen --set-zoom-fill "$LINK_TARGET/wallpaper.jpg" --save
 fi
 
-# Reload Services
-~/.config/polybar/launch.sh
-i3-msg reload
-killall dunst && dunst &
+~/.config/polybar/launch.sh &
 
-# Notification
+i3-msg reload >/dev/null
+
+killall dunst
+dunst &
+
 notify-send "System Synced" "Theme applied: $THEME"

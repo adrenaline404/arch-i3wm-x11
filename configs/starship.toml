@@ -1,47 +1,135 @@
+palette = "void_blue"
+
 command_timeout = 1000
 scan_timeout = 100
 
+# LAYOUT
+
 format = """
-[░▒▓](#2e9ef4)\
-[  ](bg:#2e9ef4 fg:#000000)\
-[](bg:#1a1a1a fg:#2e9ef4)\
+[░▒▓](accent)\
+[  ](bg:accent fg:#000000)\
+[](bg:bg_dark fg:accent)\
 $directory\
-[](fg:#1a1a1a bg:#2e2e2e)\
+[](fg:bg_dark bg:bg_medium)\
 $git_branch\
 $git_status\
-[](fg:#2e2e2e bg:#212121)\
-$nodejs\
-$rust\
+[](fg:bg_medium bg:bg_light)\
+$c\
+$elixir\
+$elm\
 $golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$lua\
+$nodejs\
+$nim\
 $php\
-[](fg:#212121)\
+$python\
+$ruby\
+$rust\
+$scala\
+$swift\
+$typescript\
+$zig\
+[](fg:bg_light)\
 \n$character"""
 
+# MODULES
+
 [directory]
-style = "bg:#1a1a1a fg:#e0e0e0"
+style = "bg:bg_dark fg:#e0e0e0"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#2e2e2e"
-format = "[[ $symbol $branch ](fg:#769ff0 bg:#2e2e2e)]($style)"
+style = "bg:bg_medium"
+format = "[[ $symbol $branch ](fg:text_secondary bg:bg_medium)]($style)"
 
 [git_status]
-style = "bg:#2e2e2e"
-format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#2e2e2e)]($style)"
+style = "bg:bg_medium"
+format = "[[($all_status$ahead_behind )](fg:text_secondary bg:bg_medium)]($style)"
+
+# LANGUAGES (Grouped in bg_light)
+
+[c]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[golang]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[java]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[lua]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
 [nodejs]
-symbol = ""
-style = "bg:#212121"
-format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212121)]($style)"
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[php]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[python]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[ruby]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
 [rust]
-symbol = ""
-style = "bg:#212121"
-format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212121)]($style)"
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[typescript]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+[zig]
+symbol = " "
+style = "bg:bg_light"
+format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
+
+# PROMPT CHAR
 
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
+
+# PALETTES (THEMES)
+
+[palettes.void_blue]
+accent = "#2e9ef4"
+text_primary = "#769ff0"
+text_secondary = "#769ff0"
+bg_dark = "#1a1a1a"
+bg_medium = "#2e2e2e"
+bg_light = "#212121"
+
+[palettes.void_red]
+accent = "#ff5555"
+text_primary = "#ff8888"
+text_secondary = "#ff8888"
+bg_dark = "#1a1a1a"
+bg_medium = "#2e2e2e"
+bg_light = "#212121"
