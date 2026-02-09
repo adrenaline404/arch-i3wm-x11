@@ -159,6 +159,24 @@ cp -r "$REPO_DIR/scripts" "$HOME/.config/i3/"
 cp -r "$REPO_DIR/themes" "$HOME/.config/i3/"
 cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 
+# NEOVIM FRESH STATE & BOOTSTRAP
+log "Configuring Neovim environment..."
+if [ -d "$HOME/.local/share/nvim" ] || [ -d "$HOME/.cache/nvim" ]; then
+    if ask_user "Perform Fresh Install for Neovim (Clean old cache/plugins)?" "Y"; then
+        log "Cleaning old Neovim data to prevent conflicts..."
+        rm -rf "$HOME/.local/share/nvim"
+        rm -rf "$HOME/.local/state/nvim"
+        rm -rf "$HOME/.cache/nvim"
+        echo -e "${GREEN}[OK] Neovim state cleaned.${NC}"
+        
+        log "Bootstrapping Neovim plugins (Headless)..."
+        nvim --headless "+Lazy! sync" +qa
+        echo -e "${GREEN}[OK] Neovim plugins synced.${NC}"
+    else
+        warn "Skipping Neovim cleanup. Old plugins might conflict."
+    fi
+fi
+
 echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
 
 log "Setting Executable Permissions..."
