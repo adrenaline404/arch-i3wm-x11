@@ -6,12 +6,12 @@ configuration {
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    width: 680px;
-    height: 300px;
+    width: 320px;
+    height: 520px;
     
     border: 2px;
     border-color: @primary;
-    border-radius: 12px;
+    border-radius: 15px;
     background-color: @background;
     
     location: center;
@@ -21,7 +21,7 @@ window {
 mainbox {
     background-color: transparent;
     children: [ message ];
-    padding: 25px;
+    padding: 20px;
 }
 
 message {
@@ -34,11 +34,11 @@ message {
 textbox {
     background-color: transparent;
     text-color: @foreground;
-    horizontal-align: 0.0;
+    horizontal-align: 0.5;
     vertical-align: 0.5;
     markup: true;
 }
 
-listview, inputbar, entry, prompt, case-indicator {
+listview, inputbar, entry, prompt {
     enabled: false;
 }

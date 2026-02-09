@@ -18,57 +18,39 @@ TIME_NOW=$(date "+%H:%M")
 DATE_NOW=$(date "+%A, %d %B %Y")
 TODAY=$(date +%-d)
 
-RAW_CAL=$(LC_ALL=C cal | sed '/^$/d')
-mapfile -t CAL_LINES <<< "$RAW_CAL"
-
 W_RAW=$(curl -s --connect-timeout 2 "wttr.in/?format=%l\n%C\n%t\n%w&m")
 
 if [ -z "$W_RAW" ] || [ $(echo "$W_RAW" | wc -l) -lt 4 ]; then
-    LOC="Local System"
-    COND="Offline / Error"
-    TEMP="--°C"
-    WIND="No Data"
+    W_LOC="Local System"
+    W_COND="Offline"
+    W_TEMP="--°C"
+    W_WIND="No Data"
 else
     mapfile -t W_DATA <<< "$W_RAW"
-    LOC=$(safe_text "${W_DATA[0]}")
-    COND=$(safe_text "${W_DATA[1]}")
-    TEMP=$(safe_text "${W_DATA[2]}")
-    WIND=$(safe_text "${W_DATA[3]}")
+    W_LOC=$(safe_text "${W_DATA[0]}")
+    W_COND=$(safe_text "${W_DATA[1]}")
+    W_TEMP=$(safe_text "${W_DATA[2]}")
+    W_WIND=$(safe_text "${W_DATA[3]}")
     
-    LOC=${LOC:0:18}
+    W_LOC=${W_LOC:0:22}
 fi
 
-SP="   │   "
+RAW_CAL=$(LC_ALL=C cal | sed '/^$/d')
 
-get_cal_line() {
-    local line="${CAL_LINES[$1]}"
-    if [ -z "$line" ]; then
-        printf "%-22s" " "
-    else
-        printf "%-22s" "$line"
-    fi
-}
+CAL_DISPLAY=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
 
-ROW1=$(printf "%s%s<span weight='heavy' size='22pt' color='%s'>%s</span>" "$(get_cal_line 0)" "$SP" "$THEME_COLOR" "$TIME_NOW")
+SECTION_TIME="<span weight='heavy' size='36pt' color='$THEME_COLOR'>$TIME_NOW</span>"
 
-ROW2=$(printf "%s%s<span color='#aaaaaa'>%s</span>" "$(get_cal_line 1)" "$SP" "$DATE_NOW")
+SECTION_DATE="<span size='11pt' color='#cccccc'>$DATE_NOW</span>"
 
-ROW3=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 2)" "$SP" "$THEME_COLOR" "$LOC")
+SECTION_WEATHER="<span size='12pt' color='$THEME_COLOR'> $W_LOC</span>
+<span size='10pt'>$W_COND ($W_TEMP)</span>
+<span size='10pt' color='#888888'> $W_WIND</span>"
 
-ROW4=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 3)" "$SP" "$THEME_COLOR" "$COND")
+SECTION_CAL="<span weight='bold'>$CAL_DISPLAY</span>"
 
-ROW5=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 4)" "$SP" "$THEME_COLOR" "$TEMP")
-
-ROW6=$(printf "%s%s<span color='%s'> </span> %s" "$(get_cal_line 5)" "$SP" "$THEME_COLOR" "$WIND")
-
-ROW7=$(printf "%s%s" "$(get_cal_line 6)" "$SP")
-
-ROW8=$(printf "%s%s" "$(get_cal_line 7)" "$SP")
-
-FINAL_TEXT="$ROW1\n$ROW2\n\n$ROW3\n$ROW4\n$ROW5\n$ROW6\n$ROW7\n$ROW8"
+FINAL_TEXT="$SECTION_TIME\n$SECTION_DATE\n\n$SECTION_WEATHER\n\n$SECTION_CAL"
 
 FINAL_TEXT="<span $FONT size='11pt'>$FINAL_TEXT</span>"
-
-FINAL_TEXT=$(echo "$FINAL_TEXT" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
 
 echo "" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$FINAL_TEXT" > /dev/null 2>&1
