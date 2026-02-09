@@ -6,13 +6,14 @@ if [ -f "$COLOR_CONFIG" ]; then
     source "$COLOR_CONFIG"
 else
     LOCK_RING="#FF0000cc"
-    LOCK_INSIDE="#00000000"
     LOCK_TEXT="#FF0000ee"
     LOCK_WRONG="#880000bb"
     LOCK_VERIFY="#ff5555bb"
+    LOCK_INSIDE="#00000000"
 fi
 
 BLANK='#00000000'
+SHADOW_BG='#00000055'
 
 DATE_LAYOUT="%A, %d %B %Y"
 
@@ -24,7 +25,7 @@ i3lock \
 --radius=120 \
 --ring-width=12 \
 \
---inside-color=$LOCK_INSIDE \
+--inside-color=$SHADOW_BG \
 --ring-color=$LOCK_RING \
 --line-color=$BLANK \
 \
@@ -33,10 +34,10 @@ i3lock \
 \
 --ringver-color=$LOCK_VERIFY \
 --separator-color=$LOCK_RING \
---insidever-color=$LOCK_INSIDE \
+--insidever-color=$SHADOW_BG \
 \
 --ringwrong-color=$LOCK_WRONG \
---insidewrong-color=$LOCK_INSIDE \
+--insidewrong-color=$SHADOW_BG \
 \
 --verif-color=$LOCK_TEXT \
 --wrong-color=$LOCK_TEXT \
