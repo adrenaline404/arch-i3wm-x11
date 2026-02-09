@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/config.rasi"
-NOTIFY_CMD="notify-send -u low -t 2000"
+ROFI_CONFIG="-theme ~/.config/rofi/config.rasi"
+WIDTH_CONST=40
 
 ICON_WIFI_ON=" "
 ICON_WIFI_OFF="󰖪 "
@@ -13,138 +13,198 @@ ICON_INFO=" "
 ICON_EDIT=" "
 ICON_LOCK=" "
 ICON_UNLOCK=" "
+ICON_CHECK=" "
 
-get_status_info() {
-    ACTIVE_CON=$(nmcli -t -f NAME,TYPE connection show --active | head -n1)
-    if [ -n "$ACTIVE_CON" ]; then
-        NAME=$(echo "$ACTIVE_CON" | cut -d: -f1)
-        TYPE=$(echo "$ACTIVE_CON" | cut -d: -f2)
-        IP_ADDR=$(nmcli -g ip4.address connection show "$NAME" | awk '{print $1}' | cut -d/ -f1)
-        echo "Connected: $NAME ($TYPE) | IP: $IP_ADDR"
+notify_user() {
+    local title="$1"
+    local msg="$2"
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -u low -t 2000 "$title" "$msg"
     else
-        echo "Status: Disconnected"
+        echo "[$title] $msg"
+    fi
+}
+
+if ! command -v nmcli >/dev/null 2>&1; then
+    notify_user "Error" "NetworkManager (nmcli) tidak ditemukan!"
+    exit 1
+fi
+
+get_active_info() {
+    ACTIVE=$(nmcli -t -f NAME,TYPE,DEVICE connection show --active | head -n1)
+    
+    if [ -n "$ACTIVE" ]; then
+        NAME=$(echo "$ACTIVE" | cut -d: -f1)
+        TYPE=$(echo "$ACTIVE" | cut -d: -f2)
+        IP=$(nmcli -g ip4.address connection show "$NAME" | head -n1 | cut -d/ -f1)
+        echo "Connected: $NAME ($TYPE) | IP: ${IP:-N/A}"
+    else
+        echo "Status: Disconnected / Offline"
     fi
 }
 
 show_main_menu() {
-    WIFI_STATUS=$(nmcli radio wifi)
-    NET_STATUS=$(nmcli networking)
-    HEADER=$(get_status_info)
+    WIFI_STATE=$(nmcli radio wifi)
+    NET_STATE=$(nmcli networking)
+    HEADER_MSG=$(get_active_info)
 
-    if [ "$WIFI_STATUS" = "enabled" ]; then
+    if [ "$WIFI_STATE" = "enabled" ]; then
         OPT_WIFI="$ICON_WIFI_OFF Disable Wi-Fi"
+        ACT_WIFI="wifi_off"
     else
         OPT_WIFI="$ICON_WIFI_ON Enable Wi-Fi"
+        ACT_WIFI="wifi_on"
     fi
 
-    if [ "$NET_STATUS" = "enabled" ]; then
-        OPT_NET="$ICON_NET_OFF Disable Networking (Airplane)"
+    if [ "$NET_STATE" = "enabled" ]; then
+        OPT_NET="$ICON_NET_OFF Disable Networking"
+        ACT_NET="net_off"
     else
         OPT_NET="$ICON_NET_ON Enable Networking"
+        ACT_NET="net_on"
     fi
 
-    OPTIONS="$OPT_WIFI\n$ICON_SCAN Scan Networks\n$ICON_ETH Ethernet Status\n$ICON_INFO Connection Details\n$ICON_EDIT Connection Editor\n$OPT_NET"
+    MENU="$OPT_WIFI
+$ICON_SCAN Scan Networks
+$ICON_ETH Ethernet Status
+$ICON_INFO Connection Details
+$ICON_EDIT Connection Editor
+$OPT_NET"
 
-    CHOICE=$(echo -e "$OPTIONS" | $ROFI_CMD -p "Network" -mesg "$HEADER")
+    LINE_COUNT=$(echo "$MENU" | wc -l)
+
+    CHOICE=$(echo -e "$MENU" | rofi -dmenu -i -p "Network" \
+        $ROFI_CONFIG \
+        -mesg "$HEADER_MSG" \
+        -lines "$LINE_COUNT" \
+        -width "$WIDTH_CONST")
 
     case "$CHOICE" in
-        *"Enable Wi-Fi")
-            nmcli radio wifi on
-            $NOTIFY_CMD "Wi-Fi" "Radio Enabled"
+        "$OPT_WIFI")
+            if [ "$ACT_WIFI" == "wifi_on" ]; then
+                nmcli radio wifi on
+                notify_user "Wi-Fi" "Turning On..."
+            else
+                nmcli radio wifi off
+                notify_user "Wi-Fi" "Turning Off..."
+            fi
             ;;
-        *"Disable Wi-Fi")
-            nmcli radio wifi off
-            $NOTIFY_CMD "Wi-Fi" "Radio Disabled"
-            ;;
-        *"Scan Networks")
+        "$ICON_SCAN"*)
             scan_wifi
             ;;
-        *"Ethernet Status")
+        "$ICON_ETH"*)
             show_ethernet_info
             ;;
-        *"Connection Details")
+        "$ICON_INFO"*)
             show_full_info
             ;;
-        *"Connection Editor")
+        "$ICON_EDIT"*)
             nmcli-connection-editor &
             ;;
-        *"Enable Networking")
-            nmcli networking on
-            $NOTIFY_CMD "Network" "Networking Enabled"
-            ;;
-        *"Disable Networking")
-            nmcli networking off
-            $NOTIFY_CMD "Network" "Networking Disabled"
+        "$OPT_NET")
+            if [ "$ACT_NET" == "net_on" ]; then
+                nmcli networking on
+                notify_user "Network" "System Networking Enabled"
+            else
+                nmcli networking off
+                notify_user "Network" "System Networking Disabled"
+            fi
             ;;
     esac
 }
 
 scan_wifi() {
-    $NOTIFY_CMD "Wi-Fi" "Scanning networks..."
+    notify_user "Wi-Fi" "Scanning networks..."
     
-    WIFI_LIST=$(nmcli --colors no -f IN-USE,BARS,SECURITY,SSID device wifi list | \
-        sed '1d' | \
-        awk -F'  +' '{
-            if($1=="*") active=" "; else active="  ";
-            if($3=="--") sec=" "; else sec=" ";
-            printf "%s %-5s %s %-20s\n", active, $2, sec, $4
+    WIFI_LIST=$(nmcli -t -f IN-USE,SSID,BARS,SECURITY device wifi list --rescan yes | \
+        awk -F: '{
+            if (length($2) > 0) {
+                if($1=="*") active=" "; else active="  ";
+                if($4!="") sec=" "; else sec=" ";
+                printf "%s%-25s %s %s\n", active, substr($2,0,25), sec, $3
+            }
         }')
 
-    CHOSEN=$(echo -e "$WIFI_LIST" | $ROFI_CMD -p "Wi-Fi Scan" -mesg " : Active |  : Secured | Bars : Signal")
+    SELECTED=$(echo -e "$WIFI_LIST" | rofi -dmenu -i -p "Wi-Fi" \
+        $ROFI_CONFIG \
+        -mesg "Select a network to connect" \
+        -lines 10 \
+        -width 50)
 
-    if [ -z "$CHOSEN" ]; then show_main_menu; return; fi
+    if [ -n "$SELECTED" ]; then
+        TEMP="${SELECTED:2}"
+        SSID=$(echo "$TEMP" | sed 's/ [].*//' | sed 's/ *$//')
 
-    SSID=$(echo "$CHOSEN" | sed -E 's/^.. ..... .. //')
-    
-    if [ -n "$SSID" ]; then
         connect_wifi "$SSID"
+    else
+        show_main_menu
     fi
 }
 
 connect_wifi() {
-    SSID=$1
-    SAVED=$(nmcli -g NAME connection show | grep -w "$SSID")
-
-    if [ -n "$SAVED" ]; then
-        $NOTIFY_CMD "Wi-Fi" "Connecting to saved network: $SSID..."
+    local SSID="$1"
+    
+    if nmcli connection show "$SSID" >/dev/null 2>&1; then
+        notify_user "Wi-Fi" "Connecting to saved: $SSID..."
         if nmcli connection up id "$SSID"; then
-            $NOTIFY_CMD "Wi-Fi" "Connected to $SSID"
+            notify_user "Wi-Fi" "Connected to $SSID"
         else
-            $NOTIFY_CMD "Wi-Fi" "Failed to connect"
+            notify_user "Wi-Fi" "Connection failed. Retrying with password..."
+            connect_new_wifi "$SSID"
         fi
     else
-        PASS=$(rofi -dmenu -password -p "Password for $SSID" -theme ~/.config/rofi/config.rasi)
-        
-        if [ -z "$PASS" ]; then return; fi
+        connect_new_wifi "$SSID"
+    fi
+}
 
-        $NOTIFY_CMD "Wi-Fi" "Connecting to new network: $SSID..."
-        if nmcli device wifi connect "$SSID" password "$PASS"; then
-            $NOTIFY_CMD "Wi-Fi" "Connected to $SSID"
-        else
-            $NOTIFY_CMD "Wi-Fi" "Wrong password or failed connection"
-        fi
+connect_new_wifi() {
+    local SSID="$1"
+    PASS=$(rofi -dmenu -password -p "Password for $SSID" \
+        $ROFI_CONFIG \
+        -lines 0 \
+        -width 30)
+        
+    if [ -z "$PASS" ]; then return; fi
+
+    notify_user "Wi-Fi" "Connecting to $SSID..."
+    
+    if nmcli device wifi connect "$SSID" password "$PASS"; then
+        notify_user "Wi-Fi" "Success: Connected to $SSID"
+    else
+        notify_user "Wi-Fi" "Error: Failed to connect (Wrong password?)"
     fi
 }
 
 show_ethernet_info() {
-    ETH_STATUS=$(nmcli device status | grep "ethernet" | awk '{print $3}')
-    ETH_DEVICE=$(nmcli device status | grep "ethernet" | awk '{print $1}')
+    ETH_DEV=$(nmcli -t -f DEVICE,TYPE device | grep "ethernet" | cut -d: -f1 | head -n1)
     
-    if [ "$ETH_STATUS" == "connected" ]; then
-        INFO=$(nmcli -g ip4.address,gw4,dns4 device show "$ETH_DEVICE")
-        rofi -e "  Ethernet Connected ($ETH_DEVICE)
------------------------------------
-$INFO" -theme ~/.config/rofi/config.rasi
+    if [ -n "$ETH_DEV" ]; then
+        STATUS=$(nmcli -t -f STATE device show "$ETH_DEV" | cut -d: -f2)
+        if [ "$STATUS" == "connected" ]; then
+             INFO=$(nmcli -g ip4.address,gw4,dns4 device show "$ETH_DEV")
+             MSG="Device: $ETH_DEV (Connected)
+---------------------------------
+$INFO"
+        else
+             MSG="Device: $ETH_DEV
+Status: Disconnected / Cable Unplugged"
+        fi
     else
-        rofi -e "  Ethernet: Disconnected / Cable Unplugged" -theme ~/.config/rofi/config.rasi
+        MSG="No Ethernet Device Found."
     fi
+    
+    rofi -e "$MSG" $ROFI_CONFIG
+    
     show_main_menu
 }
 
 show_full_info() {
-    INFO=$(nmcli -p -f GENERAL,IP4,DNS device show)
-    
-    echo "$INFO" | rofi -dmenu -p "Details" -theme ~/.config/rofi/config.rasi -lines 15 -width 50
+    nmcli -p device show | rofi -dmenu \
+        -p "System Info" \
+        $ROFI_CONFIG \
+        -width 60 \
+        -lines 15
+        
     show_main_menu
 }
 
