@@ -1,77 +1,103 @@
 #!/bin/bash
 
 ROFI_THEME="$HOME/.config/rofi/dashboard.rasi"
-TITLE="Dashboard"
-CACHE_FILE="/tmp/dashboard_weather.txt"
+CACHE_WEATHER="/tmp/dashboard_weather.txt"
+CACHE_MUSIC="/tmp/dashboard_music.txt"
 
 THEME_COLOR=$(grep 'LOCK_RING' $HOME/.config/i3/scripts/lock_colors.rc | cut -d'"' -f2 | cut -c1-7)
 if [[ ! "$THEME_COLOR" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
-    THEME_COLOR="#FFFFFF"
+    THEME_COLOR="#FF5555"
 fi
 
-FONT="font_family='JetBrainsMono Nerd Font Mono'"
+ICON_PLAY=""
+ICON_PAUSE=""
+ICON_PREV=""
+ICON_NEXT=""
+ICON_MUSIC=""
 
 safe_text() {
     echo "$1" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g'
 }
 
-TIME_NOW=$(date "+%H:%M")
-DATE_NOW=$(date "+%A, %d %B %Y")
-TODAY=$(date +%-d)
+TIME_BIG=$(date "+%H:%M")
+DATE_LONG=$(date "+%A, %d %B %Y")
+DAY_NUM=$(date "+%-d")
 
-NEED_UPDATE=false
-if [ ! -f "$CACHE_FILE" ]; then
-    NEED_UPDATE=true
-else
-    CUR_TIME=$(date +%s)
-    FILE_TIME=$(stat -c %Y "$CACHE_FILE")
-    DIFF=$((CUR_TIME - FILE_TIME))
-    if [ $DIFF -gt 900 ]; then
-        NEED_UPDATE=true
-    fi
+if [ ! -f "$CACHE_WEATHER" ] || [ $(find "$CACHE_WEATHER" -mmin +30) ]; then
+    curl -s --max-time 3 "wttr.in/?format=%l|%C|%t|%w&m" > "$CACHE_WEATHER" || echo "Offline|NA|--|--" > "$CACHE_WEATHER"
 fi
 
-if [ "$NEED_UPDATE" = true ]; then
-    NEW_DATA=$(curl -s --max-time 3 -H "User-Agent: Mozilla/5.0" "wttr.in/?format=%l|%C|%t|%w&m")
-    
-    if [[ "$NEW_DATA" == *"|"* ]] && [[ "$NEW_DATA" != *"html"* ]]; then
-        echo "$NEW_DATA" > "$CACHE_FILE"
-    fi
+IFS='|' read -r W_LOC W_COND W_TEMP W_WIND < "$CACHE_WEATHER"
+if [[ "$W_LOC" == *"html"* ]]; then
+    W_LOC="Offline"; W_COND="No Data"; W_TEMP="--"; W_WIND="--"
 fi
+W_LOC=${W_LOC:0:15}
 
-if [ -f "$CACHE_FILE" ]; then
-    IFS='|' read -r LOC COND TEMP WIND < "$CACHE_FILE"
+CAL_HEAD=$(LC_ALL=C cal | head -n1)
+CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$THEME_COLOR' weight='bold'>\2<\/span>\3/")
+
+PLAYER_STATUS=$(playerctl status 2>/dev/null)
+if [ "$?" -eq 0 ] && [ "$PLAYER_STATUS" != "Stopped" ]; then
+    ARTIST=$(playerctl metadata artist 2>/dev/null | sed 's/&/and/g')
+    TITLE=$(playerctl metadata title 2>/dev/null | sed 's/&/and/g')
     
-    LOC=$(safe_text "$LOC")
-    COND=$(safe_text "$COND")
-    TEMP=$(safe_text "$TEMP")
-    WIND=$(safe_text "$WIND")
+    if [ ${#TITLE} -gt 25 ]; then TITLE="${TITLE:0:23}.."; fi
+    if [ ${#ARTIST} -gt 25 ]; then ARTIST="${ARTIST:0:23}.."; fi
     
-    if [ ${#LOC} -gt 22 ]; then
-        LOC="${LOC:0:20}.."
+    MUSIC_INFO="$ICON_MUSIC  $TITLE\n<span size='small' color='#888888'>$ARTIST</span>"
+    
+    if [ "$PLAYER_STATUS" == "Playing" ]; then
+        BTN_PLAY="$ICON_PAUSE"
+    else
+        BTN_PLAY="$ICON_PLAY"
     fi
 else
-    LOC="Offline Mode"
-    COND="No Data"
-    TEMP="--°C"
-    WIND="--"
+    MUSIC_INFO="No Media Playing"
+    BTN_PLAY="$ICON_PLAY"
 fi
 
-RAW_CAL=$(LC_ALL=C cal | sed '/^$/d')
-CAL_DISPLAY=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
+SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 42' color='$THEME_COLOR'>$TIME_BIG</span>
+<span font='JetBrainsMono Nerd Font 12' color='#ffffff'>$DATE_LONG</span>"
 
-printf -v SECTION_TIME "<span weight='heavy' size='36pt' color='%s'>%s</span>" "$THEME_COLOR" "$TIME_NOW"
-printf -v SECTION_DATE "<span size='11pt' color='#cccccc'>%s</span>" "$DATE_NOW"
-printf -v SECTION_WEATHER "<span size='12pt' color='%s'> %s</span>\n<span size='10pt'>%s (%s)</span>\n<span size='10pt' color='#888888'> %s</span>" "$THEME_COLOR" "$LOC" "$COND" "$TEMP" "$WIND"
-printf -v SECTION_CAL "<span weight='bold'>%s</span>" "$CAL_DISPLAY"
+SECTION_MIDDLE="
+<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
+<span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>
 
-FINAL_TEXT="$SECTION_TIME
-$SECTION_DATE
+<span font='JetBrainsMono Nerd Font 10' color='$THEME_COLOR'>  $W_LOC</span>
+<span font='JetBrainsMono Nerd Font 9'>$W_TEMP ($W_COND)</span>"
 
-$SECTION_WEATHER
+SECTION_MUSIC="<span font='JetBrainsMono Nerd Font 11' weight='bold'>$MUSIC_INFO</span>"
 
-$SECTION_CAL"
+FINAL_MESSAGE="$SECTION_HEADER
+$SECTION_MIDDLE
+________________________________
+$SECTION_MUSIC"
 
-FINAL_TEXT="<span $FONT size='11pt'>$FINAL_TEXT</span>"
+OPT_PREV="$ICON_PREV"
+OPT_TOGGLE="$BTN_PLAY"
+OPT_NEXT="$ICON_NEXT"
 
-echo "" | rofi -dmenu -i -p "$TITLE" -theme "$ROFI_THEME" -mesg "$FINAL_TEXT" > /dev/null 2>&1
+CHOSEN=$(echo -e "$OPT_PREV\n$OPT_TOGGLE\n$OPT_NEXT" | rofi -dmenu \
+    -p "Dashboard" \
+    -theme "$ROFI_THEME" \
+    -mesg "$FINAL_MESSAGE" \
+    -selected-row 1)
+
+case "$CHOSEN" in
+    "$ICON_PREV")
+        playerctl previous
+        exec "$0"
+        ;;
+    "$ICON_PLAY")
+        playerctl play
+        exec "$0"
+        ;;
+    "$ICON_PAUSE")
+        playerctl pause
+        exec "$0"
+        ;;
+    "$ICON_NEXT")
+        playerctl next
+        exec "$0"
+        ;;
+esac

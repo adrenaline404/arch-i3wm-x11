@@ -1,42 +1,86 @@
 configuration {
+    font: "JetBrainsMono Nerd Font 10";
     show-icons: false;
-    font: "JetBrainsMono Nerd Font Mono Bold 11";
 }
 
-@import "~/.config/i3/themes/current/rofi.rasi"
+* {
+    background-color: transparent;
+    text-color:       #ffffff;
+    
+    accent:           #FF5555;
+    bg-col:           #1a1a1aF0;
+    border-col:       #ffffff20;
+}
 
 window {
-    width: 400px;
-    height: 550px;
-    border: 2px;
-    border-color: @primary;
-    border-radius: 16px;
-    background-color: @background;
-    location: center;
-    anchor: center;
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            350px;
+    height:           580px;
+    
+    border:           2px;
+    border-radius:    16px;
+    border-color:     @border-col;
+    background-color: @bg-col;
+    
+    padding:          20px;
 }
 
 mainbox {
     background-color: transparent;
-    children: [ message ];
-    padding: 25px;
+    orientation:      vertical;
+    children:         [ "message", "listview" ];
+    spacing:          15px;
 }
 
 message {
     background-color: transparent;
-    border: 0px;
-    padding: 0px;
-    margin: 0px;
+    padding:          10px;
+    border-radius:    8px;
 }
 
 textbox {
     background-color: transparent;
-    text-color: @foreground;
+    text-color:       #ffffff;
+    vertical-align:   0.5;
     horizontal-align: 0.5;
-    vertical-align: 0.5;
-    markup: true;
+    markup:           true;
 }
 
-listview, inputbar, entry, prompt {
-    enabled: false;
+listview {
+    background-color: transparent;
+    layout:           horizontal;
+    spacing:          10px;
+    lines:            3;
+    columns:          3;
+    cycle:            true;
+    dynamic:          false;
+    scrollbar:        false;
+    fixed-height:     true;
+    fixed-columns:    true;
+}
+
+element {
+    background-color: #ffffff0D;
+    padding:          15px 10px;
+    border-radius:    12px;
+    cursor:           pointer;
+    width:            80px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    font:             "JetBrainsMono Nerd Font 24";
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+element selected {
+    background-color: #ffffff20;
+    text-color:       @accent;
+    border:           1px;
+    border-color:     @accent;
 }
