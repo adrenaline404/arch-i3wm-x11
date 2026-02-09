@@ -2,6 +2,7 @@
 
 ROFI_THEME="$HOME/.config/rofi/dashboard.rasi"
 TITLE="Dashboard"
+CACHE_FILE="/tmp/dashboard_weather.txt"
 
 THEME_COLOR=$(grep 'LOCK_RING' $HOME/.config/i3/scripts/lock_colors.rc | cut -d'"' -f2 | cut -c1-7)
 if [[ ! "$THEME_COLOR" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
@@ -18,20 +19,40 @@ TIME_NOW=$(date "+%H:%M")
 DATE_NOW=$(date "+%A, %d %B %Y")
 TODAY=$(date +%-d)
 
-W_RAW=$(curl -s --max-time 3 "wttr.in/?format=%l|%C|%t|%w&m")
+NEED_UPDATE=false
+if [ ! -f "$CACHE_FILE" ]; then
+    NEED_UPDATE=true
+else
+    CUR_TIME=$(date +%s)
+    FILE_TIME=$(stat -c %Y "$CACHE_FILE")
+    DIFF=$((CUR_TIME - FILE_TIME))
+    if [ $DIFF -gt 900 ]; then
+        NEED_UPDATE=true
+    fi
+fi
 
-if [[ "$W_RAW" == *"|"* ]] && [[ "$W_RAW" != *"html"* ]]; then
-    IFS='|' read -r LOC COND TEMP WIND <<< "$W_RAW"
+if [ "$NEED_UPDATE" = true ]; then
+    NEW_DATA=$(curl -s --max-time 3 -H "User-Agent: Mozilla/5.0" "wttr.in/?format=%l|%C|%t|%w&m")
+    
+    if [[ "$NEW_DATA" == *"|"* ]] && [[ "$NEW_DATA" != *"html"* ]]; then
+        echo "$NEW_DATA" > "$CACHE_FILE"
+    fi
+fi
+
+if [ -f "$CACHE_FILE" ]; then
+    IFS='|' read -r LOC COND TEMP WIND < "$CACHE_FILE"
+    
     LOC=$(safe_text "$LOC")
     COND=$(safe_text "$COND")
     TEMP=$(safe_text "$TEMP")
     WIND=$(safe_text "$WIND")
-    if [ ${#LOC} -gt 20 ]; then
-        LOC="${LOC:0:18}.."
+    
+    if [ ${#LOC} -gt 22 ]; then
+        LOC="${LOC:0:20}.."
     fi
 else
-    LOC="System Offline"
-    COND="No Connection"
+    LOC="Offline Mode"
+    COND="No Data"
     TEMP="--°C"
     WIND="--"
 fi
