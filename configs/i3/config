@@ -34,6 +34,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+b exec firefox
 bindsym $mod+c exec code
 bindsym $mod+e exec thunar
+bindsym $mod+Shift+v exec $term -e nvim
 bindsym $mod+q kill
 
 # Menus (GUI)

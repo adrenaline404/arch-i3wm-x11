@@ -93,7 +93,7 @@ if ! command -v yay &> /dev/null; then
 fi
 
 log "Checking for conflicting packages..."
-CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git")
+CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git" "vim")
 for pkg in "${CONFLICTS[@]}"; do
     if pacman -Qq "$pkg" &> /dev/null; then
         warn "Removing conflict: $pkg"
@@ -108,11 +108,12 @@ PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
            network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc \
            polkit-gnome lxappearance qt5ct \
-           papirus-icon-theme arc-gtk-theme papirus-folders-git"
+           papirus-icon-theme arc-gtk-theme papirus-folders-git \
+           neovim python-pynvim npm xclip ripgrep"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"
 
 if ask_user "Install Modern Terminal Environment (Kitty, Zsh, Starship, Fastfetch)?" "Y"; then
-    PKGS_TERM="kitty zsh starship fastfetch eza bat ripgrep zsh-syntax-highlighting zsh-autosuggestions fzf"
+    PKGS_TERM="kitty zsh starship fastfetch eza bat zsh-syntax-highlighting zsh-autosuggestions fzf"
     install_pkg "Terminal Tools" "$PKGS_TERM"
 fi
 
@@ -143,7 +144,7 @@ log "Backing up old configs to $BACKUP_DIR..."
 mkdir -p "$BACKUP_DIR"
 mkdir -p "$HOME/.config"
 
-CONFIGS=("i3" "polybar" "scripts" "themes" "picom" "dunst" "kitty" "rofi" "fastfetch")
+CONFIGS=("i3" "polybar" "scripts" "themes" "picom" "dunst" "kitty" "rofi" "fastfetch" "nvim")
 
 for cfg in "${CONFIGS[@]}"; do
     if [ -d "$HOME/.config/$cfg" ]; then
@@ -163,6 +164,7 @@ echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
 log "Setting Executable Permissions..."
 chmod +x "$HOME/.config/i3/scripts/"*.sh
 chmod +x "$HOME/.config/polybar/launch.sh"
+chmod +x "$HOME/.config/i3/scripts/rofi_dashboard.sh" 2>/dev/null
 
 log "Generating Dynamic Fastfetch Presets..."
 bash "$REPO_DIR/scripts/setup_fastfetch.sh"
