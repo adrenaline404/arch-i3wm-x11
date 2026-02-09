@@ -6,14 +6,12 @@ configuration {
 @import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    width: 320px;
-    height: 520px;
-    
+    width: 360px;
+    height: 550px;
     border: 2px;
     border-color: @primary;
-    border-radius: 15px;
+    border-radius: 16px;
     background-color: @background;
-    
     location: center;
     anchor: center;
 }
@@ -21,7 +19,7 @@ window {
 mainbox {
     background-color: transparent;
     children: [ message ];
-    padding: 20px;
+    padding: 25px;
 }
 
 message {

@@ -18,38 +18,38 @@ TIME_NOW=$(date "+%H:%M")
 DATE_NOW=$(date "+%A, %d %B %Y")
 TODAY=$(date +%-d)
 
-W_RAW=$(curl -s --connect-timeout 2 "wttr.in/?format=%l\n%C\n%t\n%w&m")
+W_RAW=$(curl -s --max-time 3 "wttr.in/?format=%l|%C|%t|%w&m")
 
-if [ -z "$W_RAW" ] || [ $(echo "$W_RAW" | wc -l) -lt 4 ]; then
-    W_LOC="Local System"
-    W_COND="Offline"
-    W_TEMP="--°C"
-    W_WIND="No Data"
+if [[ "$W_RAW" == *"|"* ]] && [[ "$W_RAW" != *"html"* ]]; then
+    IFS='|' read -r LOC COND TEMP WIND <<< "$W_RAW"
+    LOC=$(safe_text "$LOC")
+    COND=$(safe_text "$COND")
+    TEMP=$(safe_text "$TEMP")
+    WIND=$(safe_text "$WIND")
+    if [ ${#LOC} -gt 20 ]; then
+        LOC="${LOC:0:18}.."
+    fi
 else
-    mapfile -t W_DATA <<< "$W_RAW"
-    W_LOC=$(safe_text "${W_DATA[0]}")
-    W_COND=$(safe_text "${W_DATA[1]}")
-    W_TEMP=$(safe_text "${W_DATA[2]}")
-    W_WIND=$(safe_text "${W_DATA[3]}")
-    
-    W_LOC=${W_LOC:0:22}
+    LOC="System Offline"
+    COND="No Connection"
+    TEMP="--°C"
+    WIND="--"
 fi
 
 RAW_CAL=$(LC_ALL=C cal | sed '/^$/d')
-
 CAL_DISPLAY=$(echo "$RAW_CAL" | sed -r "s/(^| )($TODAY)($| )/\1<span background='$THEME_COLOR' color='#000000' weight='bold'> \2 <\/span>\3/")
 
-SECTION_TIME="<span weight='heavy' size='36pt' color='$THEME_COLOR'>$TIME_NOW</span>"
+printf -v SECTION_TIME "<span weight='heavy' size='36pt' color='%s'>%s</span>" "$THEME_COLOR" "$TIME_NOW"
+printf -v SECTION_DATE "<span size='11pt' color='#cccccc'>%s</span>" "$DATE_NOW"
+printf -v SECTION_WEATHER "<span size='12pt' color='%s'> %s</span>\n<span size='10pt'>%s (%s)</span>\n<span size='10pt' color='#888888'> %s</span>" "$THEME_COLOR" "$LOC" "$COND" "$TEMP" "$WIND"
+printf -v SECTION_CAL "<span weight='bold'>%s</span>" "$CAL_DISPLAY"
 
-SECTION_DATE="<span size='11pt' color='#cccccc'>$DATE_NOW</span>"
+FINAL_TEXT="$SECTION_TIME
+$SECTION_DATE
 
-SECTION_WEATHER="<span size='12pt' color='$THEME_COLOR'> $W_LOC</span>
-<span size='10pt'>$W_COND ($W_TEMP)</span>
-<span size='10pt' color='#888888'> $W_WIND</span>"
+$SECTION_WEATHER
 
-SECTION_CAL="<span weight='bold'>$CAL_DISPLAY</span>"
-
-FINAL_TEXT="$SECTION_TIME\n$SECTION_DATE\n\n$SECTION_WEATHER\n\n$SECTION_CAL"
+$SECTION_CAL"
 
 FINAL_TEXT="<span $FONT size='11pt'>$FINAL_TEXT</span>"
 
