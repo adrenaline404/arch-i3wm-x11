@@ -38,6 +38,7 @@ bindsym $mod+q kill
 
 # Menus (GUI)
 bindsym $mod+d exec $scripts/rofi_launcher.sh
+bindsym $mod+Shift+d exec $scripts/rofi_dashboard.sh
 bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
 bindsym $mod+Shift+n exec $scripts/rofi_network.sh
 bindsym $mod+t exec $scripts/theme_switcher.sh gui
