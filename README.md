@@ -3,7 +3,7 @@
 ![Arch Linux](https://img.shields.io/badge/Distro-Arch%20Linux-1793d1?style=for-the-badge&logo=arch-linux&logoColor=white)
 ![i3wm](https://img.shields.io/badge/WM-i3wm-e8e8e8?style=for-the-badge&logo=i3&logoColor=black)
 
-> Created by: adrenaline404
+> **Created by: adrenaline404**
 
 ---
 
@@ -31,23 +31,24 @@ chmod +x install.sh
 
 ### ⚙️ What the Installer Does
 
-*Package Management:* Checks for yay (AUR Helper) and installs it if missing.
-Installs all core components (i3-wm, polybar, picom, etc.) and optional tools(Neovim, Zsh, Fonts).
+**Package Management:** *Checks for yay (AUR Helper) and installs it if missing.
+Installs all core components (i3-wm, polybar, picom, etc.) and optional tools(Neovim, Zsh, Fonts).*
 
-*Conflict Resolution:* Automatically detects and removes conflicting packages (e.g., standard vim vs neovim, or different picom forks).
+**Conflict Resolution:** *Automatically detects and removes conflicting packages (e.g., standard vim vs neovim, or different picom forks).*
 
-*Backup:* Creates a timestamped backup of your existing configurations in ~/dotfiles_backup_YYYYMMDD_HHMMSS.
+**Backup:** *Creates a timestamped backup of your existing configurations in ~/dotfiles_backup_YYYYMMDD_HHMMSS.*
 
-*Neovim Setup:* Offers a "Fresh Install" mode to clean old caches and bootstrap plugins (Lazy.nvim & Mason) automatically.
+**Neovim Setup:** *Offers a "Fresh Install" mode to clean old caches and bootstrap plugins (Lazy.nvim & Mason) automatically.*
 
-*System Hardening:* Sets up udev rules for backlight control and adds your user to necessary groups (video, input, audio).
+**System Hardening:** *Sets up udev rules for backlight control and adds your user to necessary groups (video, input, audio).*
 
 ### ⚠️ Post-Installation
 
-*After the installation is complete:*
+> *After the installation is complete:*
 
-> Reboot your system to apply group permissions and udev rules.
-> Select i3 as your session in the login manager / display manager.
+**Reboot your system to apply group permissions and udev rules.**
+
+**Select i3 as your session in the login manager / display manager.**
 
 ---
 
@@ -131,5 +132,9 @@ You can use **Arrow Keys** or **Vim Keys** (`h`, `j`, `k`, `l`).
 | **`Play/Pause`** | Media Play/Pause |
 | **`Brightness Up`** | Screen Brightness +5% |
 | **`Brightness Down`** | Screen Brightness -5% |
+
+---
+
+> ***The information in this "README.md" is not complete, I will add more information at a later time.***
 
 ---
