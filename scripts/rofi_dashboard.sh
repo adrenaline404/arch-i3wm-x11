@@ -24,28 +24,9 @@ CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span col
 
 PLAYER_STATUS=$(playerctl status 2>/dev/null)
 
-if [ "$STATUS" == "Stopped" ]; then
-    MUSIC_INFO="<span color='#666666'>No Media Playing</span>"
-    BTN_PLAY="$ICON_PLAY"
-elif [ -n "$PLAYER_STATUS" ]; then
-    ARTIST=$(playerctl metadata artist 2>/dev/null | sed 's/&/&amp;/g')
-    TITLE=$(playerctl metadata title 2>/dev/null | sed 's/&/&amp;/g')
-    
-    if [ ${#TITLE} -gt 50 ]; then TITLE="${TITLE:0:50}..."; fi
-    if [ ${#ARTIST} -gt 50 ]; then ARTIST="${ARTIST:0:25}..."; fi
-    
-    if [ -z "$TITLE" ]; then TITLE="Unknown Track"; fi
-    if [ -z "$ARTIST" ]; then ARTIST="Unknown Artist"; fi
-
-    MUSIC_INFO="<span font='JetBrainsMono Nerd Font 10' weight='bold'>$TITLE</span>\n<span font='JetBrainsMono Nerd Font 10' color='#aaaaaa'>$ARTIST</span>"
-    
-    if [ "$PLAYER_STATUS" == "Playing" ]; then
-        BTN_PLAY="$ICON_PAUSE"
-    else
-        BTN_PLAY="$ICON_PLAY"
-    fi
+if [ "$PLAYER_STATUS" == "Playing" ]; then
+    BTN_PLAY="$ICON_PAUSE"
 else
-    MUSIC_INFO="<span color='#666666'>Not Connected</span>"
     BTN_PLAY="$ICON_PLAY"
 fi
 
@@ -55,12 +36,8 @@ SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 48' color='$ACCENT
 SECTION_CALENDAR="<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
 <span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>"
 
-SECTION_MUSIC="$MUSIC_INFO"
-
 FINAL_MESSAGE="$SECTION_HEADER
-$SECTION_CALENDAR
-<span size='5pt'> </span>
-$SECTION_MUSIC"
+$SECTION_CALENDAR"
 
 OPT_PREV="$ICON_PREV"
 OPT_TOGGLE="$BTN_PLAY"
