@@ -1,12 +1,10 @@
-include = ~/.config/dunst/colors.ini
-
 [global]
     monitor = 0
     follow = mouse
-    width = (300, 360)
-    height = (100, 300)
+    width = 320
+    height = (0, 300)
     origin = top-right
-    offset = (15, 50)
+    offset = 15x50
     scale = 0
     notification_limit = 5
 
@@ -16,8 +14,15 @@ include = ~/.config/dunst/colors.ini
     progress_bar_min_width = 150
     progress_bar_max_width = 300
 
+    transparency = 10
+    
     frame_width = 2
     separator_color = frame
+    
+    padding = 12
+    horizontal_padding = 12
+    text_icon_padding = 10
+    
     sort = yes
     font = JetBrainsMono Nerd Font 10
     line_height = 0
@@ -33,8 +38,8 @@ include = ~/.config/dunst/colors.ini
     show_indicators = yes
 
     icon_position = left
-    min_icon_size = 32
-    max_icon_size = 48
+    min_icon_size = 48
+    max_icon_size = 64
     icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
 
     sticky_history = yes
@@ -44,4 +49,4 @@ include = ~/.config/dunst/colors.ini
     mouse_right_click = close_all
 
     layer = overlay
-    corner_radius = 10
+    corner_radius = 12
