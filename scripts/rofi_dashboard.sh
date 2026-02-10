@@ -31,13 +31,13 @@ elif [ -n "$PLAYER_STATUS" ]; then
     ARTIST=$(playerctl metadata artist 2>/dev/null | sed 's/&/&amp;/g')
     TITLE=$(playerctl metadata title 2>/dev/null | sed 's/&/&amp;/g')
     
-    if [ ${#TITLE} -gt 30 ]; then TITLE="${TITLE:0:28}..."; fi
-    if [ ${#ARTIST} -gt 30 ]; then ARTIST="${ARTIST:0:28}..."; fi
+    if [ ${#TITLE} -gt 50 ]; then TITLE="${TITLE:0:50}..."; fi
+    if [ ${#ARTIST} -gt 50 ]; then ARTIST="${ARTIST:0:25}..."; fi
     
     if [ -z "$TITLE" ]; then TITLE="Unknown Track"; fi
     if [ -z "$ARTIST" ]; then ARTIST="Unknown Artist"; fi
 
-    MUSIC_INFO="<span font='JetBrainsMono Nerd Font 14' weight='bold'>$TITLE</span>\n<span font='JetBrainsMono Nerd Font 10' color='#aaaaaa'>$ARTIST</span>"
+    MUSIC_INFO="<span font='JetBrainsMono Nerd Font 10' weight='bold'>$TITLE</span>\n<span font='JetBrainsMono Nerd Font 10' color='#aaaaaa'>$ARTIST</span>"
     
     if [ "$PLAYER_STATUS" == "Playing" ]; then
         BTN_PLAY="$ICON_PAUSE"
@@ -59,8 +59,6 @@ SECTION_MUSIC="$MUSIC_INFO"
 
 FINAL_MESSAGE="$SECTION_HEADER
 $SECTION_CALENDAR
-<span size='5pt'> </span>
-<span color='#333333'>_________________________</span>
 <span size='5pt'> </span>
 $SECTION_MUSIC"
 

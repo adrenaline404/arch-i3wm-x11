@@ -19,10 +19,8 @@ $nodejs\
 $php\
 $python\
 $rust\
-$typescript\
 [](fg:bg_light)\
 \n$character"""
-
 
 [directory]
 style = "bg:bg_dark fg:#e0e0e0"
@@ -38,7 +36,6 @@ format = "[[ $symbol $branch ](fg:text_secondary bg:bg_medium)]($style)"
 [git_status]
 style = "bg:bg_medium"
 format = "[[($all_status$ahead_behind )](fg:text_secondary bg:bg_medium)]($style)"
-
 
 [c]
 symbol = " "
@@ -75,15 +72,9 @@ symbol = " "
 style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
-[typescript]
-symbol = " "
-style = "bg:bg_light"
-format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
-
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
-
 
 [palettes.void_blue]
 accent = "#2e9ef4"

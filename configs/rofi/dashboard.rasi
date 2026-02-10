@@ -16,27 +16,27 @@ window {
     location:         center;
     anchor:           center;
     fullscreen:       false;
-    width:            420px; 
-    height:           550px;
+    width:            500px;
+    height:           500px;
     
-    border:           0px;
+    border:           2px;
     border-radius:    20px;
     background-color: @bg-col;
     
-    padding:          20px;
+    padding:          25px;
 }
 
 mainbox {
     background-color: transparent;
     orientation:      vertical;
     children:         [ "message", "listview" ];
-    spacing:          15px;
+    spacing:          25px;
 }
 
 message {
     background-color: transparent;
-    padding:          10px;
-    border-radius:    0px;
+    padding:          25px;
+    border-radius:    2px;
 }
 
 textbox {
@@ -50,7 +50,7 @@ textbox {
 listview {
     background-color: transparent;
     layout:           horizontal;
-    spacing:          20px;
+    spacing:          50px;
     lines:            3;
     columns:          3;
     cycle:            false;
@@ -59,21 +59,21 @@ listview {
     fixed-height:     true;
     fixed-columns:    true;
     
-    margin:           10px 45px 0px 45px; 
+    margin:           25px 25px 25px 25px; 
 }
 
 element {
     background-color: #ffffff08;
-    padding:          18px 0px;
+    padding:          25px 25px;
     border-radius:    100%;
     cursor:           pointer;
-    width:            64px;
+    width:            96px;
 }
 
 element-text {
     background-color: transparent;
     text-color:       inherit;
-    font:             "JetBrainsMono Nerd Font 24";
+    font:             "JetBrainsMono Nerd Font 10";
     horizontal-align: 0.5;
     vertical-align:   0.5;
     margin:           0px;
@@ -82,6 +82,6 @@ element-text {
 element selected {
     background-color: #ffffff20;
     text-color:       #ffffff;
-    border:           1px;
+    border:           2px;
     border-color:     #ffffff50;
 }
