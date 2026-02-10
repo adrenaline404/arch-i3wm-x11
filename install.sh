@@ -92,6 +92,8 @@ if ! command -v yay &> /dev/null; then
     cd "$REPO_DIR" || exit
 fi
 
+sleep 2
+
 log "Checking for conflicting packages..."
 CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git" "vim")
 for pkg in "${CONFLICTS[@]}"; do
@@ -100,6 +102,8 @@ for pkg in "${CONFLICTS[@]}"; do
         sudo pacman -Rdd --noconfirm "$pkg"
     fi
 done
+
+sleep 2
 
 echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 
@@ -160,6 +164,8 @@ cp -r "$REPO_DIR/scripts" "$HOME/.config/i3/"
 cp -r "$REPO_DIR/themes" "$HOME/.config/i3/"
 cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 
+sleep 2
+
 log "Configuring Neovim environment..."
 if [ -d "$HOME/.local/share/nvim" ] || [ -d "$HOME/.cache/nvim" ]; then
     if ask_user "Perform Fresh Install for Neovim (Clean old cache/plugins)?" "Y"; then
@@ -176,6 +182,8 @@ if [ -d "$HOME/.local/share/nvim" ] || [ -d "$HOME/.cache/nvim" ]; then
         warn "Skipping Neovim cleanup. Old plugins might conflict."
     fi
 fi
+
+sleep 2
 
 echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
 
@@ -214,8 +222,7 @@ else
     echo 'LOCK_RING="#FF0000cc"' > "$HOME/.config/i3/scripts/lock_colors.rc"
 fi
 
-log "Reload dunst..."
-killall dunst; dunst &
+sleep 2
 
 echo -e "${GREEN}"
 echo " "
