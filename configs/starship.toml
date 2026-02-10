@@ -1,9 +1,7 @@
-palette = "void_blue"
+palette = "void_red"
 
 command_timeout = 1000
 scan_timeout = 100
-
-# LAYOUT
 
 format = """
 [░▒▓](accent)\
@@ -15,28 +13,18 @@ $git_branch\
 $git_status\
 [](fg:bg_medium bg:bg_light)\
 $c\
-$elixir\
-$elm\
 $golang\
-$gradle\
-$haskell\
 $java\
-$julia\
 $lua\
 $nodejs\
-$nim\
 $php\
 $python\
 $ruby\
 $rust\
-$scala\
-$swift\
 $typescript\
 $zig\
 [](fg:bg_light)\
 \n$character"""
-
-# MODULES
 
 [directory]
 style = "bg:bg_dark fg:#e0e0e0"
@@ -52,8 +40,6 @@ format = "[[ $symbol $branch ](fg:text_secondary bg:bg_medium)]($style)"
 [git_status]
 style = "bg:bg_medium"
 format = "[[($all_status$ahead_behind )](fg:text_secondary bg:bg_medium)]($style)"
-
-# LANGUAGES (Grouped in bg_light)
 
 [c]
 symbol = " "
@@ -110,13 +96,9 @@ symbol = " "
 style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
-# PROMPT CHAR
-
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
-
-# PALETTES (THEMES)
 
 [palettes.void_blue]
 accent = "#2e9ef4"

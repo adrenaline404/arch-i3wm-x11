@@ -53,7 +53,7 @@ bindsym Print exec flameshot gui
 bindsym $mod+Shift+s exec flameshot gui
 
 # Lock Screen
-bindsym $mod+Shift+x exec $scripts/lock.sh
+bindsym $mod+Shift+x exec ~/.config/i3/scripts/lock.sh
 
 # WINDOW FOCUS (VIM + ARROW)
 # Vim Keys

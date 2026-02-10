@@ -1,50 +1,43 @@
 #!/bin/bash
 
 ROFI_THEME="$HOME/.config/rofi/dashboard.rasi"
-CACHE_WEATHER="/tmp/dashboard_weather.txt"
-CACHE_MUSIC="/tmp/dashboard_music.txt"
 
-THEME_COLOR=$(grep 'LOCK_RING' $HOME/.config/i3/scripts/lock_colors.rc | cut -d'"' -f2 | cut -c1-7)
-if [[ ! "$THEME_COLOR" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
-    THEME_COLOR="#FF5555"
+CURRENT_PALETTE=$(grep 'palette =' $HOME/.config/starship.toml | cut -d'"' -f2)
+
+if [ "$CURRENT_PALETTE" == "void_blue" ]; then
+    ACCENT="#2e9ef4"
+else
+    ACCENT="#FF5555"
 fi
 
 ICON_PLAY=""
 ICON_PAUSE=""
 ICON_PREV=""
 ICON_NEXT=""
-ICON_MUSIC=""
-
-safe_text() {
-    echo "$1" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g'
-}
 
 TIME_BIG=$(date "+%H:%M")
 DATE_LONG=$(date "+%A, %d %B %Y")
 DAY_NUM=$(date "+%-d")
 
-if [ ! -f "$CACHE_WEATHER" ] || [ $(find "$CACHE_WEATHER" -mmin +30) ]; then
-    curl -s --max-time 3 "wttr.in/?format=%l|%C|%t|%w&m" > "$CACHE_WEATHER" || echo "Offline|NA|--|--" > "$CACHE_WEATHER"
-fi
-
-IFS='|' read -r W_LOC W_COND W_TEMP W_WIND < "$CACHE_WEATHER"
-if [[ "$W_LOC" == *"html"* ]]; then
-    W_LOC="Offline"; W_COND="No Data"; W_TEMP="--"; W_WIND="--"
-fi
-W_LOC=${W_LOC:0:15}
-
 CAL_HEAD=$(LC_ALL=C cal | head -n1)
-CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$THEME_COLOR' weight='bold'>\2<\/span>\3/")
+CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$ACCENT' weight='bold'>\2<\/span>\3/")
 
 PLAYER_STATUS=$(playerctl status 2>/dev/null)
-if [ "$?" -eq 0 ] && [ "$PLAYER_STATUS" != "Stopped" ]; then
-    ARTIST=$(playerctl metadata artist 2>/dev/null | sed 's/&/and/g')
-    TITLE=$(playerctl metadata title 2>/dev/null | sed 's/&/and/g')
+
+if [ "$STATUS" == "Stopped" ]; then
+    MUSIC_INFO="<span color='#666666'>No Media Playing</span>"
+    BTN_PLAY="$ICON_PLAY"
+elif [ -n "$PLAYER_STATUS" ]; then
+    ARTIST=$(playerctl metadata artist 2>/dev/null | sed 's/&/&amp;/g')
+    TITLE=$(playerctl metadata title 2>/dev/null | sed 's/&/&amp;/g')
     
-    if [ ${#TITLE} -gt 25 ]; then TITLE="${TITLE:0:23}.."; fi
-    if [ ${#ARTIST} -gt 25 ]; then ARTIST="${ARTIST:0:23}.."; fi
+    if [ ${#TITLE} -gt 30 ]; then TITLE="${TITLE:0:28}..."; fi
+    if [ ${#ARTIST} -gt 30 ]; then ARTIST="${ARTIST:0:28}..."; fi
     
-    MUSIC_INFO="$ICON_MUSIC  $TITLE\n<span size='small' color='#888888'>$ARTIST</span>"
+    if [ -z "$TITLE" ]; then TITLE="Unknown Track"; fi
+    if [ -z "$ARTIST" ]; then ARTIST="Unknown Artist"; fi
+
+    MUSIC_INFO="<span font='JetBrainsMono Nerd Font 14' weight='bold'>$TITLE</span>\n<span font='JetBrainsMono Nerd Font 10' color='#aaaaaa'>$ARTIST</span>"
     
     if [ "$PLAYER_STATUS" == "Playing" ]; then
         BTN_PLAY="$ICON_PAUSE"
@@ -52,25 +45,23 @@ if [ "$?" -eq 0 ] && [ "$PLAYER_STATUS" != "Stopped" ]; then
         BTN_PLAY="$ICON_PLAY"
     fi
 else
-    MUSIC_INFO="No Media Playing"
+    MUSIC_INFO="<span color='#666666'>Not Connected</span>"
     BTN_PLAY="$ICON_PLAY"
 fi
 
-SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 42' color='$THEME_COLOR'>$TIME_BIG</span>
+SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 48' color='$ACCENT'>$TIME_BIG</span>
 <span font='JetBrainsMono Nerd Font 12' color='#ffffff'>$DATE_LONG</span>"
 
-SECTION_MIDDLE="
-<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
-<span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>
+SECTION_CALENDAR="<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
+<span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>"
 
-<span font='JetBrainsMono Nerd Font 10' color='$THEME_COLOR'>  $W_LOC</span>
-<span font='JetBrainsMono Nerd Font 9'>$W_TEMP ($W_COND)</span>"
-
-SECTION_MUSIC="<span font='JetBrainsMono Nerd Font 11' weight='bold'>$MUSIC_INFO</span>"
+SECTION_MUSIC="$MUSIC_INFO"
 
 FINAL_MESSAGE="$SECTION_HEADER
-$SECTION_MIDDLE
-________________________________
+$SECTION_CALENDAR
+<span size='5pt'> </span>
+<span color='#333333'>_________________________</span>
+<span size='5pt'> </span>
 $SECTION_MUSIC"
 
 OPT_PREV="$ICON_PREV"

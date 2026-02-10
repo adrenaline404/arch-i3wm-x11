@@ -6,10 +6,8 @@ configuration {
 * {
     background-color: transparent;
     text-color:       #ffffff;
-    
-    accent:           #FF5555;
-    bg-col:           #1a1a1aF0;
-    border-col:       #ffffff20;
+    bg-col:           #101010F2;
+    border-col:       #ffffff10;
 }
 
 window {
@@ -17,12 +15,11 @@ window {
     location:         center;
     anchor:           center;
     fullscreen:       false;
-    width:            350px;
-    height:           580px;
+    width:            320px;
+    height:           500px;
     
-    border:           2px;
-    border-radius:    16px;
-    border-color:     @border-col;
+    border:           0px;
+    border-radius:    20px;
     background-color: @bg-col;
     
     padding:          20px;
@@ -32,13 +29,14 @@ mainbox {
     background-color: transparent;
     orientation:      vertical;
     children:         [ "message", "listview" ];
-    spacing:          15px;
+    spacing:          10px;
 }
 
 message {
     background-color: transparent;
     padding:          10px;
-    border-radius:    8px;
+    border-radius:    0px;
+    horizontal-align: 0.5;
 }
 
 textbox {
@@ -52,7 +50,7 @@ textbox {
 listview {
     background-color: transparent;
     layout:           horizontal;
-    spacing:          10px;
+    spacing:          20px;
     lines:            3;
     columns:          3;
     cycle:            true;
@@ -60,27 +58,28 @@ listview {
     scrollbar:        false;
     fixed-height:     true;
     fixed-columns:    true;
+    margin:           10px 30px 0px 30px;
 }
 
 element {
-    background-color: #ffffff0D;
-    padding:          15px 10px;
-    border-radius:    12px;
+    background-color: #ffffff08;
+    padding:          15px 0px;
+    border-radius:    100%;
     cursor:           pointer;
-    width:            80px;
+    width:            60px;
 }
 
 element-text {
     background-color: transparent;
     text-color:       inherit;
-    font:             "JetBrainsMono Nerd Font 24";
+    font:             "JetBrainsMono Nerd Font 20";
     horizontal-align: 0.5;
     vertical-align:   0.5;
 }
 
 element selected {
     background-color: #ffffff20;
-    text-color:       @accent;
+    text-color:       #ffffff;
     border:           1px;
-    border-color:     @accent;
+    border-color:     #ffffff50;
 }

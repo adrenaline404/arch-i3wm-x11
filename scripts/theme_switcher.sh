@@ -10,12 +10,9 @@ LOCK_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
 GTK_SETTINGS="$HOME/.config/gtk-3.0/settings.ini"
 
 if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
-
     OPT_RED="  Void Red"
     OPT_BLUE="  Void Blue"
-    
     OPTIONS="$OPT_RED\n$OPT_BLUE"
-    
     HEADER="<span color='#888888'>SELECT SYSTEM THEME STYLE</span>"
     
     CHOICE_INDEX=$(echo -e "$OPTIONS" | rofi -dmenu -i -format d -p "Theme" -mesg "$HEADER" -theme ~/.config/rofi/theme_select.rasi)
@@ -36,69 +33,45 @@ rm -rf "$LINK_TARGET"
 ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
 
 if [ "$THEME" == "void-red" ]; then
-    papirus-folders -C red --theme Papirus-Dark &
-
-    cat > "$DUNST_COLORS" <<EOF
-[urgency_low]
-    background = "#000000CC"
-    foreground = "#888888"
-    frame_color = "#ff5555"
-    timeout = 5
-
-[urgency_normal]
-    background = "#000000CC"
-    foreground = "#ffffff"
-    frame_color = "#ff5555"
-    timeout = 5
-
-[urgency_critical]
-    background = "#000000CC"
-    foreground = "#ff5555"
-    frame_color = "#ff5555"
-    timeout = 0
-EOF
-
-    sed -i 's/^palette = .*/palette = "void_red"/' "$STARSHIP_CONFIG"
-
-    echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
-    echo 'LOCK_RING="#ff5555cc"' >> "$LOCK_CONFIG"
-    echo 'LOCK_TEXT="#ff5555ee"' >> "$LOCK_CONFIG"
-    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
-    echo 'LOCK_WRONG="#880000bb"' >> "$LOCK_CONFIG"
-    echo 'LOCK_VERIFY="#ffffffbb"' >> "$LOCK_CONFIG"
-
+    ACCENT="#ff5555"
+    ICON_COLOR="red"
+    STARSHIP_PALETTE="void_red"
 elif [ "$THEME" == "void-blue" ]; then
-    papirus-folders -C blue --theme Papirus-Dark &
+    ACCENT="#2e9ef4"
+    ICON_COLOR="blue"
+    STARSHIP_PALETTE="void_blue"
+fi
 
-    cat > "$DUNST_COLORS" <<EOF
+papirus-folders -C "$ICON_COLOR" --theme Papirus-Dark &
+
+cat > "$DUNST_COLORS" <<EOF
 [urgency_low]
-    background = "#000000CC"
+    background = "#101010F2"
     foreground = "#888888"
-    frame_color = "#2e9ef4"
+    frame_color = "$ACCENT"
     timeout = 5
 
 [urgency_normal]
-    background = "#000000CC"
+    background = "#101010F2"
     foreground = "#ffffff"
-    frame_color = "#2e9ef4"
+    frame_color = "$ACCENT"
     timeout = 5
 
 [urgency_critical]
-    background = "#000000CC"
+    background = "#101010F2"
     foreground = "#ff5555"
     frame_color = "#ff5555"
     timeout = 0
 EOF
 
-    sed -i 's/^palette = .*/palette = "void_blue"/' "$STARSHIP_CONFIG"
+sed -i "s/^palette = .*/palette = \"$STARSHIP_PALETTE\"/" "$STARSHIP_CONFIG"
 
-    echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
-    echo 'LOCK_RING="#2e9ef4cc"' >> "$LOCK_CONFIG"
-    echo 'LOCK_TEXT="#2e9ef4ee"' >> "$LOCK_CONFIG"
-    echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
-    echo 'LOCK_WRONG="#ff5555bb"' >> "$LOCK_CONFIG"
-    echo 'LOCK_VERIFY="#ffffffbb"' >> "$LOCK_CONFIG"
-fi
+echo "# Dynamic Lockscreen for $THEME" > "$LOCK_CONFIG"
+echo "LOCK_RING=\"${ACCENT}cc\"" >> "$LOCK_CONFIG"
+echo "LOCK_TEXT=\"${ACCENT}ee\"" >> "$LOCK_CONFIG"
+echo 'LOCK_INSIDE="#00000000"' >> "$LOCK_CONFIG"
+echo 'LOCK_WRONG="#880000bb"' >> "$LOCK_CONFIG"
+echo 'LOCK_VERIFY="#ffffffbb"' >> "$LOCK_CONFIG"
 
 mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$GTK_SETTINGS" <<EOF
@@ -124,7 +97,6 @@ if [ -f "$LINK_TARGET/wallpaper.jpg" ]; then
 fi
 
 ~/.config/polybar/launch.sh &
-
 i3-msg reload >/dev/null
 
 killall dunst
