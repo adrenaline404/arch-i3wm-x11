@@ -29,9 +29,6 @@ if [ ! -d "$THEME_ROOT/$THEME" ]; then
     exit 1
 fi
 
-rm -rf "$LINK_TARGET"
-ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
-
 if [ "$THEME" == "void-red" ]; then
     ACCENT="#ff5555"
     ICON_COLOR="red"
@@ -40,8 +37,13 @@ elif [ "$THEME" == "void-blue" ]; then
     ACCENT="#2e9ef4"
     ICON_COLOR="blue"
     STARSHIP_PALETTE="void_blue"
+else
+    ACCENT="#ffffff"
+    ICON_COLOR="blue"
 fi
 
+rm -rf "$LINK_TARGET"
+ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
 papirus-folders -C "$ICON_COLOR" --theme Papirus-Dark &
 
 cat > "$DUNST_COLORS" <<EOF
@@ -99,7 +101,8 @@ fi
 ~/.config/polybar/launch.sh &
 i3-msg reload >/dev/null
 
-killall dunst
+killall -q dunst
+sleep 0.5
 dunst &
 
-notify-send "System Synced" "Theme applied: $THEME"
+notify-send "System Synced" "Theme applied: $THEME (Frame Color: $ACCENT)"

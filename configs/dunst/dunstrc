@@ -7,7 +7,7 @@
     offset = 15x50
     scale = 0
     notification_limit = 5
-
+    
     progress_bar = true
     progress_bar_height = 10
     progress_bar_frame_width = 1
