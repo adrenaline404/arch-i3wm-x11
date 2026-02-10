@@ -36,8 +36,14 @@ SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 48' color='$ACCENT
 SECTION_CALENDAR="<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
 <span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>"
 
+SPACER1="<span size='20pt'>\n</span>"
+
+SPACER2="<span size='10pt'> </span>"
+
 FINAL_MESSAGE="$SECTION_HEADER
-$SECTION_CALENDAR"
+$SPACER2
+$SECTION_CALENDAR
+$SPACER1"
 
 OPT_PREV="$ICON_PREV"
 OPT_TOGGLE="$BTN_PLAY"
