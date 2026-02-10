@@ -214,6 +214,9 @@ else
     echo 'LOCK_RING="#FF0000cc"' > "$HOME/.config/i3/scripts/lock_colors.rc"
 fi
 
+log "Reload dunst..."
+killall dunst; dunst &
+
 echo -e "${GREEN}"
 echo " "
 echo "   INSTALLATION SUCCESSFUL!"

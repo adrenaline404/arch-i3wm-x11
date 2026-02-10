@@ -17,7 +17,9 @@ setopt HIST_IGNORE_ALL_DUPS
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
-mod_load zsh/complist
+
+zmodload zsh/complist
+
 compinit
 _comp_options+=(globdots)
 

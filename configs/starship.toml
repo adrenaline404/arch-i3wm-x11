@@ -15,16 +15,14 @@ $git_status\
 $c\
 $golang\
 $java\
-$lua\
 $nodejs\
 $php\
 $python\
-$ruby\
 $rust\
 $typescript\
-$zig\
 [](fg:bg_light)\
 \n$character"""
+
 
 [directory]
 style = "bg:bg_dark fg:#e0e0e0"
@@ -41,6 +39,7 @@ format = "[[ $symbol $branch ](fg:text_secondary bg:bg_medium)]($style)"
 style = "bg:bg_medium"
 format = "[[($all_status$ahead_behind )](fg:text_secondary bg:bg_medium)]($style)"
 
+
 [c]
 symbol = " "
 style = "bg:bg_light"
@@ -53,11 +52,6 @@ format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
 [java]
 symbol = " "
-style = "bg:bg_light"
-format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
-
-[lua]
-symbol = " "
 style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
@@ -76,11 +70,6 @@ symbol = " "
 style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
-[ruby]
-symbol = " "
-style = "bg:bg_light"
-format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
-
 [rust]
 symbol = " "
 style = "bg:bg_light"
@@ -91,14 +80,10 @@ symbol = " "
 style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
-[zig]
-symbol = " "
-style = "bg:bg_light"
-format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
-
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
+
 
 [palettes.void_blue]
 accent = "#2e9ef4"
