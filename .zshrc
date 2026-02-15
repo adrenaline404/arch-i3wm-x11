@@ -1,5 +1,5 @@
 export PATH="$HOME/.local/bin:$PATH"
-export EDITOR="nvim"
+export EDITOR="nano"
 export TERMINAL="kitty"
 export BROWSER="firefox"
 

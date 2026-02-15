@@ -22,7 +22,7 @@ show_header() {
     echo "╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝       ╚═╝╚═════╝  ╚══╝╚══╝ ╚═╝     ╚═╝"
     echo -e "${NC}"
     echo -e "${BLUE}  >>> AUTOMATED INSTALLER & SETUP FOR ARCH LINUX (i3-wm)${NC}"
-    echo -e "${BLUE}  >>> DEVELOPER: https://github.com/adrenaline404${NC}"
+    echo -e "${BLUE}  >>> DEV: https://github.com/adrenaline404${NC}"
     echo " "
     echo ""
 }
@@ -92,18 +92,14 @@ if ! command -v yay &> /dev/null; then
     cd "$REPO_DIR" || exit
 fi
 
-sleep 2
-
 log "Checking for conflicting packages..."
-CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git" "vim")
+CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git")
 for pkg in "${CONFLICTS[@]}"; do
     if pacman -Qq "$pkg" &> /dev/null; then
         warn "Removing conflict: $pkg"
         sudo pacman -Rdd --noconfirm "$pkg"
     fi
 done
-
-sleep 2
 
 echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 
@@ -113,7 +109,7 @@ PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme papirus-folders-git \
-           neovim python-pynvim npm xclip ripgrep"
+           neovim python-pynvim npm xclip ripgrep nano"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"
 
 if ask_user "Install Modern Terminal Environment (Kitty, Zsh, Starship, Fastfetch)?" "Y"; then
@@ -149,7 +145,7 @@ log "Backing up old configs to $BACKUP_DIR..."
 mkdir -p "$BACKUP_DIR"
 mkdir -p "$HOME/.config"
 
-CONFIGS=("i3" "polybar" "scripts" "themes" "picom" "dunst" "kitty" "rofi" "fastfetch" "nvim")
+CONFIGS=("i3" "polybar" "scripts" "themes" "picom" "dunst" "kitty" "rofi" "fastfetch")
 
 for cfg in "${CONFIGS[@]}"; do
     if [ -d "$HOME/.config/$cfg" ]; then
@@ -163,27 +159,6 @@ cp -r "$REPO_DIR/configs/"* "$HOME/.config/"
 cp -r "$REPO_DIR/scripts" "$HOME/.config/i3/"
 cp -r "$REPO_DIR/themes" "$HOME/.config/i3/"
 cp "$REPO_DIR/.zshrc" "$HOME/.zshrc"
-
-sleep 2
-
-log "Configuring Neovim environment..."
-if [ -d "$HOME/.local/share/nvim" ] || [ -d "$HOME/.cache/nvim" ]; then
-    if ask_user "Perform Fresh Install for Neovim (Clean old cache/plugins)?" "Y"; then
-        log "Cleaning old Neovim data to prevent conflicts..."
-        rm -rf "$HOME/.local/share/nvim"
-        rm -rf "$HOME/.local/state/nvim"
-        rm -rf "$HOME/.cache/nvim"
-        echo -e "${GREEN}[OK] Neovim state cleaned.${NC}"
-        
-        log "Bootstrapping Neovim plugins (Headless)..."
-        nvim --headless "+Lazy! sync" +qa
-        echo -e "${GREEN}[OK] Neovim plugins synced.${NC}"
-    else
-        warn "Skipping Neovim cleanup. Old plugins might conflict."
-    fi
-fi
-
-sleep 2
 
 echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
 
@@ -222,8 +197,6 @@ else
     echo 'LOCK_RING="#FF0000cc"' > "$HOME/.config/i3/scripts/lock_colors.rc"
 fi
 
-sleep 2
-
 echo -e "${GREEN}"
 echo " "
 echo "   INSTALLATION SUCCESSFUL!"
@@ -236,7 +209,7 @@ echo "   3. Backup of your old configs is at: $BACKUP_DIR"
 echo " "
 echo -e "${NC}"
 
-read -p "Do you want to reboot now? [y/N]: " reboot_choice
+read -p "Do you want to reboot now? [Y/n]: " reboot_choice
 if [[ "$reboot_choice" =~ ^[Yy]$ ]]; then
     reboot
 else

@@ -3,8 +3,6 @@
 ![Arch Linux](https://img.shields.io/badge/Distro-Arch%20Linux-1793d1?style=for-the-badge&logo=arch-linux&logoColor=white)
 ![i3wm](https://img.shields.io/badge/WM-i3wm-e8e8e8?style=for-the-badge&logo=i3&logoColor=black)
 
-> **Created by: adrenaline404**
-
 ---
 
 ## 📥 Installation
@@ -32,13 +30,11 @@ chmod +x install.sh
 ### ⚙️ What the Installer Does
 
 **Package Management:** *Checks for yay (AUR Helper) and installs it if missing.
-Installs all core components (i3-wm, polybar, picom, etc.) and optional tools(Neovim, Zsh, Fonts).*
+Installs all core components (i3-wm, polybar, picom, etc.) and optional tools(Zsh, Fonts).*
 
-**Conflict Resolution:** *Automatically detects and removes conflicting packages (e.g., standard vim vs neovim, or different picom forks).*
+**Conflict Resolution:** *Automatically detects and removes conflicting packages (e.g., different picom forks).*
 
 **Backup:** *Creates a timestamped backup of your existing configurations in ~/dotfiles_backup_YYYYMMDD_HHMMSS.*
-
-**Neovim Setup:** *Offers a "Fresh Install" mode to clean old caches and bootstrap plugins (Lazy.nvim & Mason) automatically.*
 
 **System Hardening:** *Sets up udev rules for backlight control and adds your user to necessary groups (video, input, audio).*
 
@@ -136,5 +132,4 @@ You can use **Arrow Keys** or **Vim Keys** (`h`, `j`, `k`, `l`).
 ---
 
 > ***The information in this "README.md" is not complete, I will add more information at a later time.***
-
----
+> **Created by: adrenaline404**
