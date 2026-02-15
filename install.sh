@@ -109,7 +109,7 @@ PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
            network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme papirus-folders-git \
-           neovim python-pynvim npm xclip ripgrep nano"
+           neovim python-pynvim npm xclip ripgrep nano cava"
 install_pkg "Core System (Window Manager & Utils)" "$PKGS_CORE"
 
 if ask_user "Install Modern Terminal Environment (Kitty, Zsh, Starship, Fastfetch)?" "Y"; then
