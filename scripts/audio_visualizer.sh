@@ -42,9 +42,9 @@ trap cleanup EXIT INT TERM
 
 BARS="▁▂▃▄▅▆▇█"
 
-COLOR_LOW="%{F#98c379}"
-COLOR_MID="%{F#e5c07b}"
-COLOR_HIGH="%{F#e06c75}"
+COLOR_LOW="%{F#6c7086}"
+COLOR_MID="%{F#9399b2}"
+COLOR_HIGH="%{F#bac2de}"
 COLOR_RESET="%{F-}"
 
 get_color() {
@@ -59,7 +59,7 @@ get_color() {
 }
 
 while read -r line; do
-    output=" "
+    output=""
     
     for val in $line; do
         [ "$val" -lt 0 ] && val=0
@@ -68,9 +68,9 @@ while read -r line; do
         char="${BARS:$val:1}"
         color=$(get_color "$val")
         
-        output="${output}${color}${char}${COLOR_RESET} "
+        output="${output}${color}${char}${COLOR_RESET}"
     done
     
     echo "$output"
-    sleep 0.016
+    sleep 0.033
 done < "$FIFO_FILE"
