@@ -103,7 +103,7 @@ done
 
 echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 
-PKGS_CORE="i3-wm polybar dunst i3lock-color-git picom-git nitrogen xss-lock \
+PKGS_CORE="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen xss-lock \
            xorg-server xorg-xinit xorg-xset xorg-xrandr \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
            network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc \
