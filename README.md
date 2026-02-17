@@ -1,135 +1,127 @@
-# Arch-i3wm-x11
+# ⚡ ARCH-I3WM-X11
 
-![Arch Linux](https://img.shields.io/badge/Distro-Arch%20Linux-1793d1?style=for-the-badge&logo=arch-linux&logoColor=white)
-![i3wm](https://img.shields.io/badge/WM-i3wm-e8e8e8?style=for-the-badge&logo=i3&logoColor=black)
+![Arch Linux](https://img.shields.io/badge/OS-Arch_Linux-33b7ff?style=for-the-badge&logo=archlinux&logoColor=white)
+![Window Manager](https://img.shields.io/badge/WM-i3wm-black?style=for-the-badge&logo=i3&logoColor=white)
+![Shell](https://img.shields.io/badge/Shell-Zsh-black?style=for-the-badge&logo=zsh&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+A highly modular, robust, and fully automated dotfiles deployment for Arch Linux (X11). This project transforms a base Arch Linux installation into a fully functional, aesthetically pleasing, and highly productive desktop environment with just one script.
+
+## ✨ Key Features
+
+- **🚀 Bulletproof Installer:** Automated deployment script (`install.sh`) with safe backup mechanisms, `sudo` keep-alive, strict path resolution, and advanced flags (`--dry-run` and `--link` for developers).
+- **🎨 Dynamic Theming Engine:** Built-in Python script (`theme_builder.py`) using `pywal` to automatically generate system-wide color schemes (Polybar, Rofi, Dunst, i3) instantly from any wallpaper. Includes two static themes (`Void Red` and `Void Blue`) out of the box.
+- **🖥️ True Multi-Monitor Support:** Polybar automatically detects and scales across all connected displays seamlessly.
+- **⌨️ Instant Keybinding Cheatsheet:** Never forget a shortcut. Press `Mod + F1` to instantly parse and view all your active i3 keybindings via an elegant Rofi menu.
+- **⚡ Blazing Fast Terminal Environment:** Pre-configured `Zsh` with `Starship` prompt (async Git fetching enabled) and dynamic `Fastfetch` presets.
+- **🛠️ Custom Rofi Tooling:** Specialized Rofi menus for:
+  - Network Management (`nmcli` GUI)
+  - Power Menu
+  - Theme / Wallpaper Switcher
+  - Dashboard (Calendar, Media Controls)
+- **👋 First Boot Greeter:** Interactive setup upon first login to configure default applications like your web browser.
 
 ---
 
-## 📥 Installation
+## 📦 Prerequisites
 
-This repository includes an automated `install.sh` script that handles package installation, configuration deployment, and system hardening for Arch Linux.
+Before running the installer, ensure you have:
 
-### 1. Clone the Repository
+1. A fresh or existing **Arch Linux** installation (X11 environment).
+2. An active internet connection.
+3. A user account with `sudo` privileges.
 
-Open your terminal and clone this repository to your local machine:
+---
+
+## 🚀 Installation
+
+Clone the repository and run the installation script. The script will automatically install necessary packages (AUR included via `yay`), backup your existing dotfiles, and deploy the new configurations.
 
 ```bash
 git clone https://github.com/adrenaline404/arch-i3wm-x11.git
 cd arch-i3wm-x11
-```
-
-### 2. Run the Installer
-
-Make the script executable and run it. Note: Do not run as root (sudo); the script will ask for sudo permissions when needed.
-
-```Bash
-chmod +x install.sh
 ./install.sh
 ```
 
-### ⚙️ What the Installer Does
+### Advanced Installer Flags (For Developers)
 
-**Package Management:** *Checks for yay (AUR Helper) and installs it if missing.
-Installs all core components (i3-wm, polybar, picom, etc.) and optional tools(Zsh, Fonts).*
-
-**Conflict Resolution:** *Automatically detects and removes conflicting packages (e.g., different picom forks).*
-
-**Backup:** *Creates a timestamped backup of your existing configurations in ~/dotfiles_backup_YYYYMMDD_HHMMSS.*
-
-**System Hardening:** *Sets up udev rules for backlight control and adds your user to necessary groups (video, input, audio).*
-
-### ⚠️ Post-Installation
-
-> *After the installation is complete:*
-
-**Reboot your system to apply group permissions and udev rules.**
-
-**Select i3 as your session in the login manager / display manager.**
+- `./install.sh --dry-run` : Simulates the installation process without making any actual changes to your system or installing packages. Perfect for reviewing what the script does.
+- `./install.sh --link` : Uses `symlinks` instead of copying files. Ideal if you plan to modify the dotfiles and want the changes reflected immediately in your cloned Git repository.
 
 ---
 
-## ⌨️ Keybindings & Shortcuts
+## ⌨️ Workflow & Keybindings
 
-The **Super Key** (Windows Key) is referred to as **`Mod`** in this configuration.
+Once installed and rebooted, log into the `i3` session. Your main modifier key (`$mod`) is typically the **Windows/Super key**.
 
-### 🚀 Applications
+### 🆘 The Most Important Shortcut
 
-| Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `Enter`** | Open Terminal (Kitty) |
-| **`Mod` + `b`** | Open Web Browser (Firefox) |
-| **`Mod` + `c`** | Open Code Editor (VS Code) |
-| **`Mod` + `e`** | Open File Manager (Thunar) |
-| **`Mod` + `Shift` + `v`** | Open Neovim (in Terminal) |
-| **`Mod` + `q`** | Close/Kill Focused Window |
+> **Press `$mod + F1**` at any time to open the **Rofi Cheatsheet**. It dynamically reads your `i3/config` and displays all available shortcuts!
 
-### 🖥️ Menus & Widgets (Rofi)
+### Basic Navigation
 
 | Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `d`** | **App Launcher** (Search & Launch Apps) |
-| **`Mod` + `Shift` + `d`** | **Dashboard** (Time, Weather, Calendar) |
-| **`Mod` + `Shift` + `e`** | **Power Menu** (Shutdown, Reboot, Lock) |
-| **`Mod` + `Shift` + `n`** | **Network Manager** (Wifi/Ethernet) |
-| **`Mod` + `t`** | **Theme Switcher** (Change Colorscheme) |
-| **`Mod` + `Shift` + `w`** | **Wallpaper Manager** |
+| --- | --- |
+| `$mod + Enter` | Open Terminal (Kitty) |
+| `$mod + d` | Open App Launcher (Rofi) |
+| `$mod + Shift + q` | Close focused window |
+| `$mod + [1-9]` | Switch to workspace 1-9 |
+| `$mod + Shift + [1-9]` | Move focused window to workspace 1-9 |
 
-### 📸 System & Utilities
-
-| Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `Shift` + `x`** | Lock Screen |
-| **`Print`** | Screenshot (GUI Selection) |
-| **`Mod` + `Shift` + `s`** | Screenshot (Alternative Shortcut) |
-| **`Mod` + `Shift` + `c`** | Reload i3 Configuration |
-| **`Mod` + `Shift` + `r`** | Restart i3 |
-
-### ⬅️ Window Navigation
-
-You can use **Arrow Keys** or **Vim Keys** (`h`, `j`, `k`, `l`).
+### System & Scripts
 
 | Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `h`** / **`←`** | Focus Window Left |
-| **`Mod` + `j`** / **`↓`** | Focus Window Down |
-| **`Mod` + `k`** / **`↑`** | Focus Window Up |
-| **`Mod` + `l`** / **`→`** | Focus Window Right |
-| **`Mod` + `Shift` + `h`** | Move Window Left |
-| **`Mod` + `Shift` + `j`** | Move Window Down |
-| **`Mod` + `Shift` + `k`** | Move Window Up |
-| **`Mod` + `Shift` + `l`** | Move Window Right |
-
-### 🔲 Workspaces
-
-| Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `1-9`** | Switch to Workspace 1-9 |
-| **`Mod` + `Shift` + `1-9`** | Move Window to Workspace 1-9 |
-| **`Mod` + `n`** | Create New Empty Workspace (Auto-detected) |
-
-### 📐 Layout Management
-
-| Keybinding | Action |
-| :--- | :--- |
-| **`Mod` + `f`** | Toggle Fullscreen |
-| **`Mod` + `Shift` + `Space`** | Toggle Floating Mode |
-| **`Mod` + `Space`** | Toggle Focus (Between Tiling/Floating) |
-| **`Mod` + `s`** | Layout: Stacking |
-| **`Mod` + `w`** | Layout: Tabbed |
-| **`Mod` + `v`** | Layout: Split Toggle (Horizontal/Vertical) |
-
-### 🔊 Hardware Controls
-
-| Keybinding | Action |
-| :--- | :--- |
-| **`Volume Up`** | Volume +5% |
-| **`Volume Down`** | Volume -5% |
-| **`Mute`** | Mute Audio |
-| **`Play/Pause`** | Media Play/Pause |
-| **`Brightness Up`** | Screen Brightness +5% |
-| **`Brightness Down`** | Screen Brightness -5% |
+| --- | --- |
+| `$mod + x` | Open Power Menu |
+| `$mod + n` | Open Network Manager |
+| `$mod + t` | Open Theme/Wallpaper Switcher |
+| `$mod + Shift + w` | Open Rofi Dashboard (Calendar/Media) |
 
 ---
 
-> ***The information in this "README.md" is not complete, I will add more information at a later time.***
-> **Created by: adrenaline404**
+## 🎨 Managing Themes & Wallpapers
+
+You can change your system's entire look with a few clicks.
+
+1. **Open the Gallery:** Run the Wallpaper Manager via Rofi.
+2. **Import or Select:** Choose an existing image or import a new one.
+3. **Dynamic Generation:** Upon selecting an image, you will be prompted to either "Set Wallpaper Only" or **"Generate Dynamic Theme (Pywal)"**.
+4. Selecting Pywal will instantly re-color your *Polybar*, *Rofi*, *Dunst notifications*, and *i3 borders* to match your wallpaper!
+
+---
+
+## 📂 Directory Structure
+
+A quick overview of how the repository is organized:
+
+```text
+ARCH-I3WM-X11/
+├── configs/          # Base configurations (polybar, rofi, dunst, kitty, picom)
+├── scripts/          # The brain behind the rice (pywal generator, network, battery, etc.)
+├── themes/           # Static theme bases (Void Red, Void Blue) and Pywal targets
+├── install.sh        # The robust deployment script
+└── .zshrc            # Custom Zsh configuration
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to check issues page if you want to contribute.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+*Built by adrenaline404.*
