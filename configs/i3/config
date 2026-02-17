@@ -28,6 +28,11 @@ exec --no-startup-id xfce4-power-manager
 exec_always --no-startup-id picom -b
 exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+# first_setup
+exec_always --no-startup-id ~/.config/i3/scripts/first_setup.sh
+
+## Tampilkan Bantuan Shortcut/Cheatsheet
+bindsym $mod+F1 exec --no-startup-id ~/.config/i3/scripts/rofi_cheatsheet.sh
 
 # Essentials
 bindsym $mod+Return exec $term

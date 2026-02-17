@@ -1,11 +1,13 @@
 #!/bin/bash
+BAT=""
+for supply in /sys/class/power_supply/BAT*; do
+    if [ -f "$supply/type" ] && grep -q "Battery" "$supply/type"; then
+        BAT="$supply"
+        break
+    fi
+done
 
-BAT=$(ls -d /sys/class/power_supply/BAT* | head -n 1)
-
-if [ -z "$BAT" ]; then
-    echo ""
-    exit 0
-fi
+if [ -z "$BAT" ]; then exit 0; fi
 
 STATUS=$(cat "$BAT/status")
 CAPACITY=$(cat "$BAT/capacity")
@@ -20,5 +22,4 @@ else
     else ICON=""
     fi
 fi
-
 echo "$ICON $CAPACITY%"

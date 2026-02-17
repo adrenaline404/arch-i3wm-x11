@@ -50,3 +50,8 @@
 
     layer = overlay
     corner_radius = 12
+
+# ==THEME_START==
+background = "#101010F2"
+frame_color = "#ff5555"
+# ==THEME_END==

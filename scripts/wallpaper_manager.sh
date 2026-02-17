@@ -46,34 +46,32 @@ if [ "$CUSTOM_COUNT" -eq 0 ]; then
     MENU_ENTRIES+="  No custom wallpapers yet\0icon\x1finfo\n"
 fi
 
+# Menu Rofi
 CHOICE=$(echo -e "$MENU_ENTRIES" | rofi -dmenu -i -show-icons -p "Gallery" -theme "$ROFI_CONF")
 
 if [ -z "$CHOICE" ]; then
     exit 0
-
 elif [[ "$CHOICE" == "  Import New Wallpaper" ]]; then
     import_wallpaper
-
 elif [[ "$CHOICE" == "  No custom wallpapers yet" ]]; then
     exit 0
-
 else
-
     CLEAN_NAME=$(echo "$CHOICE" | sed 's/\[Theme\] //')
     
-    if [ -f "$THEME_DIR/$CLEAN_NAME" ]; then
-        TARGET_IMG="$THEME_DIR/$CLEAN_NAME"
-    elif [ -f "$CUSTOM_DIR/$CLEAN_NAME" ]; then
-        TARGET_IMG="$CUSTOM_DIR/$CLEAN_NAME"
+    if [ -f "$THEME_DIR/$CLEAN_NAME" ]; then TARGET_IMG="$THEME_DIR/$CLEAN_NAME"
+    elif [ -f "$CUSTOM_DIR/$CLEAN_NAME" ]; then TARGET_IMG="$CUSTOM_DIR/$CLEAN_NAME"
     fi
     
     if [ -f "$TARGET_IMG" ]; then
-        nitrogen --set-zoom-fill "$TARGET_IMG" --save
+        ACTION=$(echo -e "  Set Wallpaper Only\n  Generate Dynamic Theme (Pywal)" | rofi -dmenu -p "Action" -theme ~/.config/rofi/theme_select.rasi -lines 2)
         
-        cp "$TARGET_IMG" "$THEME_DIR/wallpaper.jpg"
-        
-        notify-send "Wallpaper Changed" "$CLEAN_NAME applied."
-    else
-        notify-send "Error" "Image file not found!"
+        if [[ "$ACTION" == *"Generate Dynamic Theme"* ]]; then
+            notify-send "Pywal" "Membangun tema dinamis, mohon tunggu..."
+            python3 ~/.config/i3/scripts/theme_builder.py "$TARGET_IMG"
+        elif [[ "$ACTION" == *"Set Wallpaper Only"* ]]; then
+            nitrogen --set-zoom-fill "$TARGET_IMG" --save
+            cp "$TARGET_IMG" "$THEME_DIR/wallpaper.jpg"
+            notify-send "Wallpaper Changed" "$CLEAN_NAME applied."
+        fi
     fi
 fi
