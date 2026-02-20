@@ -175,10 +175,10 @@ echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 PKGS_CORE="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen xss-lock \
            xorg-server xorg-xinit xorg-xset xorg-xrandr \
            brightnessctl playerctl libcanberra libcanberra-gtk3 \
-           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc \
+           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc feh xed cava htop \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme papirus-folders-git \
-           neovim python-pynvim npm xclip ripgrep nano cava python-pywal"
+           neovim python-pynvim npm xclip ripgrep nano python-pywal less tree bat fd"
 
 install_pkg "Core System (WM, Utils & Rice Tools)" "$PKGS_CORE"
 
@@ -202,6 +202,14 @@ fi
 
 if ask_user "Install Web Browser (Firefox)?" "Y"; then
     install_pkg "Firefox" "firefox"
+fi
+
+if ask_user "Install Web Browser (Chromium)? (Optional)" "N"; then
+    install_pkg "Chromium" "chromium"
+fi
+
+if ask_user "Install Web Browser (Brave)? (Optional)" "N"; then
+    install_pkg "Brave" "brave-bin"
 fi
 
 if ask_user "Install Basic Dev Tools (Git, Python, VSCode-Bin)?" "Y"; then
