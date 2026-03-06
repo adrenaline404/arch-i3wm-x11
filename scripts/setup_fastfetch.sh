@@ -10,16 +10,16 @@ mkdir -p "$PRESET_DIR"
 mkdir -p "$ART_DIR"
 
 cat > "$ART_DIR/void_char.txt" << 'EOF'
-        .---.        .-----------
-       /     \  __  /    ------
-      / /     \(  )/    -----
-     //////   ' \/ `   ---
+       .---.        .-----------
+      /     \  __  /    ------
+     / /     \(  )/    -----
+    //////   ' \/ `   ---
    //// / // :    : ---
   // /   /  /`    '--
- //        //..\\
-         ====UU====UU====
-           '//||\\`
-             ''``
+ //          //..\\
+        ====UU====UU====
+            '//||\\`
+               ''``
 EOF
 
 cat > "$PRESET_DIR/01.jsonc" << 'EOF'
@@ -28,18 +28,18 @@ cat > "$PRESET_DIR/01.jsonc" << 'EOF'
   "logo": {
     "source": "~/.config/fastfetch/art/void_char.txt",
     "type": "file",
-    "padding": { "top": 1, "left": 2, "right": 3 }
+    "padding": { "top": 1, "left": 1, "right": 3 }
   },
-  "display": { "separator": " 󰁔 ", "color": "white" },
+  "display": { "separator": "  ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " OS ", "keyColor": "red" },
-    { "type": "kernel", "key": " KER", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 UPT", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 PKG", "keyColor": "red" },
-    { "type": "shell", "key": " SHL", "keyColor": "red" },
-    { "type": "wm", "key": " WM ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 RAM", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "red" },
+    { "type": "kernel", "key": " ", "keyColor": "red" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
+    { "type": "shell", "key": " ", "keyColor": "red" },
+    { "type": "wm", "key": " ", "keyColor": "red" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
     "break",
     "colors"
   ]
@@ -52,21 +52,23 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
   "logo": {
     "source": "~/.config/fastfetch/art/custom_image_1.png",
     "type": "kitty",
-    "height": 16,
-    "padding": { "top": 1, "left": 2, "right": 4 }
+    "height": 10,
+    "padding": { "top": 1, "left": 1, "right": 3 }
   },
-  "display": { "separator": " 󰁔 ", "color": "white" },
+  "display": { "separator": "  ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " OS ", "keyColor": "red" },
-    { "type": "kernel", "key": " KER", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 UPT", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 PKG", "keyColor": "red" },
-    { "type": "shell", "key": " SHL", "keyColor": "red" },
-    { "type": "wm", "key": " WM ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 RAM", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "red" },
+    { "type": "kernel", "key": " ", "keyColor": "red" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
+    { "type": "shell", "key": " ", "keyColor": "red" },
+    { "type": "wm", "key": " ", "keyColor": "red" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
     "break",
-    { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、あなた自身の事実を持つ権利はありません。" },
+    { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
+	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
+	"break",
     "colors"
   ]
 }
@@ -78,21 +80,23 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
   "logo": {
     "source": "~/.config/fastfetch/art/custom_image_2.png",
     "type": "kitty",
-    "height": 16,
-    "padding": { "top": 1, "left": 2, "right": 4 }
+    "height": 10,
+    "padding": { "top": 1, "left": 1, "right": 3 }
   },
-  "display": { "separator": " 󰁔 ", "color": "white" },
+  "display": { "separator": "  ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " OS ", "keyColor": "red" },
-    { "type": "kernel", "key": " KER", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 UPT", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 PKG", "keyColor": "red" },
-    { "type": "shell", "key": " SHL", "keyColor": "red" },
-    { "type": "wm", "key": " WM ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 RAM", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "red" },
+    { "type": "kernel", "key": " ", "keyColor": "red" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
+    { "type": "shell", "key": " ", "keyColor": "red" },
+    { "type": "wm", "key": " ", "keyColor": "red" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
     "break",
-    { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、あなた自身の事実を持つ権利はありません。" },
+    { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
+	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
+	"break",
     "colors"
   ]
 }

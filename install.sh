@@ -284,7 +284,7 @@ fi
 echo -e "${GREEN}"
 echo " "
 echo "   INSTALLATION SUCCESSFUL!"
-echo "   Developer: adrenaline404"
+echo "   Dev: adrenaline404"
 echo " "
 echo "   [!] IMPORTANT:"
 echo "   1. A reboot is REQUIRED for brightness & group permissions to work."

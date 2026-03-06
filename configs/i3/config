@@ -31,40 +31,55 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 # first_setup
 exec_always --no-startup-id ~/.config/i3/scripts/first_setup.sh
 
-## Tampilkan Bantuan Shortcut/Cheatsheet
+## Show Shortcut Cheatsheet
 bindsym $mod+F1 exec --no-startup-id ~/.config/i3/scripts/rofi_cheatsheet.sh
 
 # Essentials
+## Open Terminal (Kitty)
 bindsym $mod+Return exec $term
+## Open Web Browser (Firefox)
 bindsym $mod+b exec firefox
+## Open Code Editor (VS Code)
 bindsym $mod+c exec code
+## Open File Manager (Thunar)
 bindsym $mod+e exec thunar
+## Open Terminal Editor (Neovim)
 bindsym $mod+Shift+v exec $term -e nvim
+## Close Focused Window
 bindsym $mod+q kill
 
 # Menus (GUI)
+## Open App Launcher (Rofi)
 bindsym $mod+d exec $scripts/rofi_launcher.sh
+## Open Dashboard (Media/Calendar)
 bindsym $mod+Shift+d exec $scripts/rofi_dashboard.sh
+## Open Power Menu
 bindsym $mod+Shift+e exec $scripts/rofi_powermenu.sh
+## Open Network Manager
 bindsym $mod+Shift+n exec $scripts/rofi_network.sh
+## Open Theme Switcher
 bindsym $mod+t exec $scripts/theme_switcher.sh gui
-# Wallpaper Manager (Mod + Shift + w)
+## Open Wallpaper Manager
 bindsym $mod+Shift+w exec ~/.config/i3/scripts/wallpaper_manager.sh
 
 # Screenshots (Flameshot)
-# Print Screen -> GUI Selection
+## Capture Screenshot (Select Area)
 bindsym Print exec flameshot gui
-# Mod+Shift+S -> GUI Selection (Optional)
+## Capture Screenshot Alternative
 bindsym $mod+Shift+s exec flameshot gui
 
 # Lock Screen
+## Lock Screen
 bindsym $mod+Shift+x exec ~/.config/i3/scripts/lock.sh
 
 # WINDOW FOCUS (VIM + ARROW)
-# Vim Keys
+## Focus Left (H / Left)
 bindsym $mod+h focus left
+## Focus Down (J / Down)
 bindsym $mod+j focus down
+## Focus Up (K / Up)
 bindsym $mod+k focus up
+## Focus Right (L / Right)
 bindsym $mod+l focus right
 # Arrow Keys
 bindsym $mod+Left focus left
@@ -73,10 +88,13 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # WINDOW MOVE (VIM + ARROW)
-# Vim Keys
+## Move Window Left
 bindsym $mod+Shift+h move left
+## Move Window Down
 bindsym $mod+Shift+j move down
+## Move Window Up
 bindsym $mod+Shift+k move up
+## Move Window Right
 bindsym $mod+Shift+l move right
 # Arrow Keys
 bindsym $mod+Shift+Left move left
@@ -85,6 +103,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # WORKSPACES
+## Switch to Workspace 1-9
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
 bindsym $mod+3 workspace number 3
@@ -96,6 +115,7 @@ bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 
 # Window -> Workspace
+## Move Window to Workspace 1-9
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
@@ -107,26 +127,41 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 
 # NEW WORKSPACE
+## Create New Workspace
 bindsym $mod+n exec --no-startup-id i3-msg workspace "$(i3-msg -t get_workspaces | jq '[.[] | .num] | max + 1')"
 
 # Layouts & Toggles
+## Toggle Floating Mode
 bindsym $mod+Shift+space floating toggle
+## Toggle Focus (Floating/Tiled)
 bindsym $mod+space focus mode_toggle
+## Toggle Fullscreen
 bindsym $mod+f fullscreen toggle
+## Set Layout to Stacking
 bindsym $mod+s layout stacking
+## Set Layout to Tabbed
 bindsym $mod+w layout tabbed
+## Toggle Split Layout
 bindsym $mod+v layout toggle split
 
 # Hardware Controls
+## Increase Volume
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+## Decrease Volume
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+## Toggle Mute
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+## Increase Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl s +5%
+## Decrease Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
+## Toggle Media Play/Pause
 bindsym XF86AudioPlay exec playerctl play-pause
 
 # System State
+## Reload i3 Configuration
 bindsym $mod+Shift+c reload
+## Restart i3 in Place
 bindsym $mod+Shift+r restart
 
 # FLOATING RULES

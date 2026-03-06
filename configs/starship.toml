@@ -1,7 +1,7 @@
 palette = "void_red"
 
 command_timeout = 1000
-scan_timeout = 100
+scan_timeout = 250
 
 format = """
 [░▒▓](accent)\
