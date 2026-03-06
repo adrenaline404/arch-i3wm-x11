@@ -43,6 +43,8 @@ cd arch-i3wm-x11
 ./install.sh
 ```
 
+> !! If you encounter problems with incomplete deployment, perform the installation (./install.sh) again after rebooting the system after the first installation to fix the problem.
+
 ### Advanced Installer Flags (For Developers)
 
 - `./install.sh --dry-run` : Simulates the installation process without making any actual changes to your system or installing packages. Perfect for reviewing what the script does.
@@ -64,7 +66,7 @@ Once installed and rebooted, log into the `i3` session. Your main modifier key (
 | --- | --- |
 | `$mod + Enter` | Open Terminal (Kitty) |
 | `$mod + d` | Open App Launcher (Rofi) |
-| `$mod + Shift + q` | Close focused window |
+| `$mod + q` | Close focused window |
 | `$mod + [1-9]` | Switch to workspace 1-9 |
 | `$mod + Shift + [1-9]` | Move focused window to workspace 1-9 |
 
@@ -72,10 +74,11 @@ Once installed and rebooted, log into the `i3` session. Your main modifier key (
 
 | Keybinding | Action |
 | --- | --- |
-| `$mod + x` | Open Power Menu |
-| `$mod + n` | Open Network Manager |
-| `$mod + t` | Open Theme/Wallpaper Switcher |
-| `$mod + Shift + w` | Open Rofi Dashboard (Calendar/Media) |
+| `$mod + Shift + e` | Open Power Menu |
+| `$mod + Shift + n` | Open Network Manager |
+| `$mod + t` | Open Theme |
+| `$mod + Shift + w` | Wallpaper Switcher |
+| `$mod + Shift + d` | Open Rofi Dashboard (Calendar/Media) |
 
 ---
 
@@ -96,7 +99,7 @@ A quick overview of how the repository is organized:
 
 ```text
 ARCH-I3WM-X11/
-├── configs/          # Base configurations (polybar, rofi, dunst, kitty, picom)
+├── configs/          # Base configurations (polybar, rofi, dunst, kitty, picom, fastfetch)
 ├── scripts/          # The brain behind the rice (pywal generator, network, battery, etc.)
 ├── themes/           # Static theme bases (Void Red, Void Blue) and Pywal targets
 ├── install.sh        # The robust deployment script
