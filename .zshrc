@@ -59,15 +59,16 @@ if [[ -o interactive ]]; then
         CURRENT_THEME_PATH="void-red"
     fi
     
-    FF_COLOR="red"
-    
     if [[ "$CURRENT_THEME_PATH" == *"void-red"* ]]; then
         FF_COLOR="red"
     elif [[ "$CURRENT_THEME_PATH" == *"void-blue"* ]]; then
         FF_COLOR="blue"
+    else
+        FF_COLOR="blue" 
     fi
 
-    RANDOM_PRESET=$(printf "%02d" $(( ( RANDOM % 8 ) + 1 )))
+    RANDOM_NUM=$(( ( RANDOM % 3 ) + 1 ))
+    RANDOM_PRESET=$(printf "%02d" $RANDOM_NUM)
     CONFIG_FILE="$HOME/.config/fastfetch/presets/${RANDOM_PRESET}.jsonc"
 
     if [ -f "$CONFIG_FILE" ]; then
