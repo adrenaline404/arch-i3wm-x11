@@ -28,9 +28,9 @@ cat > "$PRESET_DIR/01.jsonc" << 'EOF'
   "logo": {
     "source": "~/.config/fastfetch/art/void_char.txt",
     "type": "file",
-    "padding": { "top": 1, "left": 1, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 2 }
   },
-  "display": { "separator": "  ", "color": "white" },
+  "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
     { "type": "os", "key": " ", "keyColor": "red" },
@@ -53,9 +53,9 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_1.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 1, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 2 }
   },
-  "display": { "separator": "  ", "color": "white" },
+  "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
     { "type": "os", "key": " ", "keyColor": "red" },
@@ -68,8 +68,6 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
     "break",
     { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
 	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
-	"break",
-    "colors"
   ]
 }
 EOF
@@ -81,9 +79,9 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_2.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 1, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 2 }
   },
-  "display": { "separator": "  ", "color": "white" },
+  "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
     { "type": "os", "key": " ", "keyColor": "red" },
@@ -96,8 +94,6 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
     "break",
     { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
 	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
-	"break",
-    "colors"
   ]
 }
 EOF

@@ -16,4 +16,6 @@ Please ensure you write '## Description' directly above the 'bindsym' line in ~/
     exit 1
 fi
 
-echo -e "$OUTPUT" | rofi -dmenu -i -p "Shortcuts" -theme "$ROFI_THEME"
+OVERRIDES="window {width: 800px;} listview {lines: 15;} element-text {font: \"JetBrainsMono Nerd Font 10\";}"
+
+echo -e "$OUTPUT" | rofi -dmenu -i -p "Shortcuts" -theme "$ROFI_THEME" -theme-str "$OVERRIDES"
