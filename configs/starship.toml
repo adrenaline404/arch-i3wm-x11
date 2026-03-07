@@ -1,11 +1,11 @@
-palette = "void_red"
+palette = "default"
 
 command_timeout = 1000
 scan_timeout = 250
 
 format = """
 [░▒▓](accent)\
-[  ](bg:accent fg:#000000)\
+[  ](bg:accent fg:#1E1E2E)\
 [](bg:bg_dark fg:accent)\
 $directory\
 [](fg:bg_dark bg:bg_medium)\
@@ -23,7 +23,7 @@ $rust\
 \n$character"""
 
 [directory]
-style = "bg:bg_dark fg:#e0e0e0"
+style = "bg:bg_dark fg:text_primary"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -83,21 +83,13 @@ style = "bg:bg_light"
 format = "[[ $symbol($version) ](fg:text_primary bg:bg_light)]($style)"
 
 [character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[➜](bold red)"
+success_symbol = "[➜](#A6E3A1)"
+error_symbol = "[➜](#F38BA8)"
 
-[palettes.void_blue]
-accent = "#2e9ef4"
-text_primary = "#769ff0"
-text_secondary = "#769ff0"
-bg_dark = "#1a1a1a"
-bg_medium = "#2e2e2e"
-bg_light = "#212121"
-
-[palettes.void_red]
-accent = "#ff5555"
-text_primary = "#ff8888"
-text_secondary = "#ff8888"
-bg_dark = "#1a1a1a"
-bg_medium = "#2e2e2e"
-bg_light = "#212121"
+[palettes.default]
+accent = "#CBA6F7"
+text_primary = "#CDD6F4"
+text_secondary = "#BAC2DE"
+bg_dark = "#313244"
+bg_medium = "#45475A"
+bg_light = "#585B70"

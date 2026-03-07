@@ -46,7 +46,6 @@ if [ "$CUSTOM_COUNT" -eq 0 ]; then
     MENU_ENTRIES+="  No custom wallpapers yet\0icon\x1finfo\n"
 fi
 
-# Menu Rofi
 CHOICE=$(echo -e "$MENU_ENTRIES" | rofi -dmenu -i -show-icons -p "Gallery" -theme "$ROFI_CONF")
 
 if [ -z "$CHOICE" ]; then
@@ -63,10 +62,11 @@ else
     fi
     
     if [ -f "$TARGET_IMG" ]; then
-        ACTION=$(echo -e "  Set Wallpaper Only\n  Generate Dynamic Theme (Pywal)" | rofi -dmenu -p "Action" -theme ~/.config/rofi/theme_select.rasi -lines 2)
+        HEADER="<span color='#888888'>CHOOSE WALLPAPER ACTION</span>"
+        ACTION=$(echo -e "  Set Wallpaper Only\n  Pywal Theme" | rofi -dmenu -p "Action" -mesg "$HEADER" -theme ~/.config/rofi/theme_select.rasi)
         
-        if [[ "$ACTION" == *"Generate Dynamic Theme"* ]]; then
-            notify-send "Pywal" "Membangun tema dinamis, mohon tunggu..."
+        if [[ "$ACTION" == *"Pywal Theme"* ]]; then
+            notify-send "Pywal" "Generating dynamic theme..."
             python3 ~/.config/i3/scripts/theme_builder.py "$TARGET_IMG"
         elif [[ "$ACTION" == *"Set Wallpaper Only"* ]]; then
             nitrogen --set-zoom-fill "$TARGET_IMG" --save

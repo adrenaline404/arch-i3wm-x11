@@ -10,7 +10,7 @@ A highly modular, robust, and fully automated dotfiles deployment for Arch Linux
 ## ✨ Key Features
 
 - **🚀 Bulletproof Installer:** Automated deployment script (`install.sh`) with safe backup mechanisms, `sudo` keep-alive, strict path resolution, and advanced flags (`--dry-run` and `--link` for developers).
-- **🎨 Dynamic Theming Engine:** Built-in Python script (`theme_builder.py`) using `pywal` to automatically generate system-wide color schemes (Polybar, Rofi, Dunst, i3) instantly from any wallpaper. Includes two static themes (`Void Red` and `Void Blue`) out of the box.
+- **🎨 Dynamic Theming Engine:** Built-in Python script (`theme_builder.py`) using `pywal` to automatically generate system-wide color schemes (Polybar, Rofi, Dunst, i3) instantly from any wallpaper. Includes two static themes (`Pro Dark`) out of the box.
 - **🖥️ True Multi-Monitor Support:** Polybar automatically detects and scales across all connected displays seamlessly.
 - **⌨️ Instant Keybinding Cheatsheet:** Never forget a shortcut. Press `Mod + F1` to instantly parse and view all your active i3 keybindings via an elegant Rofi menu.
 - **⚡ Blazing Fast Terminal Environment:** Pre-configured `Zsh` with `Starship` prompt (async Git fetching enabled) and dynamic `Fastfetch` presets.
@@ -18,7 +18,7 @@ A highly modular, robust, and fully automated dotfiles deployment for Arch Linux
   - Network Management (`nmcli` GUI)
   - Power Menu
   - Theme / Wallpaper Switcher
-  - Dashboard (Calendar, Media Controls)
+  - Dashboard
 - **👋 First Boot Greeter:** Interactive setup upon first login to configure default applications like your web browser.
 
 ---
@@ -78,7 +78,7 @@ Once installed and rebooted, log into the `i3` session. Your main modifier key (
 | `$mod + Shift + n` | Open Network Manager |
 | `$mod + t` | Open Theme |
 | `$mod + Shift + w` | Wallpaper Switcher |
-| `$mod + Shift + d` | Open Rofi Dashboard (Calendar/Media) |
+| `$mod + Shift + d` | Open Rofi Dashboard |
 
 ---
 
@@ -101,7 +101,7 @@ A quick overview of how the repository is organized:
 ARCH-I3WM-X11/
 ├── configs/          # Base configurations (polybar, rofi, dunst, kitty, picom, fastfetch)
 ├── scripts/          # The brain behind the rice (pywal generator, network, battery, etc.)
-├── themes/           # Static theme bases (Void Red, Void Blue) and Pywal targets
+├── themes/           # Static theme bases (Pro-Dark) and Pywal targets
 ├── install.sh        # The robust deployment script
 └── .zshrc            # Custom Zsh configuration
 ```

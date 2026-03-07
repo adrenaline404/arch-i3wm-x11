@@ -1,87 +1,75 @@
 configuration {
-    font: "JetBrainsMono Nerd Font 10";
+    font: "JetBrainsMono Nerd Font 14";
     show-icons: false;
 }
 
-* {
-    background-color: transparent;
-    text-color:       #ffffff;
-    bg-col:           #101010F2;
-    border-col:       #ffffff20;
-    accent:           #FF5555; 
-}
+@import "~/.config/i3/themes/current/rofi.rasi"
 
 window {
-    transparency:     "real";
-    location:         center;
-    anchor:           center;
-    fullscreen:       false;
-    width:            500px;
-    height:           500px;
-    
-    border:           2px;
-    border-radius:    20px;
-    background-color: @bg-col;
-    
-    padding:          25px;
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 450px;
+    border: 1px;
+    border-color: @primary;
+    border-radius: 12px;
+    background-color: @background;
+    padding: 20px;
 }
 
 mainbox {
     background-color: transparent;
-    orientation:      vertical;
-    children:         [ "message", "listview" ];
-    spacing:          25px;
+    orientation: vertical;
+    children: [ "message", "listview" ];
+    spacing: 20px;
 }
 
 message {
     background-color: transparent;
-    padding:          25px;
-    border-radius:    2px;
+    padding: 10px;
 }
 
 textbox {
     background-color: transparent;
-    text-color:       #ffffff;
-    vertical-align:   0.5;
+    text-color: @foreground;
+    vertical-align: 0.5;
     horizontal-align: 0.5;
-    markup:           true;
+    markup: true;
 }
 
 listview {
     background-color: transparent;
-    layout:           horizontal;
-    spacing:          50px;
-    lines:            3;
-    columns:          3;
-    cycle:            false;
-    dynamic:          false;
-    scrollbar:        false;
-    fixed-height:     true;
-    fixed-columns:    true;
-    
-    margin:           25px 25px 25px 25px; 
+    layout: horizontal;
+    spacing: 30px;
+    lines: 1;
+    columns: 3;
+    cycle: true;
+    scrollbar: false;
+    margin: 10px 45px 10px 45px;
 }
 
 element {
-    background-color: #ffffff08;
-    padding:          25px 25px;
-    border-radius:    100%;
-    cursor:           pointer;
-    width:            96px;
+    background-color: @bg-alt;
+    padding: 20px;
+    border-radius: 100%;
+    cursor: pointer;
+    border: 1px;
+    border-color: transparent;
 }
 
 element-text {
     background-color: transparent;
-    text-color:       inherit;
-    font:             "JetBrainsMono Nerd Font 10";
+    text-color: @foreground;
+    font: "JetBrainsMono Nerd Font 16";
     horizontal-align: 0.5;
-    vertical-align:   0.5;
-    margin:           0px;
+    vertical-align: 0.5;
 }
 
 element selected {
-    background-color: #ffffff20;
-    text-color:       #ffffff;
-    border:           2px;
-    border-color:     #ffffff50;
+    background-color: @primary;
+    border-color: @primary;
+}
+
+element-text selected {
+    text-color: #1E1E2E; 
 }

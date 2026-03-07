@@ -3,6 +3,9 @@
 I3_CONF="$HOME/.config/i3/config"
 ROFI_THEME="$HOME/.config/rofi/config.rasi"
 
+ACCENT=$(grep '^primary =' "$HOME/.config/i3/themes/current/colors.ini" | awk '{print $3}')
+if [ -z "$ACCENT" ]; then ACCENT="#CBA6F7"; fi
+
 OUTPUT=$(awk '/^##/ {desc=substr($0, 4); next} 
      /^[ \t]*bindsym/ {
          cmd=$0; 
@@ -16,6 +19,8 @@ Please ensure you write '## Description' directly above the 'bindsym' line in ~/
     exit 1
 fi
 
-OVERRIDES="window {width: 800px;} listview {lines: 15;} element-text {font: \"JetBrainsMono Nerd Font 10\";}"
+HEADER="<span color='$ACCENT'><b>      SHORTCUT DESCRIPTION      </b></span> <span color='#6C7086'>|</span> <span color='$ACCENT'><b>     BUTTONS & EXECUTION COMMANDS     </b></span>"
 
-echo -e "$OUTPUT" | rofi -dmenu -i -p "Shortcuts" -theme "$ROFI_THEME" -theme-str "$OVERRIDES"
+OVERRIDES="window {width: 1000px;} listview {lines: 16;} element-text {font: \"JetBrainsMono Nerd Font 11\";}"
+
+echo -e "$OUTPUT" | rofi -dmenu -i -p "Cheatsheet" -theme "$ROFI_THEME" -theme-str "$OVERRIDES" -mesg "$HEADER"

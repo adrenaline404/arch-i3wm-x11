@@ -19,21 +19,21 @@ def generate_theme(image_path):
         colors = json.load(f)["colors"]
 
     polybar_colors = f"""[colors]
-background = #99{colors['color0'][1:]}
-background-alt = #33{colors['color1'][1:]}
-foreground = {colors['color7']}
+background = #E6{colors['color0'][1:]}
+background-alt = #66{colors['color0'][1:]}
+foreground = #FFFFFF
 primary = {colors['color4']}
 secondary = {colors['color5']}
 alert = {colors['color1']}
-disabled = #707880
+disabled = #898c95
 """
     with open(os.path.join(theme_dir, "colors.ini"), "w") as f:
         f.write(polybar_colors)
 
     rofi_override = f"""* {{
-    background: #050a1aE6;
+    background: #0A0A0EE6;
     bg-alt: {colors['color0']};
-    foreground: {colors['color7']};
+    foreground: #FFFFFF;
     primary: {colors['color4']};
     disabled: #707880;
     
@@ -44,17 +44,17 @@ disabled = #707880
         f.write(rofi_override)
 
     i3_colors = f"""# class                 border  backgr. text    indicator child_border
-client.focused          {colors['color4']} {colors['color0']} {colors['color7']} {colors['color4']}   {colors['color4']}
-client.focused_inactive #333333 {colors['color0']} #888888 #484e50   #5f676a
-client.unfocused        #333333 {colors['color0']} #888888 #292d2e   #222222
-client.urgent           #2f343a {colors['color1']} #ffffff {colors['color1']}   {colors['color1']}
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+client.focused          {colors['color4']} #0A0A0E #FFFFFF {colors['color4']}   {colors['color4']}
+client.focused_inactive #313244 #0A0A0E #A6ADC8 #313244   #313244
+client.unfocused        #181825 #181825 #A6ADC8 #181825   #181825
+client.urgent           {colors['color1']} #0A0A0E #FFFFFF {colors['color1']}   {colors['color1']}
+client.placeholder      #11111B #11111B #FFFFFF #11111B   #11111B
+client.background       #0A0A0E
 """
     with open(os.path.join(theme_dir, "i3_colors"), "w") as f:
         f.write(i3_colors)
 
-    print(f"Tema dinamis 'pywal-custom' berhasil dibuat berdasarkan {image_path}!")
+    print(f"Professional Pywal theme generated for {image_path}!")
     
     switcher = os.path.expanduser("~/.config/i3/scripts/theme_switcher.sh")
     subprocess.run(["bash", switcher, "pywal-custom"])

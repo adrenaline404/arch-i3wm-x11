@@ -6,18 +6,16 @@ LINK_TARGET="$THEME_ROOT/current"
 DUNSTRC="$HOME/.config/dunst/dunstrc_base"
 
 if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
-    OPT_RED="  Void Red"
-    OPT_BLUE="  Void Blue"
-    OPT_PYWAL="  Pywal Custom"
-    OPTIONS="$OPT_RED\n$OPT_BLUE\n$OPT_PYWAL"
+    OPT_PRO="  Pro Dark (Default)"
+    OPT_PYWAL="  Pywal (Dynamic)"
+    OPTIONS="$OPT_PRO\n$OPT_PYWAL"
     HEADER="<span color='#888888'>SELECT SYSTEM THEME STYLE</span>"
     
     CHOICE_INDEX=$(echo -e "$OPTIONS" | rofi -dmenu -i -format d -p "Theme" -mesg "$HEADER" -theme ~/.config/rofi/theme_select.rasi)
     
     case "$CHOICE_INDEX" in
-        1) THEME="void-red" ;;
-        2) THEME="void-blue" ;;
-        3) THEME="pywal-custom" ;;
+        1) THEME="pro-dark" ;;
+        2) THEME="pywal-custom" ;;
         *) exit 0 ;;
     esac
 fi
@@ -27,25 +25,19 @@ if [ ! -d "$THEME_ROOT/$THEME" ]; then
     exit 1
 fi
 
-if [ "$THEME" == "void-red" ]; then
-    ACCENT="#ff5555"
-    ICON_THEME="red"
-    STARSHIP_PALETTE="void_red"
-    BG_COLOR="#101010F2"
-elif [ "$THEME" == "void-blue" ]; then
-    ACCENT="#2e9ef4"
-    ICON_THEME="blue"
-    STARSHIP_PALETTE="void_blue"
-    BG_COLOR="#101010F2"
+if [ "$THEME" == "pro-dark" ]; then
+    ACCENT="#CBA6F7"
+    ICON_THEME="Papirus-Dark"
+    STARSHIP_PALETTE="default"
+    BG_COLOR="#1E1E2EF2"
 elif [ "$THEME" == "pywal-custom" ]; then
     ACCENT=$(grep "primary:" "$THEME_ROOT/$THEME/rofi.rasi" | cut -d'#' -f2 | cut -d';' -f1)
     ACCENT="#$ACCENT"
-    ICON_THEME="blue" # Default fallback
-    STARSHIP_PALETTE="void_blue"
-    BG_COLOR="#101010F2"
+    ICON_THEME="Papirus-Dark"
+    STARSHIP_PALETTE="default"
+    BG_COLOR="#0A0A0FF2"
 fi
 
-# Update Dunstrc in-place
 if grep -q "# ==THEME_START==" "$DUNSTRC"; then
     sed -i "/# ==THEME_START==/,/# ==THEME_END==/c\\# ==THEME_START==\n\
     background = \"$BG_COLOR\"\n\
@@ -54,22 +46,19 @@ if grep -q "# ==THEME_START==" "$DUNSTRC"; then
     cp "$DUNSTRC" "$HOME/.config/dunst/dunstrc"
 fi
 
-# Lockscreen Export
 cat > "$HOME/.config/i3/scripts/lock_colors.rc" <<EOF
 export LOCK_RING="${ACCENT}cc"
 export LOCK_TEXT="${ACCENT}ee"
 export LOCK_INSIDE="#00000000"
-export LOCK_WRONG="#880000bb"
-export LOCK_VERIFY="#ffffffbb"
+export LOCK_WRONG="#F38BA8bb"
+export LOCK_VERIFY="#CDD6F4bb"
 EOF
 
-# Starship
 sed -i "s/^palette = .*/palette = \"$STARSHIP_PALETTE\"/" "$HOME/.config/starship.toml"
 
-# Symlink & Wallpaper
 rm -rf "$LINK_TARGET"
 ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
-papirus-folders -C "$ICON_THEME" --theme Papirus-Dark &
+papirus-folders -C blue --theme Papirus-Dark &
 
 if [ -f "$LINK_TARGET/wallpaper.jpg" ]; then
     nitrogen --set-zoom-fill "$LINK_TARGET/wallpaper.jpg" --save

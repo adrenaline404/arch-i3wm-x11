@@ -56,15 +56,15 @@ if [[ -o interactive ]]; then
     if [ -d ~/.config/i3/themes/current ]; then
         CURRENT_THEME_PATH=$(readlink -f ~/.config/i3/themes/current)
     else
-        CURRENT_THEME_PATH="void-red"
+        CURRENT_THEME_PATH="pro-dark"
     fi
     
-    if [[ "$CURRENT_THEME_PATH" == *"void-red"* ]]; then
-        FF_COLOR="red"
-    elif [[ "$CURRENT_THEME_PATH" == *"void-blue"* ]]; then
+    if [[ "$CURRENT_THEME_PATH" == *"pro-dark"* ]]; then
+        FF_COLOR="magenta"
+    elif [[ "$CURRENT_THEME_PATH" == *"pywal-custom"* ]]; then
         FF_COLOR="blue"
     else
-        FF_COLOR="blue" 
+        FF_COLOR="magenta" 
     fi
 
     RANDOM_NUM=$(( ( RANDOM % 3 ) + 1 ))
@@ -74,7 +74,7 @@ if [[ -o interactive ]]; then
     if [ -f "$CONFIG_FILE" ]; then
         sed "s/\"keyColor\": \".*\"/\"keyColor\": \"$FF_COLOR\"/g" "$CONFIG_FILE" > /tmp/fastfetch_run.jsonc
         
-        fastfetch --config /tmp/fastfetch_run.jsonc --logo-color-1 "$FF_COLOR"
+        fastfetch --config /tmp/fastfetch_run.jsonc
     else
         fastfetch
     fi

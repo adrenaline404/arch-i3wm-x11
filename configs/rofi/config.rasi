@@ -2,7 +2,7 @@ configuration {
     modi: "drun,run,window";
     font: "JetBrainsMono Nerd Font 12";
     show-icons: true;
-    icon-theme: "Papirus";
+    icon-theme: "Papirus-Dark";
     display-drun: "";
     display-run: "";
     display-window: "";
@@ -14,7 +14,7 @@ configuration {
 window {
     width: 450px;
     height: 360px;
-    border: 2px;
+    border: 1px;
     border-color: @primary;
     border-radius: 12px;
     background-color: @background;
@@ -66,7 +66,7 @@ element {
 
 element selected {
     background-color: @primary;
-    text-color: #000000;
+    text-color: #1E1E2E;
 }
 
 element-icon {

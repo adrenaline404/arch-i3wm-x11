@@ -9,37 +9,22 @@ echo "Generating Fastfetch Resources..."
 mkdir -p "$PRESET_DIR"
 mkdir -p "$ART_DIR"
 
-cat > "$ART_DIR/void_char.txt" << 'EOF'
-       .---.        .-----------
-      /     \  __  /    ------
-     / /     \(  )/    -----
-    //////   ' \/ `   ---
-   //// / // :    : ---
-  // /   /  /`    '--
- //          //..\\
-        ====UU====UU====
-            '//||\\`
-               ''``
-EOF
-
 cat > "$PRESET_DIR/01.jsonc" << 'EOF'
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "source": "~/.config/fastfetch/art/void_char.txt",
-    "type": "file",
-    "padding": { "top": 1, "left": 0, "right": 2 }
+    "padding": { "top": 1, "left": 1, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " ", "keyColor": "red" },
-    { "type": "kernel", "key": " ", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
-    { "type": "shell", "key": " ", "keyColor": "red" },
-    { "type": "wm", "key": " ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "magenta" },
+    { "type": "kernel", "key": " ", "keyColor": "magenta" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "magenta" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "magenta" },
+    { "type": "shell", "key": " ", "keyColor": "magenta" },
+    { "type": "wm", "key": " ", "keyColor": "magenta" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "magenta" },
     "break",
     "colors"
   ]
@@ -58,16 +43,16 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
   "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " ", "keyColor": "red" },
-    { "type": "kernel", "key": " ", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
-    { "type": "shell", "key": " ", "keyColor": "red" },
-    { "type": "wm", "key": " ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "magenta" },
+    { "type": "kernel", "key": " ", "keyColor": "magenta" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "magenta" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "magenta" },
+    { "type": "shell", "key": " ", "keyColor": "magenta" },
+    { "type": "wm", "key": " ", "keyColor": "magenta" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "magenta" },
     "break",
     { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
-	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
+    { "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" }
   ]
 }
 EOF
@@ -84,19 +69,19 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
   "display": { "separator": " ", "color": "white" },
   "modules": [
     "break",
-    { "type": "os", "key": " ", "keyColor": "red" },
-    { "type": "kernel", "key": " ", "keyColor": "red" },
-    { "type": "uptime", "key": "󰅐 ", "keyColor": "red" },
-    { "type": "packages", "key": "󰏖 ", "keyColor": "red" },
-    { "type": "shell", "key": " ", "keyColor": "red" },
-    { "type": "wm", "key": " ", "keyColor": "red" },
-    { "type": "memory", "key": "󰍛 ", "keyColor": "red" },
+    { "type": "os", "key": " ", "keyColor": "magenta" },
+    { "type": "kernel", "key": " ", "keyColor": "magenta" },
+    { "type": "uptime", "key": "󰅐 ", "keyColor": "magenta" },
+    { "type": "packages", "key": "󰏖 ", "keyColor": "magenta" },
+    { "type": "shell", "key": " ", "keyColor": "magenta" },
+    { "type": "wm", "key": " ", "keyColor": "magenta" },
+    { "type": "memory", "key": "󰍛 ", "keyColor": "magenta" },
     "break",
     { "type": "custom", "format": "あなたにはあなた自身の意見を持つ権利はありますが、" },
-	{ "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" },
+    { "type": "custom", "format": "あなた自身の事実を持つ権利はありません。" }
   ]
 }
 EOF
 
-echo "Generated 3 Fastfetch Layouts (ASCII, Image 1, Image 2)!"
+echo "Generated 3 Fastfetch Layouts (Pro ASCII, Image 1, Image 2)!"
 chmod +x "$0"

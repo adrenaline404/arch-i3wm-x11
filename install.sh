@@ -275,8 +275,8 @@ if [ "$DRY_RUN" = false ]; then
         chsh -s /usr/bin/zsh
     fi
 
-    log "Applying Default Theme (Void Red)..."
-    bash "$HOME/.config/i3/scripts/theme_switcher.sh" "void-red"
+    log "Applying Default Theme (Pro-Dark)..."
+    bash "$HOME/.config/i3/scripts/theme_switcher.sh" "pro-dark"
 else
     log "[DRY-RUN] Skipping permissions, udev rules, and shell changes."
 fi
@@ -291,6 +291,8 @@ echo "   1. A reboot is REQUIRED for brightness & group permissions to work."
 echo "   2. Select 'i3' session at login screen."
 echo "   3. Backup of your old configs is at: $BACKUP_DIR"
 echo "   4. First boot will prompt for default browser setup."
+echo "   5. Don't forget to give a star on GitHub if you like the setup! :)"
+echo "   6. For issues, feedback, or contributions, visit the GitHub repo."
 echo " "
 echo -e "${NC}"
 

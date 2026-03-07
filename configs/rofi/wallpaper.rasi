@@ -8,9 +8,9 @@ configuration {
 window {
     width: 850px;
     height: 600px;
-    border: 3px;
+    border: 1px;
     border-color: @primary;
-    border-radius: 15px;
+    border-radius: 12px;
     background-color: @background;
     padding: 10px;
     location: center;
@@ -26,10 +26,12 @@ mainbox {
 
 inputbar {
     background-color: @bg-alt;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px;
     children: [ prompt, entry ];
     margin: 0 0 10px 0;
+    border: 1px;
+    border-color: transparent;
 }
 
 prompt {
@@ -43,6 +45,7 @@ entry {
     background-color: transparent;
     text-color: @foreground;
     placeholder: "Search / Select Wallpaper...";
+    placeholder-color: @disabled;
 }
 
 listview {
@@ -59,15 +62,15 @@ element {
     background-color: @bg-alt;
     text-color: @foreground;
     orientation: vertical;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 15px;
-    border: 2px;
+    border: 1px;
     border-color: transparent;
 }
 
 element selected {
-    background-color: @background;
-    text-color: @primary;
+    background-color: @primary;
+    text-color: #1E1E2E;
     border-color: @primary;
 }
 
@@ -76,7 +79,7 @@ element-icon {
     horizontal-align: 0.5;
     background-color: transparent;
     margin: 0 0 10px 0;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 element-text {

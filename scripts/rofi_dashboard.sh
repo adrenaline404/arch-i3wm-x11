@@ -2,13 +2,8 @@
 
 ROFI_THEME="$HOME/.config/rofi/dashboard.rasi"
 
-CURRENT_PALETTE=$(grep 'palette =' $HOME/.config/starship.toml | cut -d'"' -f2)
-
-if [ "$CURRENT_PALETTE" == "void_blue" ]; then
-    ACCENT="#2e9ef4"
-else
-    ACCENT="#FF5555"
-fi
+ACCENT=$(grep '^primary =' "$HOME/.config/i3/themes/current/colors.ini" | awk '{print $3}')
+if [ -z "$ACCENT" ]; then ACCENT="#CBA6F7"; fi
 
 ICON_PLAY=""
 ICON_PAUSE=""
@@ -20,7 +15,7 @@ DATE_LONG=$(date "+%A, %d %B %Y")
 DAY_NUM=$(date "+%-d")
 
 CAL_HEAD=$(LC_ALL=C cal | head -n1)
-CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$ACCENT' weight='bold'>\2<\/span>\3/")
+CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$ACCENT' weight='bold' background='#313244'> \2 <\/span>\3/")
 
 PLAYER_STATUS=$(playerctl status 2>/dev/null)
 
@@ -31,19 +26,12 @@ else
 fi
 
 SECTION_HEADER="<span font='JetBrainsMono Nerd Font ExtraBold 48' color='$ACCENT'>$TIME_BIG</span>
-<span font='JetBrainsMono Nerd Font 12' color='#ffffff'>$DATE_LONG</span>"
+<span font='JetBrainsMono Nerd Font 12' color='#CDD6F4'>$DATE_LONG</span>"
 
-SECTION_CALENDAR="<span font='JetBrainsMono Nerd Font 10' color='#cccccc'>$CAL_HEAD</span>
-<span font='JetBrainsMono Nerd Font 10' color='#888888'>$CAL_BODY</span>"
+SECTION_CALENDAR="<span font='JetBrainsMono Nerd Font 11' color='#A6ADC8'>$CAL_HEAD</span>
+<span font='JetBrainsMono Nerd Font 11' color='#CDD6F4'>$CAL_BODY</span>"
 
-SPACER1="<span size='20pt'>\n</span>"
-
-SPACER2="<span size='10pt'> </span>"
-
-FINAL_MESSAGE="$SECTION_HEADER
-$SPACER2
-$SECTION_CALENDAR
-$SPACER1"
+FINAL_MESSAGE="$SECTION_HEADER\n\n$SECTION_CALENDAR"
 
 OPT_PREV="$ICON_PREV"
 OPT_TOGGLE="$BTN_PLAY"

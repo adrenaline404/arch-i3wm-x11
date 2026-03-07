@@ -1,7 +1,9 @@
 #!/bin/bash
 
-ROFI_CONFIG="-theme ~/.config/rofi/config.rasi"
-WIDTH_CONST=40
+ACCENT=$(grep '^primary =' "$HOME/.config/i3/themes/current/colors.ini" | awk '{print $3}')
+if [ -z "$ACCENT" ]; then ACCENT="#CBA6F7"; fi
+
+ROFI_CONFIG="~/.config/rofi/config.rasi"
 
 ICON_WIFI_ON=" "
 ICON_WIFI_OFF="󰖪 "
@@ -26,7 +28,7 @@ notify_user() {
 }
 
 if ! command -v nmcli >/dev/null 2>&1; then
-    notify_user "Error" "NetworkManager (nmcli) tidak ditemukan!"
+    notify_user "Error" "NetworkManager (nmcli) not found!"
     exit 1
 fi
 
@@ -37,9 +39,9 @@ get_active_info() {
         NAME=$(echo "$ACTIVE" | cut -d: -f1)
         TYPE=$(echo "$ACTIVE" | cut -d: -f2)
         IP=$(nmcli -g ip4.address connection show "$NAME" | head -n1 | cut -d/ -f1)
-        echo "Connected: $NAME ($TYPE) | IP: ${IP:-N/A}"
+        echo "<span color='$ACCENT'><b>󰈁 Connected:</b></span> $NAME ($TYPE)\n<span color='#888888'><b>󰩟 IP:</b> ${IP:-N/A}</span>"
     else
-        echo "Status: Disconnected / Offline"
+        echo "<span color='#F38BA8'><b>󰖪 Disconnected / Offline</b></span>"
     fi
 }
 
@@ -73,11 +75,12 @@ $OPT_NET"
 
     LINE_COUNT=$(echo "$MENU" | wc -l)
 
+    LAYOUT="window {width: 450px;} listview {lines: $LINE_COUNT;}"
+
     CHOICE=$(echo -e "$MENU" | rofi -dmenu -i -p "Network" \
-        $ROFI_CONFIG \
-        -mesg "$HEADER_MSG" \
-        -lines "$LINE_COUNT" \
-        -width "$WIDTH_CONST")
+        -theme "$ROFI_CONFIG" \
+        -theme-str "$LAYOUT" \
+        -mesg "$HEADER_MSG")
 
     case "$CHOICE" in
         "$OPT_WIFI")
@@ -89,25 +92,17 @@ $OPT_NET"
                 notify_user "Wi-Fi" "Turning Off..."
             fi
             ;;
-        "$ICON_SCAN"*)
-            scan_wifi
-            ;;
-        "$ICON_ETH"*)
-            show_ethernet_info
-            ;;
-        "$ICON_INFO"*)
-            show_full_info
-            ;;
-        "$ICON_EDIT"*)
-            nmcli-connection-editor &
-            ;;
+        "$ICON_SCAN"*) scan_wifi ;;
+        "$ICON_ETH"*) show_ethernet_info ;;
+        "$ICON_INFO"*) show_full_info ;;
+        "$ICON_EDIT"*) nmcli-connection-editor & ;;
         "$OPT_NET")
             if [ "$ACT_NET" == "net_on" ]; then
                 nmcli networking on
-                notify_user "Network" "System Networking Enabled"
+                notify_user "Network" "Networking Enabled"
             else
                 nmcli networking off
-                notify_user "Network" "System Networking Disabled"
+                notify_user "Network" "Networking Disabled"
             fi
             ;;
     esac
@@ -125,16 +120,16 @@ scan_wifi() {
             }
         }')
 
-    SELECTED=$(echo -e "$WIFI_LIST" | rofi -dmenu -i -p "Wi-Fi" \
-        $ROFI_CONFIG \
-        -mesg "Select a network to connect" \
-        -lines 10 \
-        -width 50)
+    LAYOUT="window {width: 600px;} listview {lines: 8;} element-text {font: \"JetBrainsMono Nerd Font 11\";}"
+
+    SELECTED=$(echo -e "$WIFI_LIST" | rofi -dmenu -i -p "Select Wi-Fi" \
+        -theme "$ROFI_CONFIG" \
+        -theme-str "$LAYOUT" \
+        -mesg "<span color='#888888'>Available Networks:</span>")
 
     if [ -n "$SELECTED" ]; then
         TEMP="${SELECTED:2}"
         SSID=$(echo "$TEMP" | sed 's/ [].*//' | sed 's/ *$//')
-
         connect_wifi "$SSID"
     else
         show_main_menu
@@ -159,10 +154,13 @@ connect_wifi() {
 
 connect_new_wifi() {
     local SSID="$1"
-    PASS=$(rofi -dmenu -password -p "Password for $SSID" \
-        $ROFI_CONFIG \
-        -lines 0 \
-        -width 30)
+    
+    LAYOUT="window {width: 400px;} listview {lines: 0;}"
+    
+    PASS=$(rofi -dmenu -password -p "Password" \
+        -theme "$ROFI_CONFIG" \
+        -theme-str "$LAYOUT" \
+        -mesg "<span color='$ACCENT'>Network: $SSID</span>")
         
     if [ -z "$PASS" ]; then return; fi
 
@@ -182,28 +180,24 @@ show_ethernet_info() {
         STATUS=$(nmcli -t -f STATE device show "$ETH_DEV" | cut -d: -f2)
         if [ "$STATUS" == "connected" ]; then
              INFO=$(nmcli -g ip4.address,gw4,dns4 device show "$ETH_DEV")
-             MSG="Device: $ETH_DEV (Connected)
----------------------------------
-$INFO"
+             MSG="Device: $ETH_DEV (Connected)\n---------------------------------\n$INFO"
         else
-             MSG="Device: $ETH_DEV
-Status: Disconnected / Cable Unplugged"
+             MSG="Device: $ETH_DEV\nStatus: Disconnected / Cable Unplugged"
         fi
     else
         MSG="No Ethernet Device Found."
     fi
     
-    rofi -e "$MSG" $ROFI_CONFIG
-    
+    rofi -e "$MSG" -theme "$ROFI_CONFIG"
     show_main_menu
 }
 
 show_full_info() {
+    LAYOUT="window {width: 600px;} listview {lines: 12;}"
     nmcli -p device show | rofi -dmenu \
         -p "System Info" \
-        $ROFI_CONFIG \
-        -width 60 \
-        -lines 15
+        -theme "$ROFI_CONFIG" \
+        -theme-str "$LAYOUT"
         
     show_main_menu
 }

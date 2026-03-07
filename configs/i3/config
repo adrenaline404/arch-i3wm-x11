@@ -4,14 +4,14 @@ set $scripts ~/.config/i3/scripts
 
 font pango:JetBrainsMono Nerd Font 10
 # GAPS & LAYOUT
-gaps inner 10
+gaps inner 8
 gaps outer 0
 # GAP TOP: 50px (Polybar Height 28pt + Offset + Padding)
 gaps top 50
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 1
 
 # WINDOW COLORS
 include ~/.config/i3/themes/current/i3_colors

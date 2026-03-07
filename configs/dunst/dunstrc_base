@@ -4,28 +4,28 @@
     width = 320
     height = (0, 300)
     origin = top-right
-    offset = 15x50
+    offset = 20x60
     scale = 0
     notification_limit = 5
 
     progress_bar = true
-    progress_bar_height = 10
+    progress_bar_height = 8
     progress_bar_frame_width = 1
     progress_bar_min_width = 150
     progress_bar_max_width = 300
 
-    transparency = 10
+    transparency = 0
     
-    frame_width = 2
+    frame_width = 1
     separator_color = frame
     
-    padding = 12
-    horizontal_padding = 12
-    text_icon_padding = 10
+    padding = 15
+    horizontal_padding = 15
+    text_icon_padding = 15
     
     sort = yes
     font = JetBrainsMono Nerd Font 10
-    line_height = 0
+    line_height = 3
     markup = full
     format = "<b>%s</b>\n%b"
     alignment = left
@@ -49,9 +49,10 @@
     mouse_right_click = close_all
 
     layer = overlay
-    corner_radius = 12
+    corner_radius = 8
 
 # ==THEME_START==
-background = "#101010F2"
-frame_color = "#ff5555"
+    background = "#1E1E2EF2"
+    foreground = "#CDD6F4"
+    frame_color = "#CBA6F7"
 # ==THEME_END==
