@@ -39,19 +39,17 @@ textbox {
 
 listview {
     background-color: transparent;
-    layout: horizontal;
-    spacing: 35px;
+    spacing: 20px;
     lines: 1;
     columns: 3;
     cycle: true;
     scrollbar: false;
-    margin: 10px 50px 10px 50px;
+    margin: 10px 45px 10px 45px;
 }
 
 element {
     background-color: @bg-alt;
-    width: 80px;
-    padding: 25px 0px; 
+    padding: 28px 0px;
     border-radius: 100%;
     cursor: pointer;
     border: 1px;
@@ -61,9 +59,10 @@ element {
 element-text {
     background-color: transparent;
     text-color: @foreground;
-    font: "JetBrainsMono Nerd Font 16";
+    font: "JetBrainsMono Nerd Font 18";
     horizontal-align: 0.5;
     vertical-align: 0.5;
+    margin: 0px;
 }
 
 element selected {

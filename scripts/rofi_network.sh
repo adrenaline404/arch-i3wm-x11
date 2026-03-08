@@ -3,7 +3,7 @@
 ACCENT=$(grep '^primary =' "$HOME/.config/i3/themes/current/colors.ini" | awk '{print $3}')
 if [ -z "$ACCENT" ]; then ACCENT="#CBA6F7"; fi
 
-ROFI_CONFIG="~/.config/rofi/config.rasi"
+ROFI_CONFIG="$HOME/.config/rofi/config.rasi"
 
 ICON_WIFI_ON=" "
 ICON_WIFI_OFF="󰖪 "
@@ -75,7 +75,7 @@ $OPT_NET"
 
     LINE_COUNT=$(echo "$MENU" | wc -l)
 
-    LAYOUT="window {width: 450px;} listview {lines: $LINE_COUNT;}"
+    LAYOUT="window {width: 450px;} listview {lines: $LINE_COUNT;} element-text {horizontal-align: 0.0; font: \"JetBrainsMono Nerd Font 11\";} entry {placeholder: \"Select Option...\";}"
 
     CHOICE=$(echo -e "$MENU" | rofi -dmenu -i -p "Network" \
         -theme "$ROFI_CONFIG" \
@@ -116,11 +116,11 @@ scan_wifi() {
             if (length($2) > 0) {
                 if($1=="*") active=" "; else active="  ";
                 if($4!="") sec=" "; else sec=" ";
-                printf "%s%-25s %s %s\n", active, substr($2,0,25), sec, $3
+                printf "%s%-30s %s %s\n", active, substr($2,0,30), sec, $3
             }
         }')
 
-    LAYOUT="window {width: 600px;} listview {lines: 8;} element-text {font: \"JetBrainsMono Nerd Font 11\";}"
+    LAYOUT="window {width: 800px;} listview {lines: 10;} element-text {horizontal-align: 0.0; font: \"JetBrainsMono Nerd Font 10\";} entry {placeholder: \"Search Wi-Fi...\";}"
 
     SELECTED=$(echo -e "$WIFI_LIST" | rofi -dmenu -i -p "Select Wi-Fi" \
         -theme "$ROFI_CONFIG" \
@@ -155,7 +155,7 @@ connect_wifi() {
 connect_new_wifi() {
     local SSID="$1"
     
-    LAYOUT="window {width: 400px;} listview {lines: 0;}"
+    LAYOUT="window {width: 450px;} listview {lines: 0;} entry {placeholder: \"Enter Password...\";}"
     
     PASS=$(rofi -dmenu -password -p "Password" \
         -theme "$ROFI_CONFIG" \
@@ -188,12 +188,14 @@ show_ethernet_info() {
         MSG="No Ethernet Device Found."
     fi
     
-    rofi -e "$MSG" -theme "$ROFI_CONFIG"
+    LAYOUT="window {width: 600px;} textbox {horizontal-align: 0.0; font: \"JetBrainsMono Nerd Font 10\";}"
+    rofi -e "$MSG" -theme "$ROFI_CONFIG" -theme-str "$LAYOUT"
     show_main_menu
 }
 
 show_full_info() {
-    LAYOUT="window {width: 600px;} listview {lines: 12;}"
+    LAYOUT="window {width: 950px;} listview {lines: 16;} element-text {horizontal-align: 0.0; font: \"JetBrainsMono Nerd Font 9\";} entry {placeholder: \"Search details...\";}"
+    
     nmcli -p device show | rofi -dmenu \
         -p "System Info" \
         -theme "$ROFI_CONFIG" \

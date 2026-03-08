@@ -11,15 +11,15 @@ STATUS=$(xset q | grep "DPMS is" | awk '{print $3}')
 if [ "$1" == "toggle" ]; then
     if [ "$STATUS" == "Enabled" ]; then
         xset s off -dpms
-        notify-send -u low "☕ Caffeine" "Enabled: Screen will stay awake."
+        notify-send -u low "󰅶 Caffeine" "Enabled: Screen will stay awake."
     else
         xset s on +dpms
         notify-send -u low "⏾ Caffeine" "Disabled: Auto-sleep restored."
     fi
 else
     if [ "$STATUS" == "Enabled" ]; then
-        echo "%{F$DISABLED_COLOR}󰅽%{F-}" 
+        echo "%{F$DISABLED_COLOR}󰅽 %{F-}"
     else
-        echo "%{F$ACCENT}󰅶%{F-}" 
+        echo "%{F$ACCENT}󰅶 %{F-}"
     fi
 fi

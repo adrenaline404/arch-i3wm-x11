@@ -56,13 +56,13 @@ i3lock \
 \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
---time-size=56 \
---time-pos="ix:iy-40" \
+--time-size=64 \
+--time-pos="ix:iy+5" \
 \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
 --date-size=14 \
---date-pos="ix:iy+45" \
+--date-pos="ix:iy+25" \
 \
 --verif-text="Verifying..." \
 --verif-font="JetBrainsMono Nerd Font:style=Bold" \
