@@ -40,17 +40,18 @@ textbox {
 listview {
     background-color: transparent;
     layout: horizontal;
-    spacing: 30px;
+    spacing: 35px;
     lines: 1;
     columns: 3;
     cycle: true;
     scrollbar: false;
-    margin: 10px 45px 10px 45px;
+    margin: 10px 50px 10px 50px;
 }
 
 element {
     background-color: @bg-alt;
-    padding: 20px;
+    width: 80px;
+    padding: 25px 0px; 
     border-radius: 100%;
     cursor: pointer;
     border: 1px;

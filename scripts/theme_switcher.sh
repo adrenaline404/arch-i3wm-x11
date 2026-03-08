@@ -6,8 +6,8 @@ LINK_TARGET="$THEME_ROOT/current"
 DUNSTRC="$HOME/.config/dunst/dunstrc_base"
 
 if [ -z "$THEME" ] || [ "$THEME" == "gui" ]; then
-    OPT_PRO="  Pro Dark (Default)"
-    OPT_PYWAL="  Pywal (Dynamic)"
+    OPT_PRO="  Pro Dark"
+    OPT_PYWAL="  Pywal"
     OPTIONS="$OPT_PRO\n$OPT_PYWAL"
     HEADER="<span color='#888888'>SELECT SYSTEM THEME STYLE</span>"
     

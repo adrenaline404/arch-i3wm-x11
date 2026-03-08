@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ACCENT=$(grep '^primary =' "$HOME/.config/i3/themes/current/colors.ini" | awk '{print $3}')
+if [ -z "$ACCENT" ]; then ACCENT="#CBA6F7"; fi
+
 get_count() {
     if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
         updates_arch=0
@@ -14,7 +17,7 @@ get_count() {
     if [ "$updates" -gt 0 ]; then
         echo " $updates"
     else
-        echo ""
+        echo " 0"
     fi
 }
 
@@ -24,18 +27,24 @@ show_list() {
 
     full_list="$list_arch\n$list_aur"
 
-    clean_list=$(echo -e "$full_list" | sed '/^$/d')
+    clean_list=$(echo -e "$full_list" | sed '/^$/d' | grep -v '^\s*$')
 
     if [ -z "$clean_list" ]; then
-        notify-send "System" "No updates available."
+        notify-send "System Status" "No updates available. Your system is up to date!"
         exit 0
     fi
 
-    echo -e "$clean_list" | rofi -dmenu -i -p "Updates Available" -theme ~/.config/rofi/config.rasi
+    HEADER="<span color='$ACCENT'><b>      AVAILABLE SYSTEM UPDATES      </b></span>"
+    LAYOUT="window {width: 700px;} listview {lines: 12;} element-text {font: \"JetBrainsMono Nerd Font 11\";}"
+
+    echo -e "$clean_list" | rofi -dmenu -i -p "Updates" \
+        -theme ~/.config/rofi/config.rasi \
+        -theme-str "$LAYOUT" \
+        -mesg "$HEADER"
 }
 
 run_update() {
-    kitty --hold -e sh -c "yay -Syu; echo 'Done. Press Enter to exit.'; read"
+    kitty --hold -e sh -c "yay -Syu; echo ''; echo 'System Update Complete! Press Enter to exit.'; read"
 }
 
 case "$1" in

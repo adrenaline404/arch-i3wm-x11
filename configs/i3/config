@@ -28,6 +28,7 @@ exec --no-startup-id xfce4-power-manager
 exec_always --no-startup-id picom -b
 exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id autotiling
 # first_setup
 exec_always --no-startup-id ~/.config/i3/scripts/first_setup.sh
 

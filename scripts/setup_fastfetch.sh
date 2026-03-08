@@ -13,7 +13,8 @@ cat > "$PRESET_DIR/01.jsonc" << 'EOF'
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "padding": { "top": 1, "left": 1, "right": 3 }
+    "source": "arch_small",
+    "padding": { "top": 1, "left": 2, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
@@ -38,7 +39,7 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_1.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 0, "right": 2 }
+    "padding": { "top": 1, "left": 2, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
@@ -64,7 +65,7 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_2.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 0, "right": 2 }
+    "padding": { "top": 1, "left": 2, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
@@ -83,5 +84,5 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
 }
 EOF
 
-echo "Generated 3 Fastfetch Layouts (Pro ASCII, Image 1, Image 2)!"
+echo "Generated 3 Fastfetch Layouts (ASCII, Image 1, Image 2)!"
 chmod +x "$0"

@@ -178,7 +178,7 @@ PKGS_CORE="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen xss-lock
            network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc feh xed cava htop \
            polkit-gnome lxappearance qt5ct \
            papirus-icon-theme arc-gtk-theme papirus-folders-git \
-           neovim python-pynvim npm xclip ripgrep nano python-pywal less tree bat fd"
+           neovim python-pynvim npm xclip ripgrep nano python-pywal less tree bat fd autotiling python-i3ipc"
 
 install_pkg "Core System (WM, Utils & Rice Tools)" "$PKGS_CORE"
 

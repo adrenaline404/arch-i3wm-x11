@@ -1,16 +1,24 @@
 #!/bin/bash
 
+if pidof i3lock >/dev/null; then
+    exit 0
+fi
+
+if pidof rofi >/dev/null; then
+    killall rofi
+    sleep 0.2
+fi
+
 COLOR_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
 
 if [ -f "$COLOR_CONFIG" ]; then
     source "$COLOR_CONFIG"
 else
-    # Fallback to Pro Dark (Catppuccin Mocha) if config is missing
-    LOCK_RING="#CBA6F7cc"    # Mauve
-    LOCK_TEXT="#CDD6F4ee"    # White/Text
-    LOCK_WRONG="#F38BA8bb"   # Red Pastel
-    LOCK_VERIFY="#89B4FAbb"  # Blue Pastel
-    LOCK_INSIDE="#00000000"  # Transparent
+    LOCK_RING="#CBA6F7cc"
+    LOCK_TEXT="#CDD6F4ee"
+    LOCK_WRONG="#F38BA8bb"
+    LOCK_VERIFY="#89B4FAbb"
+    LOCK_INSIDE="#00000000"
 fi
 
 BLANK='#00000000'
@@ -49,12 +57,12 @@ i3lock \
 --time-str="%H:%M" \
 --time-font="JetBrainsMono Nerd Font:style=ExtraBold" \
 --time-size=56 \
---time-pos="ix:iy-15" \
+--time-pos="ix:iy-40" \
 \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
 --date-size=14 \
---date-pos="ix:iy+25" \
+--date-pos="ix:iy+45" \
 \
 --verif-text="Verifying..." \
 --verif-font="JetBrainsMono Nerd Font:style=Bold" \

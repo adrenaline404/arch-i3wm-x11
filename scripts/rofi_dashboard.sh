@@ -15,7 +15,7 @@ DATE_LONG=$(date "+%A, %d %B %Y")
 DAY_NUM=$(date "+%-d")
 
 CAL_HEAD=$(LC_ALL=C cal | head -n1)
-CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$ACCENT' weight='bold' background='#313244'> \2 <\/span>\3/")
+CAL_BODY=$(LC_ALL=C cal | tail -n+2 | sed -r "s/(^| )($DAY_NUM)($| )/\1<span color='$ACCENT' weight='bold' background='#313244'>\2<\/span>\3/")
 
 PLAYER_STATUS=$(playerctl status 2>/dev/null)
 
