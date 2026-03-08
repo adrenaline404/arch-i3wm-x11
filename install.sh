@@ -159,7 +159,7 @@ fi
 # CONFLICT HANDLING
 log "Checking for conflicting packages..."
 if [ "$DRY_RUN" = false ]; then
-    CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git")
+    CONFLICTS=("i3lock" "picom" "picom-ibhagwan-git" "nitrogen")
     for pkg in "${CONFLICTS[@]}"; do
         if pacman -Qq "$pkg" &> /dev/null; then
             warn "Removing conflict: $pkg"
@@ -171,14 +171,17 @@ fi
 # PACKAGE INSTALLATION
 echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 
-# Core
-PKGS_CORE="i3-wm polybar rofi dunst i3lock-color-git picom-git nitrogen xss-lock \
-           xorg-server xorg-xinit xorg-xset xorg-xrandr \
-           brightnessctl playerctl libcanberra libcanberra-gtk3 \
-           network-manager-applet blueman pavucontrol flameshot jq xfce4-power-manager dmenu zenity imagemagick progress curl vlc feh xed cava htop \
-           polkit-gnome lxappearance qt5ct \
-           papirus-icon-theme arc-gtk-theme papirus-folders-git \
-           neovim python-pynvim npm xclip ripgrep nano python-pywal less tree bat fd autotiling python-i3ipc"
+# Core Packages Grouping
+PKG_XORG="xorg-server xorg-xinit xorg-xset xorg-xrandr"
+PKG_WM="i3-wm polybar rofi dunst i3lock-color-git picom-git xss-lock autotiling python-i3ipc"
+PKG_SYS="brightnessctl xfce4-power-manager polkit-gnome lxappearance qt5ct"
+PKG_NET="network-manager-applet blueman"
+PKG_AUDIO="pavucontrol playerctl"
+PKG_APPS="flameshot dmenu zenity imagemagick feh mpv xed"
+PKG_CLI="jq progress curl htop neovim python-pynvim npm xclip ripgrep nano less tree bat fd python-pywal"
+PKG_THEMES="papirus-icon-theme arc-gtk-theme papirus-folders-git"
+
+PKGS_CORE="$PKG_XORG $PKG_WM $PKG_SYS $PKG_NET $PKG_AUDIO $PKG_APPS $PKG_CLI $PKG_THEMES"
 
 install_pkg "Core System (WM, Utils & Rice Tools)" "$PKGS_CORE"
 
@@ -222,7 +225,6 @@ fi
 echo -e "\n${CYAN}>>> CONFIGURATION DEPLOYMENT${NC}"
 
 # Deploy standard configs from configs/ folder
-# Mapped: configs/folder -> ~/.config/folder
 for dir in "$REPO_DIR/configs"/*; do
     if [ -d "$dir" ] || [ -f "$dir" ]; then
         base_name=$(basename "$dir")
@@ -234,11 +236,22 @@ done
 deploy_config "$REPO_DIR/.zshrc" "$HOME/.zshrc"
 
 # Deploy i3 Scripts & Themes
-# Mapped: scripts/ -> ~/.config/i3/scripts
-# Mapped: themes/  -> ~/.config/i3/themes
 deploy_config "$REPO_DIR/scripts" "$HOME/.config/i3/scripts"
 deploy_config "$REPO_DIR/themes" "$HOME/.config/i3/themes"
 
+# INITIALIZE WALLPAPER DIRECTORY
+if [ "$DRY_RUN" = false ]; then
+    log "Setting up Default Wallpapers directory..."
+    TARGET_WALLPAPER_DIR="$HOME/Wallpapers"
+    mkdir -p "$TARGET_WALLPAPER_DIR"
+    
+    if [ -f "$REPO_DIR/themes/pro-dark/wallpaper.jpg" ]; then
+        cp "$REPO_DIR/themes/pro-dark/wallpaper.jpg" "$TARGET_WALLPAPER_DIR/default_pro_dark.jpg"
+        log "Copied default wallpaper to $TARGET_WALLPAPER_DIR"
+    else
+        warn "Default wallpaper.jpg not found in $REPO_DIR/themes/pro-dark/"
+    fi
+fi
 
 # SYSTEM HARDENING & FIXES
 echo -e "\n${CYAN}>>> SYSTEM HARDENING & FIXES${NC}"
@@ -249,7 +262,6 @@ if [ "$DRY_RUN" = false ]; then
     chmod +x "$HOME/.config/polybar/launch.sh"
     chmod +x "$HOME/.config/i3/scripts/rofi_dashboard.sh" 2>/dev/null
     
-    # Permission for python scripts
     if [ -f "$HOME/.config/i3/scripts/theme_builder.py" ]; then
         chmod +x "$HOME/.config/i3/scripts/theme_builder.py"
     fi
@@ -284,7 +296,7 @@ fi
 echo -e "${GREEN}"
 echo " "
 echo "   INSTALLATION SUCCESSFUL!"
-echo "   Dev: adrenaline404"
+echo "   Github: adrenaline404"
 echo " "
 echo "   [!] IMPORTANT:"
 echo "   1. A reboot is REQUIRED for brightness & group permissions to work."

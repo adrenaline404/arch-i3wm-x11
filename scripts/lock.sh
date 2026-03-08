@@ -62,7 +62,7 @@ i3lock \
 --date-str="$DATE_LAYOUT" \
 --date-font="JetBrainsMono Nerd Font:style=Bold" \
 --date-size=14 \
---date-pos="ix:iy+25" \
+--date-pos="ix:iy+35" \
 \
 --verif-text="Verifying..." \
 --verif-font="JetBrainsMono Nerd Font:style=Bold" \

@@ -1,4 +1,4 @@
-# ⚡ ARCH-I3WM-X11
+# ARCH-I3WM-X11
 
 ![Arch Linux](https://img.shields.io/badge/OS-Arch_Linux-33b7ff?style=for-the-badge&logo=archlinux&logoColor=white)
 ![Window Manager](https://img.shields.io/badge/WM-i3wm-black?style=for-the-badge&logo=i3&logoColor=white)
@@ -7,23 +7,23 @@
 
 A highly modular, robust, and fully automated dotfiles deployment for Arch Linux (X11). This project transforms a base Arch Linux installation into a fully functional, aesthetically pleasing, and highly productive desktop environment with just one script.
 
-## ✨ Key Features
+## Key Features
 
-- **🚀 Bulletproof Installer:** Automated deployment script (`install.sh`) with safe backup mechanisms, `sudo` keep-alive, strict path resolution, and advanced flags (`--dry-run` and `--link` for developers).
-- **🎨 Dynamic Theming Engine:** Built-in Python script (`theme_builder.py`) using `pywal` to automatically generate system-wide color schemes (Polybar, Rofi, Dunst, i3) instantly from any wallpaper. Includes two static themes (`Pro Dark`) out of the box.
-- **🖥️ True Multi-Monitor Support:** Polybar automatically detects and scales across all connected displays seamlessly.
-- **⌨️ Instant Keybinding Cheatsheet:** Never forget a shortcut. Press `Mod + F1` to instantly parse and view all your active i3 keybindings via an elegant Rofi menu.
-- **⚡ Blazing Fast Terminal Environment:** Pre-configured `Zsh` with `Starship` prompt (async Git fetching enabled) and dynamic `Fastfetch` presets.
-- **🛠️ Custom Rofi Tooling:** Specialized Rofi menus for:
+- **Bulletproof Installer:** Automated deployment script (`install.sh`) with safe backup mechanisms, `sudo` keep-alive, strict path resolution, and advanced flags (`--dry-run` and `--link` for developers).
+- **Dynamic Theming Engine:** Built-in Python script (`theme_builder.py`) using `pywal` to automatically generate system-wide color schemes (Polybar, Rofi, Dunst, i3) instantly from any wallpaper. Includes static themes (`Pro Dark`) out of the box.
+- **True Multi-Monitor Support:** Polybar automatically detects and scales across all connected displays seamlessly.
+- **Instant Keybinding Cheatsheet:** Never forget a shortcut. Press `Mod + F1` to instantly parse and view all your active i3 keybindings via an elegant Rofi menu.
+- **Blazing Fast Terminal Environment:** Pre-configured `Zsh` with `Starship` prompt (async Git fetching enabled) and dynamic `Fastfetch` presets.
+- **Custom Rofi Tooling:** Specialized Rofi menus for:
   - Network Management (`nmcli` GUI)
   - Power Menu
   - Theme / Wallpaper Switcher
   - Dashboard
-- **👋 First Boot Greeter:** Interactive setup upon first login to configure default applications like your web browser.
+- **First Boot Greeter:** Interactive setup upon first login to configure default applications like your web browser.
 
 ---
 
-## 📦 Prerequisites
+## Prerequisites
 
 Before running the installer, ensure you have:
 
@@ -33,7 +33,7 @@ Before running the installer, ensure you have:
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Clone the repository and run the installation script. The script will automatically install necessary packages (AUR included via `yay`), backup your existing dotfiles, and deploy the new configurations.
 
@@ -43,7 +43,7 @@ cd arch-i3wm-x11
 ./install.sh
 ```
 
-> !! If you encounter problems with incomplete deployment, perform the installation (./install.sh) again after rebooting the system after the first installation to fix the problem.
+> If you encounter problems with incomplete deployment, perform the installation (./install.sh) again after rebooting the system after the first installation to fix the problem!.
 
 ### Advanced Installer Flags (For Developers)
 
@@ -52,11 +52,11 @@ cd arch-i3wm-x11
 
 ---
 
-## ⌨️ Workflow & Keybindings
+## Workflow & Keybindings
 
 Once installed and rebooted, log into the `i3` session. Your main modifier key (`$mod`) is typically the **Windows/Super key**.
 
-### 🆘 The Most Important Shortcut
+### The Most Important Shortcut
 
 > **Press `$mod + F1**` at any time to open the **Rofi Cheatsheet**. It dynamically reads your `i3/config` and displays all available shortcuts!
 
@@ -76,13 +76,14 @@ Once installed and rebooted, log into the `i3` session. Your main modifier key (
 | --- | --- |
 | `$mod + Shift + e` | Open Power Menu |
 | `$mod + Shift + n` | Open Network Manager |
-| `$mod + t` | Open Theme |
+| `$mod + t` | Open Theme (pro-dark, custom pywall) |
 | `$mod + Shift + w` | Wallpaper Switcher |
 | `$mod + Shift + d` | Open Rofi Dashboard |
+| `$mod + Shift + x` | Lockscreen |
 
 ---
 
-## 🎨 Managing Themes & Wallpapers
+## Managing Themes & Wallpapers
 
 You can change your system's entire look with a few clicks.
 
@@ -93,7 +94,7 @@ You can change your system's entire look with a few clicks.
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 A quick overview of how the repository is organized:
 
@@ -108,7 +109,7 @@ ARCH-I3WM-X11/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome!
 Feel free to check issues page if you want to contribute.
@@ -121,7 +122,7 @@ Feel free to check issues page if you want to contribute.
 
 ---
 
-## 📝 License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 

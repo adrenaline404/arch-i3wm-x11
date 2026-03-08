@@ -61,7 +61,7 @@ ln -s "$THEME_ROOT/$THEME" "$LINK_TARGET"
 papirus-folders -C blue --theme Papirus-Dark &
 
 if [ -f "$LINK_TARGET/wallpaper.jpg" ]; then
-    nitrogen --set-zoom-fill "$LINK_TARGET/wallpaper.jpg" --save
+    feh --bg-fill "$LINK_TARGET/wallpaper.jpg"
 fi
 
 ~/.config/polybar/launch.sh &

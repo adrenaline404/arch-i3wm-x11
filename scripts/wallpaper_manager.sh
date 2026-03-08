@@ -69,8 +69,8 @@ else
             notify-send "Pywal" "Generating dynamic theme..."
             python3 ~/.config/i3/scripts/theme_builder.py "$TARGET_IMG"
         elif [[ "$ACTION" == *"Set Wallpaper Only"* ]]; then
-            nitrogen --set-zoom-fill "$TARGET_IMG" --save
             cp "$TARGET_IMG" "$THEME_DIR/wallpaper.jpg"
+            feh --bg-fill "$THEME_DIR/wallpaper.jpg"
             notify-send "Wallpaper Changed" "$CLEAN_NAME applied."
         fi
     fi
