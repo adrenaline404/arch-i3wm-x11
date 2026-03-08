@@ -14,7 +14,7 @@ cat > "$PRESET_DIR/01.jsonc" << 'EOF'
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
     "source": "arch_small",
-    "padding": { "top": 1, "left": 2, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
@@ -39,7 +39,7 @@ cat > "$PRESET_DIR/02.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_1.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 2, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [
@@ -65,7 +65,7 @@ cat > "$PRESET_DIR/03.jsonc" << 'EOF'
     "source": "~/.config/fastfetch/art/custom_image_2.png",
     "type": "kitty",
     "height": 10,
-    "padding": { "top": 1, "left": 2, "right": 3 }
+    "padding": { "top": 1, "left": 0, "right": 3 }
   },
   "display": { "separator": " ", "color": "white" },
   "modules": [

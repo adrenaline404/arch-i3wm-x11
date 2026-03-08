@@ -1,13 +1,11 @@
 #!/bin/bash
 
-if pidof i3lock >/dev/null; then
-    exit 0
-fi
+killall rofi 2>/dev/null
 
-if pidof rofi >/dev/null; then
-    killall rofi
-    sleep 0.2
-fi
+killall i3lock 2>/dev/null
+killall i3lock-color 2>/dev/null
+
+sleep 0.3
 
 COLOR_CONFIG="$HOME/.config/i3/scripts/lock_colors.rc"
 

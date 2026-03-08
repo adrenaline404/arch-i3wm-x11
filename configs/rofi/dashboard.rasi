@@ -38,22 +38,23 @@ textbox {
 }
 
 listview {
-    background-color: transparent;
-    spacing: 20px;
+    background-color: @bg-alt;
+    border-radius: 16px;
+    padding: 10px 5px;
+    spacing: 5px;
     lines: 1;
     columns: 3;
     cycle: true;
     scrollbar: false;
-    margin: 10px 45px 10px 45px;
+    margin: 10px 50px 10px 50px;
 }
 
 element {
-    background-color: @bg-alt;
-    padding: 28px 0px;
-    border-radius: 100%;
+    background-color: transparent;
+    padding: 18px 0px;
+    border-radius: 12px;
     cursor: pointer;
-    border: 1px;
-    border-color: transparent;
+    border: 0px;
 }
 
 element-text {
@@ -67,7 +68,7 @@ element-text {
 
 element selected {
     background-color: @primary;
-    border-color: @primary;
+    border-color: transparent;
 }
 
 element-text selected {

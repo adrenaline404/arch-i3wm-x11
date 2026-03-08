@@ -6,8 +6,8 @@ font pango:JetBrainsMono Nerd Font 10
 # GAPS & LAYOUT
 gaps inner 8
 gaps outer 0
-# GAP TOP: 38px (Polybar Height 24pt + Offset + Padding)
-gaps top 38
+# GAP TOP: 40px (Polybar Height 24pt + Offset + Padding)
+gaps top 40
 default_border pixel 1
 default_floating_border pixel 1
 

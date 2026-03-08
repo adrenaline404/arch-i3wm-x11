@@ -50,7 +50,7 @@ entry {
 listview {
     background-color: transparent;
     columns: 4;
-    lines: 3;
+    lines: 2;
     spacing: 15px;
     cycle: true;
     dynamic: true;
