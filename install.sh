@@ -173,11 +173,11 @@ echo -e "\n${CYAN}>>> PACKAGE SELECTION${NC}"
 
 # Core Packages Grouping
 PKG_XORG="xorg-server xorg-xinit xorg-xset xorg-xrandr"
-PKG_WM="i3-wm polybar rofi dunst i3lock-color-git picom-git xss-lock autotiling python-i3ipc"
+PKG_WM="i3-wm polybar rofi dunst i3lock-color-git picom-git xss-lock autotiling python-i3ipc libnotify"
 PKG_SYS="brightnessctl xfce4-power-manager polkit-gnome lxappearance qt5ct"
 PKG_NET="network-manager-applet blueman"
 PKG_AUDIO="pavucontrol playerctl"
-PKG_APPS="flameshot dmenu zenity imagemagick feh mpv xed"
+PKG_APPS="flameshot dmenu zenity imagemagick feh mpv"
 PKG_CLI="jq progress curl htop neovim python-pynvim npm xclip ripgrep nano less tree bat fd python-pywal"
 PKG_THEMES="papirus-icon-theme arc-gtk-theme papirus-folders-git"
 

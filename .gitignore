@@ -20,3 +20,4 @@ dist/
 tmp/
 temp/
 dotfiles_backup_*
+.config/i3/scripts/.weather_city
