@@ -26,14 +26,29 @@ if [ -f "$CACHE_FILE" ]; then
     fi
 fi
 
-WEATHER=$(curl -s --max-time 10 "https://wttr.in/${CITY}?format=%c+%t")
+WEATHER_RAW=$(curl -s --max-time 10 "https://wttr.in/${CITY}?format=%C|%t")
 
-if [ $? -eq 0 ] && [[ ! "$WEATHER" == *"<"* ]] && [[ ! "$WEATHER" == *"Unknown"* ]]; then
-    echo "$WEATHER" > "$CACHE_FILE"
-    echo "$WEATHER"
+if [ $? -eq 0 ] && [[ ! "$WEATHER_RAW" == *"<"* ]] && [[ ! "$WEATHER_RAW" == *"Unknown"* ]]; then
+    CONDITION=$(echo "$WEATHER_RAW" | awk -F '|' '{print $1}' | tr '[:upper:]' '[:lower:]' | xargs)
+    TEMP=$(echo "$WEATHER_RAW" | awk -F '|' '{print $2}' | xargs)
+
+    case "$CONDITION" in
+        *"clear"*|*"sunny"*) ICON="󰖙" ;;
+        *"partly cloudy"*) ICON="󰖕" ;;
+        *"cloudy"*|*"overcast"*) ICON="󰖐" ;;
+        *"drizzle"*|*"rain"*) ICON="󰖗" ;;
+        *"thunderstorm"*|*"storm"*) ICON="󰖓" ;;
+        *"snow"*|*"ice"*) ICON="󰖘" ;;
+        *"fog"*|*"mist"*) ICON="󰖑" ;;
+        *) ICON="󰖐" ;;
+    esac
+
+    WEATHER_FINAL="$ICON $TEMP"
+    echo "$WEATHER_FINAL" > "$CACHE_FILE"
+    echo "$WEATHER_FINAL"
 else
     if [ -f "$CACHE_FILE" ]; then
-        echo "$(read_cache) [!]"
+        read_cache
     else
         echo "󰖐 Offline"
     fi

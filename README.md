@@ -43,8 +43,6 @@ cd arch-i3wm-x11
 ./install.sh
 ```
 
-> If you encounter problems with incomplete deployment, perform the installation (./install.sh) again after rebooting the system after the first installation to fix the problem!.
-
 ### Advanced Installer Flags (For Developers)
 
 - `./install.sh --dry-run` : Simulates the installation process without making any actual changes to your system or installing packages. Perfect for reviewing what the script does.
@@ -91,6 +89,23 @@ You can change your system's entire look with a few clicks.
 2. **Import or Select:** Choose an existing image or import a new one.
 3. **Dynamic Generation:** Upon selecting an image, you will be prompted to either "Set Wallpaper Only" or **"Generate Dynamic Theme (Pywal)"**.
 4. Selecting Pywal will instantly re-color your *Polybar*, *Rofi*, *Dunst notifications*, and *i3 borders* to match your wallpaper!
+
+---
+
+### Interactive Weather Module
+
+A lightweight, API-free weather module integrated into Polybar, utilizing `wttr.in` with smart caching and dynamic GUI interactions.
+
+**Key Features:**
+**API-Free & Efficient:** Retrieves data directly from `wttr.in`—no API keys or registration required.
+**Smart RAM Caching:** Stores weather data in `/tmp` for 15 minutes to minimize network requests, ensure instant bar reloads, and prevent server rate-limiting.
+**Dynamic GUI Setup:** Prompts for a default city via `zenity` during `first_setup.sh`. Unconfigured states elegantly fallback to a "Set Location" module prompt.
+
+**Interactive Mouse Bindings:**
+**Left-Click:** Displays a detailed forecast tooltip (feels-like temperature, wind, humidity, moon phase) via `dunst`.
+**Right-Click:** Opens a `rofi` prompt to update the target city on-the-fly without manually editing configuration files.
+
+**Dependencies:** `curl`, `rofi`, `libnotify`, `zenity` *(handled automatically by the installer)*.
 
 ---
 

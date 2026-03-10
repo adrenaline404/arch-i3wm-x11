@@ -7,6 +7,7 @@ if [ -f "$SETUP_FLAG" ]; then exit 0; fi
 sleep 3
 
 rm -rf ~/.cache/fastfetch
+rm -f /tmp/weather_cache
 notify-send -u normal -t 3000 "System Setup" "Clearing old caches & preparing environment..."
 
 sleep 1
